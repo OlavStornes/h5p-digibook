@@ -1,11 +1,18 @@
 [
   {
-    "label": "True",
+    "label": "COLUMN LABEL",
     "name": "Column",
     "type": "library",
     "description": "cooldesc",
     "options": [
       "H5P.Column 1.7"
     ]
+  },
+  {
+    "label": "NAVBAR LABEL",
+    "name": "Navbar",
+    "type": "text",
+    "description": "accordion test",
+    "default": "insert text here"
   }
 ]

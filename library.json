@@ -3,7 +3,7 @@
   "description": "A regular ordinary special book",
   "majorVersion": 1,
   "minorVersion": 0,
-  "patchVersion": 0,
+  "patchVersion": 1,
   "runnable": 1,
   "author": "Joubel",
   "license": "MIT",
@@ -17,6 +17,12 @@
     }
   ],
   "preloadedCss": [],
-  "preloadedDependencies": [],
+  "preloadedDependencies": [
+    {
+      "machineName": "H5P.Column",
+      "majorVersion": 1,
+      "minorVersion": 7
+    }
+  ],
   "editorDependencies": []
 }
