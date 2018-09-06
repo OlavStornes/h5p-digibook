@@ -16,7 +16,7 @@
     "h5p",
     "library"
   ],
-  "author": "Joubel",
+  "author": "Olav Daling Stornes",
   "license": "MIT",
   "devDependencies": {
     "ava": "^0.19.1",

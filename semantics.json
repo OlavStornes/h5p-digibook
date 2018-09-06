@@ -1,12 +1,11 @@
 [
   {
-    "label": "Text",
-    "importance": "high",
-    "name": "textField",
-    "type": "text",
-    "widget": "textarea",
-    "placeholder": "Hello world",
-    "default": "Hello %username",
-    "description": "Says hello to someone"
+    "label": "True",
+    "name": "Column",
+    "type": "library",
+    "description": "cooldesc",
+    "options": [
+      "H5P.Column 1.7"
+    ]
   }
 ]
