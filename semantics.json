@@ -10,9 +10,9 @@
   },
   {
     "label": "NAVBAR LABEL",
-    "name": "Navbar",
+    "name": "navbar",
     "type": "text",
-    "description": "accordion test",
+    "description": "desctest",
     "default": "insert text here"
   }
 ]

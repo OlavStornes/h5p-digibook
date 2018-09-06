@@ -1,5 +1,3 @@
-import Navbar from './navbar';
-
 export default class DigiBook extends H5P.EventDispatcher {
   /**
    * @constructor
@@ -11,9 +9,6 @@ export default class DigiBook extends H5P.EventDispatcher {
   
   constructor(config, contentId, contentData = {}) {
     super();
-    
-
-
     // Find all types of content inside a column
     this.columnFinder = function(arrElems) {
       let elemArray = [];
@@ -25,31 +20,21 @@ export default class DigiBook extends H5P.EventDispatcher {
     
 
     this.colelem = document.createElement('div');
-    this.navelem = document.createElement('div');
-    
-    this.bookpage = H5P.newRunnable(config.Column, contentId, H5P.jQuery(this.colelem), contentData);
 
-    this.navbar = new Navbar(config.navbar);
+    this.bookpage = H5P.newRunnable(config.Column, contentId, H5P.jQuery(this.colelem), contentData);
+    this.navbar = new NavBar(config.navbar, contentId);
+
     
     
     
     //Find all column elements
-    let columnElems = this.columnFinder(config.Column.params.content);
-
-    // console.log("all the columns:");
-    // console.log(columnElems);
+    // let columnElems = this.columnFinder(config.Column.params.content);
     
     //Edit the accordian text before applying it to a fresh instance
-    let navigation = "";
-    for (let i = 0; i < columnElems.length; i++) {
-      navigation += "- " + columnElems[i].library.split(' ')[0] + '<br>';
-    }
-
-    // navigation = config.Navbar.params.panels[0].content.params.text.replace('__testsection', navigation);
-    // config.Navbar.params.panels[0].content.params.text = navigation;
-    
-    this.navbar = H5P.newRunnable(config.Navbar, contentId, H5P.jQuery(this.navelem), contentData);
-    // debugger;
+    // let navigation = "";
+    // for (let i = 0; i < columnElems.length; i++) {
+    //   navigation += "- " + columnElems[i].library.split(' ')[0] + '<br>';
+    // }
     
     /**
      * Attach library to wrapper
@@ -59,8 +44,26 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.attach = function($wrapper) {
       $wrapper.get(0).classList.add('h5p-book-page');
       $wrapper.get(0).appendChild(this.colelem);
-      $wrapper.get(0).appendChild(this.navelem);
+      $wrapper.get(0).appendChild(this.navbar.div);
 
     };
   }
 }
+
+/**
+   * Constructor function.
+   */
+class NavBar extends H5P.EventDispatcher {
+  constructor(text, contentId) {
+    super();
+    // Extend defaults with provided options
+    this.text = text;
+    // Keep provided id.
+    this.id = contentId;
+    this.div = document.createElement('div');
+    var newContent = document.createTextNode(this.text); 
+    // add the text node to the newly created div
+    this.div.appendChild(newContent);  
+  }
+}
+  
