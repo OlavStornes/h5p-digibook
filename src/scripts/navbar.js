@@ -2,27 +2,30 @@
  * Constructor function.
  */
 class NavBar extends H5P.EventDispatcher {
-  constructor(text, contentId) {
+  constructor(elemArray, contentId) {
     super();
-    this.text = text;
     this.id = contentId;
     this.div = document.createElement('div');
-    this.div.id = 'navbar';
     this.para = document.createElement('p');
+    this.div.id = 'navbar';
     
-
-    // add the text node to the newly created div
     
-    this.para.innerHTML = text;
-    // console.log(newContent);
-
+    this.para.innerHTML = this.parseElems(elemArray);
     this.div.appendChild(this.para);  
-    
-    this.addnav = function(input) {
-      
-      return input;
-    };
-
   }
+  
+  //Parse element array to a more readable format
+  parseElems(elemArray) {
+    let navHTML = '';
+
+    for (let i = 0; i < elemArray.length; i++) {
+      //Splitting both on dots and spaces for a more sane output
+      //TODO: apply lists in js instead
+      navHTML += "- " + elemArray[i].library.split('.')[1].split(' ')[0] + '<br>';
+    }
+
+    return navHTML;
+  }
+  
 }
 export default NavBar;
