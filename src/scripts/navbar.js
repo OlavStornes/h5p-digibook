@@ -13,23 +13,22 @@ class NavBar extends H5P.EventDispatcher {
   }
   
 
-
   //Parse element array to a more readable format
   parseElems(elemArray) {
     let alphaboi = document.createElement('ul');
     let node, ref;
 
-    for (let i = 0; i < elemArray.length; i++) {
+    elemArray.forEach(elem => {
+      
       node = document.createElement('li');
       ref = document.createElement('a');
 
-      ref.href = "#" + elemArray[i].subContentId;
-      ref.innerHTML = elemArray[i].library;
+      ref.href = "#" + elem.subContentId;
+      ref.innerHTML = elem.library;
       node.appendChild(ref);
       alphaboi.appendChild(node);  
-    }
+    });
     return alphaboi;
   }
-  
 }
 export default NavBar;
