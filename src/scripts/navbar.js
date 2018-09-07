@@ -11,24 +11,48 @@ class NavBar extends H5P.EventDispatcher {
     
     this.div.appendChild(this.parseElems(elemArray));  
   }
-  
+
+  parseLibrary(input){
+    let tmp;
+    switch (input.library.split(" ")[0]) {
+      case "H5P.AdvancedText":
+      
+        tmp = input.params.text.match(/<h2>(.+)<\/h2>/);
+        if (tmp)
+          tmp = tmp[1];
+        else
+          tmp = "Unnamed paragraph";
+        break;
+    
+      case "H5P.Image":
+        tmp = input.params.alt;
+        break;
+      default:
+        tmp = input.library;
+        break;
+    }
+    return tmp;
+
+  }
 
   //Parse element array to a more readable format
   parseElems(elemArray) {
-    let alphaboi = document.createElement('ul');
-    let node, ref;
+    let ulElem = document.createElement('ul');
+    let liElem, aElem;
 
     elemArray.forEach(elem => {
       
-      node = document.createElement('li');
-      ref = document.createElement('a');
+      liElem = document.createElement('li');
+      aElem = document.createElement('button');
 
-      ref.href = "#" + elem.subContentId;
-      ref.innerHTML = elem.library;
-      node.appendChild(ref);
-      alphaboi.appendChild(node);  
+      aElem.innerHTML = this.parseLibrary(elem);
+      aElem.onclick = function() {
+        document.getElementById(elem.subContentId).focus();
+      };
+      liElem.appendChild(aElem);
+      ulElem.appendChild(liElem);  
     });
-    return alphaboi;
+    return ulElem;
   }
 }
 export default NavBar;

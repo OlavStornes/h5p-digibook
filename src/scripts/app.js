@@ -13,7 +13,6 @@ export default class DigiBook extends H5P.EventDispatcher {
     super();
     // Find all types of content inside a column
     this.columnFinder = function(arrElems) {
-      debugger;
       let elemArray = [];
       arrElems.forEach(e => {
         elemArray.push(e.content);
@@ -21,12 +20,25 @@ export default class DigiBook extends H5P.EventDispatcher {
       return elemArray;
     };
 
-    this.colelem = document.createElement('div');
+    //Retrofit the content id to the column content
+    this.injectId = function() {
+      let tmp = this.colelem.getElementsByClassName('h5p-column-content');
+      for (let i = 0; i < tmp.length; i++) {
+        tmp[i].id = config.Column.params.content[i].content.subContentId;
 
+        //Needed to make elements redirectable
+        tmp[i].setAttribute('tabindex', '-1');
+
+      }
+    };
+    
+    this.colelem = document.createElement('div');
+    
     this.bookpage = H5P.newRunnable(config.Column, contentId, H5P.jQuery(this.colelem), contentData);
     this.navbar = new NavBar(this.columnFinder(config.Column.params.content), contentId);
-
+    this.injectId();
     
+
     /**
      * Attach library to wrapper
      *
@@ -38,5 +50,8 @@ export default class DigiBook extends H5P.EventDispatcher {
       $wrapper.get(0).appendChild(this.colelem);
     };
   }
+
+
+
 }
 
