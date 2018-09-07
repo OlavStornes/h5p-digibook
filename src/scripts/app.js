@@ -17,14 +17,10 @@ export default class DigiBook extends H5P.EventDispatcher {
       arrElems.forEach(e => {
         elemArray.push(e.content);
       });
-
-      let navigation = '';
-      for (let i = 0; i < elemArray.length; i++) {
-        navigation += "- " + elemArray[i].library.split(' ')[0] + '<br>';
-      }
-      return navigation;
+      return elemArray;
     };
-    
+
+     
 
     this.colelem = document.createElement('div');
 
