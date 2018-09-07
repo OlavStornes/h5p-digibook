@@ -1,3 +1,5 @@
+import NavBar from './navbar';
+
 export default class DigiBook extends H5P.EventDispatcher {
   /**
    * @constructor
@@ -15,26 +17,20 @@ export default class DigiBook extends H5P.EventDispatcher {
       arrElems.forEach(e => {
         elemArray.push(e.content);
       });
-      return elemArray;
+
+      let navigation = '';
+      for (let i = 0; i < elemArray.length; i++) {
+        navigation += "- " + elemArray[i].library.split(' ')[0] + '<br>';
+      }
+      return navigation;
     };
     
 
     this.colelem = document.createElement('div');
 
     this.bookpage = H5P.newRunnable(config.Column, contentId, H5P.jQuery(this.colelem), contentData);
-    this.navbar = new NavBar(config.navbar, contentId);
+    this.navbar = new NavBar(this.columnFinder(config.Column.params.content), contentId);
 
-    
-    
-    
-    //Find all column elements
-    // let columnElems = this.columnFinder(config.Column.params.content);
-    
-    //Edit the accordian text before applying it to a fresh instance
-    // let navigation = "";
-    // for (let i = 0; i < columnElems.length; i++) {
-    //   navigation += "- " + columnElems[i].library.split(' ')[0] + '<br>';
-    // }
     
     /**
      * Attach library to wrapper
@@ -50,20 +46,5 @@ export default class DigiBook extends H5P.EventDispatcher {
   }
 }
 
-/**
-   * Constructor function.
-   */
-class NavBar extends H5P.EventDispatcher {
-  constructor(text, contentId) {
-    super();
-    // Extend defaults with provided options
-    this.text = text;
-    // Keep provided id.
-    this.id = contentId;
-    this.div = document.createElement('div');
-    var newContent = document.createTextNode(this.text); 
-    // add the text node to the newly created div
-    this.div.appendChild(newContent);  
-  }
-}
+
   
