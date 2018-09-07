@@ -9,22 +9,26 @@ class NavBar extends H5P.EventDispatcher {
     this.para = document.createElement('p');
     this.div.id = 'navbar';
     
-    
-    this.para.innerHTML = this.parseElems(elemArray);
-    this.div.appendChild(this.para);  
+    this.div.appendChild(this.parseElems(elemArray));  
   }
   
+
+
   //Parse element array to a more readable format
   parseElems(elemArray) {
-    let navHTML = '';
+    let alphaboi = document.createElement('ul');
+    let node, ref;
 
     for (let i = 0; i < elemArray.length; i++) {
-      //Splitting both on dots and spaces for a more sane output
-      //TODO: apply lists in js instead
-      navHTML += "- " + elemArray[i].library.split('.')[1].split(' ')[0] + '<br>';
-    }
+      node = document.createElement('li');
+      ref = document.createElement('a');
 
-    return navHTML;
+      ref.href = "#" + elemArray[i].subContentId;
+      ref.innerHTML = elemArray[i].library;
+      node.appendChild(ref);
+      alphaboi.appendChild(node);  
+    }
+    return alphaboi;
   }
   
 }
