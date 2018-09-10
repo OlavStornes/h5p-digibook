@@ -13,22 +13,32 @@ export default class DigiBook extends H5P.EventDispatcher {
   constructor(config, contentId, contentData = {}) {
     super();
     // Find all types of content inside a column
-    this.columnFinder = function (arrElems) {
+    this.columnFinder = function (chapters) {
       let elemArray = [];
-      arrElems.forEach(e => {
-        elemArray.push(e.content);
+      chapters.forEach(c => {
+        // debugger;
+        c.params.content.forEach(element => {
+          elemArray.push(element.content);
+        });
       });
       return elemArray;
     };
 
     //Retrofit the content id to the column content
     this.injectId = function () {
-      let tmp = this.colelem[0].getElementsByClassName('h5p-column-content');
-      for (let i = 0; i < tmp.length; i++) {
-        tmp[i].id = config.chapters[0].params.content[i].content.subContentId;
-
-        //Needed to make elements redirectable
-        tmp[i].setAttribute('tabindex', '-1');
+      let tmp = [];
+      for (let i = 0; i < this.colelem.length; i++) {
+        tmp.push(this.colelem[i].getElementsByClassName('h5p-column-content'));
+      }
+      
+      for (let j = 0; j < tmp.length; j++) {
+        for (let i = 0; i < tmp[j].length; i++) {
+          tmp[j][i].id = config.chapters[j].params.content[i].content.subContentId;
+          
+          //Needed to make elements redirectable
+          
+          tmp[j][i].setAttribute('tabindex', '-1');
+        }
       }
     };
 
@@ -38,7 +48,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.colelem.push(document.createElement('div'));
       this.bookpage = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.colelem[i]), contentData);
     }
-    this.sidebar = new SideBar(this.columnFinder(config.chapters[0].params.content), contentId);
+    this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId);
     this.topbar = new TopBar();
 
     this.injectId();
