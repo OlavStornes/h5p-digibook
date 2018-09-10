@@ -2,18 +2,19 @@
  * Constructor function.
  */
 class TopBar extends H5P.EventDispatcher {
-  constructor(contentId) {
+  constructor(contentId, totalChapters) {
     super();
     this.id = contentId;
     this.div = document.createElement('div');
     this.navlist = document.createElement('ul');
     this.div.id = 'topbar';
+    this.totalChapters = totalChapters;
 
     
     this.addIcon("fa-bars");
     this.addIcon("fa-search");
 
-    this.addRow('Page % of %');
+    this.addRow('Page % of ' + this.totalChapters);
     this.addIcon('fa-arrow-right');
     this.addIcon('fa-arrow-left');
 
