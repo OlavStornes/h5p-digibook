@@ -13,6 +13,7 @@ class SideBar extends H5P.EventDispatcher {
 
   parseLibrary(input){
     let tmp;
+
     switch (input.library.split(" ")[0]) {
       case "H5P.AdvancedText":
       
@@ -44,7 +45,7 @@ class SideBar extends H5P.EventDispatcher {
       liElem = document.createElement('li');
       aElem = document.createElement('button');
 
-      aElem.innerHTML = this.parseLibrary(elem);
+      aElem.innerHTML = elem.chapter +'-' + elem.section +': ' + this.parseLibrary(elem);
       aElem.onclick = function() {
         document.getElementById(elem.subContentId).focus();
       };

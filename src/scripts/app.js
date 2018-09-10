@@ -15,12 +15,19 @@ export default class DigiBook extends H5P.EventDispatcher {
     // Find all types of content inside a column
     this.columnFinder = function (chapters) {
       let elemArray = [];
-      chapters.forEach(c => {
-        // debugger;
-        c.params.content.forEach(element => {
-          elemArray.push(element.content);
-        });
-      });
+      for (let i = 0; i < chapters.length; i++) {        
+        //Index will be used in sorting of the sidebar
+        for (let j = 0; j < chapters[i].params.content.length; j++) {
+          let input = chapters[i].params.content[j].content;
+          // debugger
+
+          input.chapter = i;
+          input.section = j;
+          elemArray.push(input);
+        }
+        
+      }
+      //should return a nested array - elemArray[chapter][section]
       return elemArray;
     };
 
@@ -30,13 +37,16 @@ export default class DigiBook extends H5P.EventDispatcher {
       for (let i = 0; i < this.colelem.length; i++) {
         tmp.push(this.colelem[i].getElementsByClassName('h5p-column-content'));
       }
-      
+
+      /**
+       * j = chapters
+       * i = sections inside a chapter
+       */ 
       for (let j = 0; j < tmp.length; j++) {
         for (let i = 0; i < tmp[j].length; i++) {
           tmp[j][i].id = config.chapters[j].params.content[i].content.subContentId;
           
           //Needed to make elements redirectable
-          
           tmp[j][i].setAttribute('tabindex', '-1');
         }
       }
@@ -49,7 +59,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.bookpage = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.colelem[i]), contentData);
     }
     this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId);
-    this.topbar = new TopBar();
+    this.topbar = new TopBar(contentId, config.chapters.length);
 
     this.injectId();
 
