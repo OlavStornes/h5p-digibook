@@ -1,13 +1,12 @@
 /**
  * Constructor function.
  */
-class NavBar extends H5P.EventDispatcher {
+class SideBar extends H5P.EventDispatcher {
   constructor(elemArray, contentId) {
     super();
     this.id = contentId;
     this.div = document.createElement('div');
-    this.para = document.createElement('p');
-    this.div.id = 'navbar';
+    this.div.id = 'sidebar';
     
     this.div.appendChild(this.parseElems(elemArray));  
   }
@@ -55,4 +54,4 @@ class NavBar extends H5P.EventDispatcher {
     return ulElem;
   }
 }
-export default NavBar;
+export default SideBar;

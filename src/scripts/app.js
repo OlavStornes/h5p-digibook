@@ -1,4 +1,5 @@
-import NavBar from './navbar';
+import SideBar from './sidebar';
+import TopBar from './topbar';
 
 export default class DigiBook extends H5P.EventDispatcher {
   /**
@@ -28,17 +29,17 @@ export default class DigiBook extends H5P.EventDispatcher {
 
         //Needed to make elements redirectable
         tmp[i].setAttribute('tabindex', '-1');
-
       }
     };
     
     this.colelem = document.createElement('div');
     
     this.bookpage = H5P.newRunnable(config.Column, contentId, H5P.jQuery(this.colelem), contentData);
-    this.navbar = new NavBar(this.columnFinder(config.Column.params.content), contentId);
+    this.sidebar = new SideBar(this.columnFinder(config.Column.params.content), contentId);
+    this.topbar = new TopBar();
+
     this.injectId();
     
-
     /**
      * Attach library to wrapper
      *
@@ -46,12 +47,12 @@ export default class DigiBook extends H5P.EventDispatcher {
      */
     this.attach = function($wrapper) {
       $wrapper.get(0).classList.add('h5p-book-page');
-      $wrapper.get(0).appendChild(this.navbar.div);
+      $wrapper.get(0).appendChild(this.topbar.div);
+      $wrapper.get(0).appendChild(this.sidebar.div);
       $wrapper.get(0).appendChild(this.colelem);
+
     };
   }
-
-
 
 }
 
