@@ -31,7 +31,12 @@ class TopBar extends H5P.EventDispatcher {
   }
   // Helper function to add icons
   addIcon(iconcode){
-    this.addRow('<i class="fa '+ iconcode + '"></i>');
+    let row = document.createElement('li');
+    let newbutton = document.createElement('button');
+    newbutton.classList.add('fa', iconcode);
+
+    row.appendChild(newbutton);
+    this.navlist.appendChild(row);
   }
 }
 export default TopBar;
