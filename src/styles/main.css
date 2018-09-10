@@ -2,6 +2,10 @@
   color: blue;
 }
 
-#navbar{
+#sidebar{
   border: 5px dotted blue;
+}
+
+#topbar{
+  border: 5px dotted red;
 }
