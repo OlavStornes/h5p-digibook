@@ -1,6 +1,4 @@
-.h5p-hello-world {
-  color: blue;
-}
+
 
 #sidebar{
   border: 5px dotted blue;
@@ -8,4 +6,23 @@
 
 #topbar{
   border: 5px dotted red;
+  position: fixed;
+  width: 100%;
+
+}
+
+#topbar li{
+  float: left;
+  padding: 10px;
+
+
+}
+#topbar ul{
+  color: red;
+  /* display: inline; */
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
 }
