@@ -12,6 +12,9 @@ export default class DigiBook extends H5P.EventDispatcher {
 
   constructor(config, contentId, contentData = {}) {
     super();
+    this.activeChapter = 0;
+    var self = this;
+
     /**
      * Converts a list of chapters and splits it up to its respective sections
      * @param {Column[]} chapters - A list of columns 
@@ -68,10 +71,25 @@ export default class DigiBook extends H5P.EventDispatcher {
         this.colelem[i].style.display = 'none';
       }
     }
+
+
     this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId);
-    var self = this;
-    this.sidebar.on('resize', () => {
+    this.sidebar.on('newChapter', (chapter) => {
+      let newSection = self.colelem[chapter.data];
+      
+      if (newSection.style.display === 'none'){  
+        self.colelem[self.activeChapter].style.display = 'none';
+        newSection.style.display = 'block';
+      }
+      self.activeChapter = chapter.data;
+      
       self.trigger('resize');
+      
+      // Workaround on focusing on new element
+      setTimeout(function(){
+        newSection.scrollIntoView();
+      }, 0);
+      
     });
     this.topbar = new TopBar(contentId, config.chapters.length);
 

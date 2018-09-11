@@ -9,7 +9,6 @@ class SideBar extends H5P.EventDispatcher {
     this.div.id = 'sidebar';
     
     this.div.appendChild(this.parseColumnContent(columnSections, this));  
-    this.activeChapter = 0;
 
   }
   /**
@@ -60,22 +59,10 @@ class SideBar extends H5P.EventDispatcher {
       aElem.parent = parent;
 
       aElem.onclick = function() {
-        let newSection = document.getElementById('h5p-chapter-' + section.chapter);
         
-        if (newSection.style.display === 'none'){
-          document.getElementById('h5p-chapter-' + parent.activeChapter).style.display = 'none';
-          newSection.style.display = 'block';
-        }
-        this.parent.activeChapter = section.chapter;
+        // Send a trigger upstream
         
-        // Send a resizing trigger upstream
-        that.trigger('resize');
-        
-        
-        // Workaround on focusing on new element
-        setTimeout(function(){
-          document.getElementById(section.subContentId).scrollIntoView();
-        }, 0);
+        that.trigger('newChapter', section.chapter);
         
       };
       liElem.appendChild(aElem);
