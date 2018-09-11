@@ -13,12 +13,12 @@ export default class DigiBook extends H5P.EventDispatcher {
   constructor(config, contentId, contentData = {}) {
     super();
     /**
-     * 
-     * @param {*} chapters 
-     * @returns a 2D array - elemArray[chapter][section]
+     * Converts a list of chapters and splits it up to its respective sections
+     * @param {Column[]} chapters - A list of columns 
+     * @returns an array of all the sections
      */
     this.columnFinder = function (chapters) {
-      let elemArray = [];
+      let sections = [];
       for (let i = 0; i < chapters.length; i++) {
         //Index will be used in sorting of the sidebar
         for (let j = 0; j < chapters[i].params.content.length; j++) {
@@ -26,14 +26,16 @@ export default class DigiBook extends H5P.EventDispatcher {
 
           input.chapter = i;
           input.section = j;
-          elemArray.push(input);
+          sections.push(input);
         }
-
+        
       }
-      return elemArray;
+      return sections;
     };
 
-    //Retrofit the content id to the column content
+    /**
+     * Retrofit the content id to the column element 
+     */
     this.injectId = function () {
       let tmp = [];
       for (let i = 0; i < this.colelem.length; i++) {
@@ -60,7 +62,11 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.colelem.push(document.createElement('div'));
       this.bookpage = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.colelem[i]), contentData);
       this.colelem[i].id = 'h5p-chapter-' + i;
-      this.colelem[i].style.display = 'none';
+      //First chapter should be visible.
+      //TODO: Make it user spesific?
+      if (i != 0){
+        this.colelem[i].style.display = 'none';
+      }
     }
     this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId);
     var self = this;
@@ -70,7 +76,6 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.topbar = new TopBar(contentId, config.chapters.length);
 
     this.injectId();
-
     /**
      * Attach library to wrapper
      *
@@ -86,8 +91,6 @@ export default class DigiBook extends H5P.EventDispatcher {
       });
     };
   }
-
-
 }
 
 

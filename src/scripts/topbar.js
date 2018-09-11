@@ -15,7 +15,7 @@ class TopBar extends H5P.EventDispatcher {
     this.addIcon('fa-bars');
     this.addIcon('fa-search');
 
-    this.addRow('Page % of ' + this.totalChapters);
+    this.addRow('Chapter % of ' + this.totalChapters);
     this.addIcon('fa-arrow-right');
     this.addIcon('fa-arrow-left');
 

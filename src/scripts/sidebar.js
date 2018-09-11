@@ -2,14 +2,14 @@
  * Constructor function.
  */
 class SideBar extends H5P.EventDispatcher {
-  constructor(elemArray, contentId) {
+  constructor(columnSections, contentId) {
     super();
     this.id = contentId;
     this.div = document.createElement('div');
     this.div.id = 'sidebar';
     
-    this.div.appendChild(this.parseElems(elemArray, this));  
-    this.activeChapter = null;
+    this.div.appendChild(this.parseColumnContent(columnSections, this));  
+    this.activeChapter = 0;
 
   }
   /**
@@ -44,35 +44,38 @@ class SideBar extends H5P.EventDispatcher {
   
   /**
    * Parse element array from app.js to a more readable format
-   * @param {array} elemArray 
+   * @param {array} columnSections 
    */
-  parseElems(elemArray, parent) {
+  parseColumnContent(columnSections, parent) {
     let ulElem = document.createElement('ul');
     let liElem, aElem;
-    var self = this;
+    var that = this;
 
-    elemArray.forEach(elem => {
+    columnSections.forEach(section => {
       
       liElem = document.createElement('li');
       aElem = document.createElement('button');
 
-      aElem.innerHTML = elem.chapter +'-' + elem.section +': ' + this.parseLibrary(elem);
+      aElem.innerHTML = section.chapter +'-' + section.section +': ' + this.parseLibrary(section);
       aElem.parent = parent;
 
       aElem.onclick = function() {
-        let tmp = document.getElementById('h5p-chapter-' + elem.chapter);
+        let newSection = document.getElementById('h5p-chapter-' + section.chapter);
         
-        if (tmp.style.display === 'none'){
-          tmp.style.display = 'block';
+        if (newSection.style.display === 'none'){
+          document.getElementById('h5p-chapter-' + parent.activeChapter).style.display = 'none';
+          newSection.style.display = 'block';
         }
+        this.parent.activeChapter = section.chapter;
         
-        // Workaround to make resizing function as intended
-        setTimeout( ()=>{
-          self.trigger('resize');
-        }
-        , 0);
-
-        this.parent.activeChapter = elem.chapter;
+        // Send a resizing trigger upstream
+        that.trigger('resize');
+        
+        
+        // Workaround on focusing on new element
+        setTimeout(function(){
+          document.getElementById(section.subContentId).scrollIntoView();
+        }, 0);
         
       };
       liElem.appendChild(aElem);
