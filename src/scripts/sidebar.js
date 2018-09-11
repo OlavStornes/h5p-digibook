@@ -10,7 +10,10 @@ class SideBar extends H5P.EventDispatcher {
     
     this.div.appendChild(this.parseElems(elemArray));  
   }
-
+  /**
+   * Parses the library which 
+   * @param {string} input 
+   */
   parseLibrary(input){
     let tmp;
 
@@ -34,8 +37,11 @@ class SideBar extends H5P.EventDispatcher {
     return tmp;
 
   }
-
-  //Parse element array to a more readable format
+  
+  /**
+   * Parse element array from app.js to a more readable format
+   * @param {array} elemArray 
+   */
   parseElems(elemArray) {
     let ulElem = document.createElement('ul');
     let liElem, aElem;
@@ -46,6 +52,7 @@ class SideBar extends H5P.EventDispatcher {
       aElem = document.createElement('button');
 
       aElem.innerHTML = elem.chapter +'-' + elem.section +': ' + this.parseLibrary(elem);
+
       aElem.onclick = function() {
         document.getElementById(elem.subContentId).focus();
       };

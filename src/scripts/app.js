@@ -39,8 +39,8 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
 
       /**
-       * j = chapters
-       * i = sections inside a chapter
+       * j - chapters
+       * i - sections inside a chapter
        */ 
       for (let j = 0; j < tmp.length; j++) {
         for (let i = 0; i < tmp[j].length; i++) {
@@ -52,11 +52,11 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     };
 
-    // debugger;
     this.colelem = [];
     for (let i = 0; i < config.chapters.length; i++) {
       this.colelem.push(document.createElement('div'));
       this.bookpage = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.colelem[i]), contentData);
+      this.colelem[i].id = 'h5p-chapter-' + i;
     }
     this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId);
     this.topbar = new TopBar(contentId, config.chapters.length);
