@@ -12,22 +12,24 @@ export default class DigiBook extends H5P.EventDispatcher {
 
   constructor(config, contentId, contentData = {}) {
     super();
-    // Find all types of content inside a column
+    /**
+     * 
+     * @param {*} chapters 
+     * @returns a 2D array - elemArray[chapter][section]
+     */
     this.columnFinder = function (chapters) {
       let elemArray = [];
-      for (let i = 0; i < chapters.length; i++) {        
+      for (let i = 0; i < chapters.length; i++) {
         //Index will be used in sorting of the sidebar
         for (let j = 0; j < chapters[i].params.content.length; j++) {
           let input = chapters[i].params.content[j].content;
-          // debugger
 
           input.chapter = i;
           input.section = j;
           elemArray.push(input);
         }
-        
+
       }
-      //should return a nested array - elemArray[chapter][section]
       return elemArray;
     };
 
@@ -41,24 +43,30 @@ export default class DigiBook extends H5P.EventDispatcher {
       /**
        * j - chapters
        * i - sections inside a chapter
-       */ 
+       */
       for (let j = 0; j < tmp.length; j++) {
         for (let i = 0; i < tmp[j].length; i++) {
           tmp[j][i].id = config.chapters[j].params.content[i].content.subContentId;
-          
+
           //Needed to make elements redirectable
           tmp[j][i].setAttribute('tabindex', '-1');
         }
       }
     };
-
+    
+    //Create an array of columns
     this.colelem = [];
     for (let i = 0; i < config.chapters.length; i++) {
       this.colelem.push(document.createElement('div'));
       this.bookpage = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.colelem[i]), contentData);
       this.colelem[i].id = 'h5p-chapter-' + i;
+      this.colelem[i].style.display = 'none';
     }
     this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId);
+    var self = this;
+    this.sidebar.on('resize', () => {
+      self.trigger('resize');
+    });
     this.topbar = new TopBar(contentId, config.chapters.length);
 
     this.injectId();
@@ -79,5 +87,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     };
   }
 
+
 }
+
 

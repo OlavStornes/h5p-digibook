@@ -8,10 +8,13 @@ class SideBar extends H5P.EventDispatcher {
     this.div = document.createElement('div');
     this.div.id = 'sidebar';
     
-    this.div.appendChild(this.parseElems(elemArray));  
+    this.div.appendChild(this.parseElems(elemArray, this));  
+    this.activeChapter = null;
+
   }
   /**
-   * Parses the library which 
+   * Parses the library which is used
+   * TODO: Implement a more flexible system for library/title detection
    * @param {string} input 
    */
   parseLibrary(input){
@@ -37,14 +40,16 @@ class SideBar extends H5P.EventDispatcher {
     return tmp;
 
   }
+
   
   /**
    * Parse element array from app.js to a more readable format
    * @param {array} elemArray 
    */
-  parseElems(elemArray) {
+  parseElems(elemArray, parent) {
     let ulElem = document.createElement('ul');
     let liElem, aElem;
+    var self = this;
 
     elemArray.forEach(elem => {
       
@@ -52,13 +57,28 @@ class SideBar extends H5P.EventDispatcher {
       aElem = document.createElement('button');
 
       aElem.innerHTML = elem.chapter +'-' + elem.section +': ' + this.parseLibrary(elem);
+      aElem.parent = parent;
 
       aElem.onclick = function() {
-        document.getElementById(elem.subContentId).focus();
+        let tmp = document.getElementById('h5p-chapter-' + elem.chapter);
+        
+        if (tmp.style.display === 'none'){
+          tmp.style.display = 'block';
+        }
+        
+        // Workaround to make resizing function as intended
+        setTimeout( ()=>{
+          self.trigger('resize');
+        }
+        , 0);
+
+        this.parent.activeChapter = elem.chapter;
+        
       };
       liElem.appendChild(aElem);
       ulElem.appendChild(liElem);  
     });
+
     return ulElem;
   }
 }
