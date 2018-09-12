@@ -36,49 +36,34 @@ export default class DigiBook extends H5P.EventDispatcher {
       return sections;
     };
 
-    /**
-     * Retrofit the content id to the column element 
-     */
-    this.injectId = function () {
-      let tmp = [];
-      for (let i = 0; i < this.colelem.length; i++) {
-        tmp.push(this.colelem[i].getElementsByClassName('h5p-column-content'));
-      }
 
-      /**
-       * j - chapters
-       * i - sections inside a chapter
-       */
-      for (let j = 0; j < tmp.length; j++) {
-        for (let i = 0; i < tmp[j].length; i++) {
-          tmp[j][i].id = config.chapters[j].params.content[i].content.subContentId;
-
-          //Needed to make elements redirectable
-          tmp[j][i].setAttribute('tabindex', '-1');
-        }
-      }
-    };
-    
-    //Create an array of columns
-    this.colelem = [];
+    //Add all chapters as a h5p runnable 
+    this.columnElements = [];
     for (let i = 0; i < config.chapters.length; i++) {
-      this.colelem.push(document.createElement('div'));
-      this.bookpage = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.colelem[i]), contentData);
-      this.colelem[i].id = 'h5p-chapter-' + i;
+      this.columnElements.push(document.createElement('div'));
+      this.bookpage = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.columnElements[i]), contentData);
+      this.columnElements[i].id = 'h5p-chapter-' + i;
+
+      //Add ID to each content type within a column
+      var x = this.columnElements[i].getElementsByClassName('h5p-column-content');
+      for (let j = 0; j < x.length; j++) {
+        x[j].id = config.chapters[i].params.content[j].content.subContentId; 
+      } 
+
       //First chapter should be visible.
       //TODO: Make it user spesific?
       if (i != 0){
-        this.colelem[i].style.display = 'none';
+        this.columnElements[i].style.display = 'none';
       }
     }
 
 
     this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId);
     this.sidebar.on('newChapter', (chapter) => {
-      let newSection = self.colelem[chapter.data];
+      let newSection = self.columnElements[chapter.data];
       
       if (newSection.style.display === 'none'){  
-        self.colelem[self.activeChapter].style.display = 'none';
+        self.columnElements[self.activeChapter].style.display = 'none';
         newSection.style.display = 'block';
       }
       self.activeChapter = chapter.data;
@@ -93,7 +78,6 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
     this.topbar = new TopBar(contentId, config.chapters.length);
 
-    this.injectId();
     /**
      * Attach library to wrapper
      *
@@ -104,7 +88,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       $wrapper.get(0).appendChild(this.topbar.div);
       $wrapper.get(0).appendChild(this.sidebar.div);
 
-      this.colelem.forEach(element => {
+      this.columnElements.forEach(element => {
         $wrapper.get(0).appendChild(element);
       });
     };
