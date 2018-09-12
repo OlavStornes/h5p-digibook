@@ -6,20 +6,20 @@
 
 #topbar{
   border: 5px dotted red;
-  position: fixed;
   width: 100%;
 
 }
 
 #topbar li{
-  float: left;
-  padding: 10px;
+  align: left;
+  display: inline;
+  
+  padding: 20px;
 
 
 }
 #topbar ul{
   color: red;
-  /* display: inline; */
   list-style-type: none;
   margin: 0;
   padding: 0;
