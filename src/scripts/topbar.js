@@ -2,25 +2,42 @@
  * Constructor function.
  */
 class TopBar extends H5P.EventDispatcher {
-  constructor(contentId, totalChapters) {
+  constructor(contentId, totalChapters, parent) {
     super();
     this.id = contentId;
+    this.parent = parent;
     this.div = document.createElement('div');
     this.div.classList.add('sticky');
     this.navlist = document.createElement('ul');
     this.div.id = 'topbar';
     this.totalChapters = totalChapters;
-
+    
+    this.status = this.addStatus();
     
     this.addIcon('fa-bars');
     this.addIcon('fa-search');
-
-    this.addRow('Chapter % of ' + this.totalChapters);
+    
+    this.navlist.appendChild(this.status);
     this.addIcon('fa-arrow-left');
     this.addIcon('fa-arrow-right');
-
+    
     
     this.div.appendChild(this.navlist);
+    this.parent.on('updateChapter', () =>{
+      //TODO: Change only the active chapter, 
+      this.status.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
+    });
+  }
+
+  addStatus() {
+    let newbutton = document.createElement('li');
+    //let currentPage = document.createElement('i');
+    //currentPage.innerHTML = (this.parent.activeChapter+1);
+
+
+
+    newbutton.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
+    return newbutton;
   }
 
   /**
@@ -30,7 +47,7 @@ class TopBar extends H5P.EventDispatcher {
   addRow(input) {
     let newbutton = document.createElement('li');
     newbutton.innerHTML = input;
-    this.navlist.appendChild(newbutton);
+    return newbutton;
   }
   /**
    * Helper function to add icons

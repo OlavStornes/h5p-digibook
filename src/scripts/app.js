@@ -59,25 +59,27 @@ export default class DigiBook extends H5P.EventDispatcher {
 
 
     this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId);
-    this.sidebar.on('newChapter', (chapter) => {
-      let newSection = self.columnElements[chapter.data];
+    this.topbar = new TopBar(contentId, config.chapters.length, this);
+    
+    this.topbar.on('navigate', (event) => {
+      debugger;
+    });
+    this.sidebar.on('newChapter', (event) => {
+      let newSection = self.columnElements[event.data.chapter];
       
       if (newSection.style.display === 'none') {  
         self.columnElements[self.activeChapter].style.display = 'none';
         newSection.style.display = 'block';
       }
-      self.activeChapter = chapter.data;
+      self.activeChapter = event.data.chapter;
       
       self.trigger('resize');
-      
       // Workaround on focusing on new element
       setTimeout(function () {
-        newSection.scrollIntoView();
+        document.getElementById(event.data.subContentId).scrollIntoView(true);
       }, 0);
-      
+      this.trigger('updateChapter');
     });
-    this.topbar = new TopBar(contentId, config.chapters.length);
-
     /**
      * Attach library to wrapper
      *

@@ -61,8 +61,7 @@ class SideBar extends H5P.EventDispatcher {
       aElem.onclick = function () {
         
         // Send a trigger upstream
-        
-        that.trigger('newChapter', section.chapter);
+        that.trigger('newChapter', section);
         
       };
       liElem.appendChild(aElem);
