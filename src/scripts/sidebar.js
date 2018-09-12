@@ -16,7 +16,7 @@ class SideBar extends H5P.EventDispatcher {
    * TODO: Implement a more flexible system for library/title detection
    * @param {string} input 
    */
-  parseLibrary(input){
+  parseLibrary(input) {
     let tmp;
 
     switch (input.library.split(" ")[0]) {
@@ -58,7 +58,7 @@ class SideBar extends H5P.EventDispatcher {
       aElem.innerHTML = section.chapter +'-' + section.section +': ' + this.parseLibrary(section);
       aElem.parent = parent;
 
-      aElem.onclick = function() {
+      aElem.onclick = function () {
         
         // Send a trigger upstream
         

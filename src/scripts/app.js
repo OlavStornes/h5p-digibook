@@ -52,7 +52,7 @@ export default class DigiBook extends H5P.EventDispatcher {
 
       //First chapter should be visible.
       //TODO: Make it user spesific?
-      if (i != 0){
+      if (i != 0) { 
         this.columnElements[i].style.display = 'none';
       }
     }
@@ -62,7 +62,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.sidebar.on('newChapter', (chapter) => {
       let newSection = self.columnElements[chapter.data];
       
-      if (newSection.style.display === 'none'){  
+      if (newSection.style.display === 'none') {  
         self.columnElements[self.activeChapter].style.display = 'none';
         newSection.style.display = 'block';
       }
@@ -71,7 +71,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       self.trigger('resize');
       
       // Workaround on focusing on new element
-      setTimeout(function(){
+      setTimeout(function () {
         newSection.scrollIntoView();
       }, 0);
       

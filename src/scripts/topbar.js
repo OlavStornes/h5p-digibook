@@ -27,7 +27,7 @@ class TopBar extends H5P.EventDispatcher {
    * Add a row to the top bar
    * @param {string} input 
    */
-  addRow(input){
+  addRow(input) {
     let newbutton = document.createElement('li');
     newbutton.innerHTML = input;
     this.navlist.appendChild(newbutton);
@@ -36,7 +36,7 @@ class TopBar extends H5P.EventDispatcher {
    * Helper function to add icons
    * @param {string} iconcode 
    */
-  addIcon(iconcode){
+  addIcon(iconcode) {
     let row = document.createElement('li');
     let newbutton = document.createElement('a');
     newbutton.classList.add('fa', iconcode);
