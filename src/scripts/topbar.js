@@ -11,10 +11,12 @@ class TopBar extends H5P.EventDispatcher {
     this.navlist = document.createElement('ul');
     this.div.id = 'topbar';
     this.totalChapters = totalChapters;
+
     
     this.status = this.addStatus();
+    this.menu = this.addMenu();
     
-    this.addIcon('fa-bars');
+    this.navlist.appendChild(this.menu);
     this.addIcon('fa-search');
     
     this.navlist.appendChild(this.status);
@@ -29,12 +31,21 @@ class TopBar extends H5P.EventDispatcher {
     });
   }
 
+  addMenu() {
+    let that = this;
+    let row = document.createElement('li');
+    let icon = document.createElement('button');
+    icon.classList.add('fa', 'fa-bars');
+    icon.onclick = function () {
+      that.trigger('toggleMenu');
+    };
+
+    row.appendChild(icon);
+    return row;
+  }
+
   addStatus() {
     let newbutton = document.createElement('li');
-    //let currentPage = document.createElement('i');
-    //currentPage.innerHTML = (this.parent.activeChapter+1);
-
-
 
     newbutton.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
     return newbutton;
