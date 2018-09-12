@@ -2,9 +2,10 @@
  * Constructor function.
  */
 class SideBar extends H5P.EventDispatcher {
-  constructor(columnSections, contentId) {
+  constructor(columnSections, contentId, parent) {
     super();
     this.id = contentId;
+    this.parent = parent;
     this.div = document.createElement('div');
     this.div.id = 'sidebar';
     
@@ -61,7 +62,7 @@ class SideBar extends H5P.EventDispatcher {
       aElem.onclick = function () {
         
         // Send a trigger upstream
-        that.trigger('newChapter', section);
+        that.parent.trigger('newChapter', section);
         
       };
       liElem.appendChild(aElem);

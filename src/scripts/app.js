@@ -14,7 +14,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     super();
     this.activeChapter = 0;
     var self = this;
-
+    
     /**
      * Converts a list of chapters and splits it up to its respective sections
      * @param {Column[]} chapters - A list of columns 
@@ -36,36 +36,57 @@ export default class DigiBook extends H5P.EventDispatcher {
       return sections;
     };
 
-
+    
     //Add all chapters as a h5p runnable 
     this.columnElements = [];
+    var bookpage;
     for (let i = 0; i < config.chapters.length; i++) {
       this.columnElements.push(document.createElement('div'));
-      this.bookpage = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.columnElements[i]), contentData);
+      bookpage = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.columnElements[i]), contentData);
       this.columnElements[i].id = 'h5p-chapter-' + i;
-
+      
       //Add ID to each content type within a column
       var x = this.columnElements[i].getElementsByClassName('h5p-column-content');
       for (let j = 0; j < x.length; j++) {
-        x[j].id = config.chapters[i].params.content[j].content.subContentId; 
+        x[j].id = config.chapters[i].params.content[j].content.subContentId;
       } 
-
+      
       //First chapter should be visible.
       //TODO: Make it user spesific?
       if (i != 0) { 
         this.columnElements[i].style.display = 'none';
       }
     }
+    
 
-
-    this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId);
+    this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId, this);
     this.topbar = new TopBar(contentId, config.chapters.length, this);
     
     this.topbar.on('toggleMenu', () => {
       self.sidebar.div.hidden = !(self.sidebar.div.hidden);
     });
-    this.sidebar.on('newChapter', (event) => {
-      let newSection = self.columnElements[event.data.chapter];
+    this.topbar.on('seqChapter', (event) => {
+      //Event should be either 'next' or 'prev'
+      if (event.data === 'next') {
+        //Codepath for traversing to next chapter
+        if (self.activeChapter <= self.columnElements.length) {
+          self.trigger('newChapter', (self.activeChapter-1));
+        }
+      }
+      else {
+        //traversing backwards
+        if (self.activeChapter > 0) {
+          self.trigger('newChapter', (self.activeChapter-1));
+        }
+      }
+
+
+    });
+    //TODO: Avoud using event data subcontentID, so we dont need anything else than a chapter
+    //! Use self.columnElements[chapter].getElementsByClassName('h5p-column-content');
+    this.on('newChapter', (event) => {
+      debugger;
+      let newSection = self.allSections[event.data.chapter];
       
       if (newSection.style.display === 'none') {  
         self.columnElements[self.activeChapter].style.display = 'none';
@@ -76,7 +97,8 @@ export default class DigiBook extends H5P.EventDispatcher {
       self.trigger('resize');
       // Workaround on focusing on new element
       setTimeout(function () {
-        document.getElementById(event.data.subContentId).scrollIntoView(true);
+        debugger
+        self.allSections[event.data.chapter][event.data.section].scrollIntoView(true);
       }, 0);
       this.trigger('updateChapter');
     });
