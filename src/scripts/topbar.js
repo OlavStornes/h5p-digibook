@@ -8,27 +8,50 @@ class TopBar extends H5P.EventDispatcher {
     this.parent = parent;
     this.div = document.createElement('div');
     this.div.classList.add('sticky');
-    this.navlist = document.createElement('ul');
+    this.navList = document.createElement('ul');
     this.div.id = 'topbar';
     this.totalChapters = totalChapters;
 
     
     this.status = this.addStatus();
     this.menu = this.addMenu();
+    this.prevChapter = this.addArrow('prev');
+    this.nextChapter = this.addArrow('next');
     
-    this.navlist.appendChild(this.menu);
+    this.navList.appendChild(this.menu);
     this.addIcon('fa-search');
     
-    this.navlist.appendChild(this.status);
-    this.addIcon('fa-arrow-left');
-    this.addIcon('fa-arrow-right');
+    this.navList.appendChild(this.status);
+    this.navList.appendChild(this.prevChapter);
+    this.navList.appendChild(this.nextChapter);
+
     
-    
-    this.div.appendChild(this.navlist);
+    this.div.appendChild(this.navList);
     this.parent.on('updateChapter', () =>{
       //TODO: Change only the active chapter, 
       this.status.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
     });
+  }
+  addArrow(direction) {
+    let that = this;
+    console.log(that);
+    let row = document.createElement('li');
+    let icon = document.createElement('button');
+    
+
+    if (direction == 'prev') {
+      icon.classList.add('fa', 'fa-arrow-left');
+    }
+    else if (direction == 'next') {
+      icon.classList.add('fa', 'fa-arrow-right');      
+    }
+
+    icon.onclick = function () {
+      that.trigger('seqChapter', direction);
+    };
+
+    row.appendChild(icon);
+    return row;
   }
 
   addMenu() {
@@ -70,7 +93,7 @@ class TopBar extends H5P.EventDispatcher {
     newbutton.classList.add('fa', iconcode);
 
     row.appendChild(newbutton);
-    this.navlist.appendChild(row);
+    this.navList.appendChild(row);
   }
 }
 export default TopBar;
