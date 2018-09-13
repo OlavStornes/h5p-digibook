@@ -29,12 +29,26 @@ class TopBar extends H5P.EventDispatcher {
     this.div.appendChild(this.navList);
     this.parent.on('updateChapter', () =>{
       //TODO: Change only the active chapter, 
+      
       this.status.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
+      //assure that the buttons are valid in terms of chapter edges
+      if (this.parent.activeChapter <= 0) {
+        this.prevChapter.firstChild.disabled = true;
+      }
+      else {
+        this.prevChapter.firstChild.disabled = false;
+      }
+
+      if ((this.parent.activeChapter+1) >= this.totalChapters) {
+        this.nextChapter.firstChild.disabled = true;
+      }
+      else {
+        this.nextChapter.firstChild.disabled = false;
+      }
     });
   }
   addArrow(direction) {
     let that = this;
-    console.log(that);
     let row = document.createElement('li');
     let icon = document.createElement('button');
     

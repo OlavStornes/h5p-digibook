@@ -13,6 +13,7 @@ export default class DigiBook extends H5P.EventDispatcher {
   constructor(config, contentId, contentData = {}) {
     super();
     this.activeChapter = 0;
+    
     var self = this;
     
     /**
@@ -66,39 +67,47 @@ export default class DigiBook extends H5P.EventDispatcher {
       self.sidebar.div.hidden = !(self.sidebar.div.hidden);
     });
     this.topbar.on('seqChapter', (event) => {
+      let eventInput = {section:0};
       //Event should be either 'next' or 'prev'
       if (event.data === 'next') {
         //Codepath for traversing to next chapter
         if (self.activeChapter <= self.columnElements.length) {
-          self.trigger('newChapter', (self.activeChapter-1));
+          eventInput.chapter = (self.activeChapter+1);
         }
       }
-      else {
+      else if (event.data === 'prev') {
         //traversing backwards
         if (self.activeChapter > 0) {
-          self.trigger('newChapter', (self.activeChapter-1));
+          eventInput.chapter = (self.activeChapter-1);
         }
       }
+
+
+      self.trigger('newChapter', eventInput);
+
 
 
     });
-    //TODO: Avoud using event data subcontentID, so we dont need anything else than a chapter
-    //! Use self.columnElements[chapter].getElementsByClassName('h5p-column-content');
+
+    /**
+     * Input in event should be: 
+     * event.data.chapter
+     * event.data.section
+     */
     this.on('newChapter', (event) => {
-      debugger;
-      let newSection = self.allSections[event.data.chapter];
+      let targetChapter = self.columnElements[event.data.chapter];
+      let sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
       
-      if (newSection.style.display === 'none') {  
+      if (targetChapter.style.display === 'none') {  
         self.columnElements[self.activeChapter].style.display = 'none';
-        newSection.style.display = 'block';
+        targetChapter.style.display = 'block';
       }
       self.activeChapter = event.data.chapter;
       
       self.trigger('resize');
       // Workaround on focusing on new element
       setTimeout(function () {
-        debugger
-        self.allSections[event.data.chapter][event.data.section].scrollIntoView(true);
+        sectionsInChapter[event.data.section].scrollIntoView(true);
       }, 0);
       this.trigger('updateChapter');
     });
