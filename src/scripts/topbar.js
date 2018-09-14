@@ -75,10 +75,11 @@ class TopBar extends H5P.EventDispatcher {
     
 
     if (direction == 'prev') {
-      icon.classList.add('fa', 'fa-arrow-left');
+      icon.innerHTML = "Previous";
     }
     else if (direction == 'next') {
-      icon.classList.add('fa', 'fa-arrow-right');      
+      icon.innerHTML = "Next";
+
     }
 
     icon.onclick = function () {
@@ -93,7 +94,7 @@ class TopBar extends H5P.EventDispatcher {
     let that = this;
     let row = document.createElement('li');
     let icon = document.createElement('button');
-    icon.classList.add('fa', 'fa-bars');
+    icon.innerHTML = "Toggle menu";
     icon.onclick = function () {
       that.parent.trigger('toggleMenu');
     };
@@ -109,15 +110,6 @@ class TopBar extends H5P.EventDispatcher {
     return newbutton;
   }
 
-  /**
-   * Add a row to the top bar
-   * @param {string} input 
-   */
-  addRow(input) {
-    let newbutton = document.createElement('li');
-    newbutton.innerHTML = input;
-    return newbutton;
-  }
   /**
    * Helper function to add icons
    * @param {string} iconcode 
