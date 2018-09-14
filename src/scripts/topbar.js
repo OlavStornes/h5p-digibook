@@ -27,7 +27,7 @@ class TopBar extends H5P.EventDispatcher {
 
     
     this.div.appendChild(this.navList);
-    this.parent.on('updateChapter', () =>{
+    this.parent.on('updateTopBar', () =>{
       //TODO: Change only the active chapter, 
       
       this.status.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;

@@ -42,8 +42,6 @@ export default class DigiBook extends H5P.EventDispatcher {
       H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.columnElements[i]), contentData);
       this.columnElements[i].id = 'h5p-chapter-' + i;
       
-
-      
       //First chapter should be visible.
       //TODO: Make it user spesific?
       if (i != 0) { 
@@ -74,10 +72,11 @@ export default class DigiBook extends H5P.EventDispatcher {
       self.trigger('newChapter', eventInput);
     });
 
+    this.trigger('updateTopBar');    
     /**
      * Input in event should be: 
-     * event.data.chapter
-     * event.data.section
+     * @param {int} chapter The given chapter that should be opened
+     * @param {int} section The given section to redirect
      */
     this.on('newChapter', (event) => {
       let targetChapter = self.columnElements[event.data.chapter];
@@ -94,7 +93,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       setTimeout(function () {
         sectionsInChapter[event.data.section].scrollIntoView(true);
       }, 0);
-      this.trigger('updateChapter');
+      this.trigger('updateTopBar');
     });
     /**
      * Attach library to wrapper
