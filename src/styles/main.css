@@ -11,7 +11,7 @@
 }
 
 #topbar li{
-  align: left;
+  align-items: left;
   display: inline;
   
   padding: 20px;
