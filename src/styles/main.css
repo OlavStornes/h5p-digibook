@@ -7,19 +7,12 @@
 .topbar{
   border: 5px dotted red;
   width: 100%;
-  position:relative;
+  position: -webkit-sticky;
+  position: sticky;
   top: 0px;
 
 }
 
-.topbar li{
-  /* align-items: left; */
-  display: inline;
-
-  padding: 0px 20px;
-
-
-}
 .topbar ul{
   color: red;
   list-style-type: none;
@@ -27,4 +20,12 @@
   padding: 30px 0px;
   overflow: hidden;
   /* background-color: #333333; */
+}
+.topbar li{
+  /* align-items: left; */
+  display: inline;
+
+  padding: 0px 20px;
+
+
 }
