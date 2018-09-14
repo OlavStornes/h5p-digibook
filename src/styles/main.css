@@ -13,10 +13,10 @@
 }
 
 .topbar li{
-  align-items: left;
+  /* align-items: left; */
   display: inline;
-  
-  padding: 0px;
+
+  padding: 0px 20px;
 
 
 }

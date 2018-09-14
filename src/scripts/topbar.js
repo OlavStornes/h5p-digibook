@@ -14,15 +14,13 @@ class TopBar extends H5P.EventDispatcher {
     
     this.status = this.addStatus();
     this.menu = this.addMenu();
-    this.prevChapter = this.addArrow('prev');
-    this.nextChapter = this.addArrow('next');
+    this.arrows = this.addArrows();
     
     this.navList.appendChild(this.menu);
     this.addIcon('fa-search');
     
     this.navList.appendChild(this.status);
-    this.navList.appendChild(this.prevChapter);
-    this.navList.appendChild(this.nextChapter);
+    this.navList.appendChild(this.arrows);
 
     
     this.div.appendChild(this.navList);
@@ -35,17 +33,17 @@ class TopBar extends H5P.EventDispatcher {
       this.status.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
       //assure that the buttons are valid in terms of chapter edges
       if (this.parent.activeChapter <= 0) {
-        this.prevChapter.firstChild.disabled = true;
+        this.prev.disabled = true;
       }
       else {
-        this.prevChapter.firstChild.disabled = false;
+        this.prev.disabled = false;
       }
 
       if ((this.parent.activeChapter+1) >= this.totalChapters) {
-        this.nextChapter.firstChild.disabled = true;
+        this.next.disabled = true;
       }
       else {
-        this.nextChapter.firstChild.disabled = false;
+        this.next.disabled = false;
       }
     });
 
@@ -68,25 +66,28 @@ class TopBar extends H5P.EventDispatcher {
       this.parent.trigger('newChapter', eventInput);
     });
   }
-  addArrow(direction) {
+  addArrows() {
     let that = this;
     let row = document.createElement('li');
-    let icon = document.createElement('button');
+    this.prev = document.createElement('button');
+    this.next = document.createElement('button');
+
     
 
-    if (direction == 'prev') {
-      icon.innerHTML = "Previous";
-    }
-    else if (direction == 'next') {
-      icon.innerHTML = "Next";
+    this.prev.innerHTML = "Previous";
 
-    }
+    this.next.innerHTML = "Next";
 
-    icon.onclick = function () {
-      that.trigger('seqChapter', direction);
+    this.prev.onclick = function () {
+      that.trigger('seqChapter', 'prev');
+    };
+    this.next.onclick = function () {
+      that.trigger('seqChapter', 'next');
     };
 
-    row.appendChild(icon);
+    row.appendChild(this.prev);
+    row.appendChild(this.next);
+
     return row;
   }
 
