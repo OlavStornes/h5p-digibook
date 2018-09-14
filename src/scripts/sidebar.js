@@ -7,7 +7,7 @@ class SideBar extends H5P.EventDispatcher {
     this.id = contentId;
     this.parent = parent;
     this.div = document.createElement('div');
-    this.div.id = 'sidebar';
+    this.div.classList.add('sidebar');
     
     this.div.appendChild(this.parseColumnContent(columnSections, this));  
 
