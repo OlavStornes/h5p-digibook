@@ -85,10 +85,10 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {jQuery} $wrapper
      */
     this.attach = function ($wrapper) {
-      $wrapper.get(0).classList.add('h5p-book-page');
       $wrapper.get(0).appendChild(this.topbar.div);
+      $wrapper.get(0).classList.add('h5p-book-page');
       $wrapper.get(0).appendChild(this.sidebar.div);
-
+      
       this.columnElements.forEach(element => {
         $wrapper.get(0).appendChild(element);
       });
