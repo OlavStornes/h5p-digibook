@@ -96,7 +96,7 @@ class TopBar extends H5P.EventDispatcher {
     let icon = document.createElement('button');
     icon.classList.add('fa', 'fa-bars');
     icon.onclick = function () {
-      that.trigger('toggleMenu');
+      that.parent.trigger('toggleMenu');
     };
 
     row.appendChild(icon);

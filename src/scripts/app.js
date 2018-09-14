@@ -51,8 +51,8 @@ export default class DigiBook extends H5P.EventDispatcher {
 
     this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId, this);
     this.topbar = new TopBar(contentId, config.chapters.length, this);
-    this.topbar.on('toggleMenu', () => {
-      self.sidebar.div.hidden = !(self.sidebar.div.hidden);
+    this.on('toggleMenu', () => {
+      this.sidebar.div.hidden = !(this.sidebar.div.hidden);
     });
 
 
