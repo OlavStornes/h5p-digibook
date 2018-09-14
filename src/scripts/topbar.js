@@ -27,7 +27,10 @@ class TopBar extends H5P.EventDispatcher {
 
     
     this.div.appendChild(this.navList);
-    this.parent.on('updateTopBar', () =>{
+
+
+
+    this.on('updateTopBar', () =>{
       //TODO: Change only the active chapter, 
       
       this.status.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
@@ -45,6 +48,25 @@ class TopBar extends H5P.EventDispatcher {
       else {
         this.nextChapter.firstChild.disabled = false;
       }
+    });
+
+    this.on('seqChapter', (event) => {
+
+      let eventInput = {section:0};
+      //Event should be either 'next' or 'prev'
+      if (event.data === 'next') {
+        //Codepath for traversing to next chapter
+        if (this.parent.activeChapter <= this.parent.columnElements.length) {
+          eventInput.chapter = (this.parent.activeChapter+1);
+        }
+      }
+      else if (event.data === 'prev') {
+        //traversing backwards
+        if (this.parent.activeChapter > 0) {
+          eventInput.chapter = (this.parent.activeChapter-1);
+        }
+      }
+      this.parent.trigger('newChapter', eventInput);
     });
   }
   addArrow(direction) {

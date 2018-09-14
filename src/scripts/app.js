@@ -54,25 +54,9 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.topbar.on('toggleMenu', () => {
       self.sidebar.div.hidden = !(self.sidebar.div.hidden);
     });
-    this.topbar.on('seqChapter', (event) => {
-      let eventInput = {section:0};
-      //Event should be either 'next' or 'prev'
-      if (event.data === 'next') {
-        //Codepath for traversing to next chapter
-        if (self.activeChapter <= self.columnElements.length) {
-          eventInput.chapter = (self.activeChapter+1);
-        }
-      }
-      else if (event.data === 'prev') {
-        //traversing backwards
-        if (self.activeChapter > 0) {
-          eventInput.chapter = (self.activeChapter-1);
-        }
-      }
-      self.trigger('newChapter', eventInput);
-    });
 
-    this.trigger('updateTopBar');    
+
+    this.topbar.trigger('updateTopBar');    
     /**
      * Input in event should be: 
      * @param {int} chapter The given chapter that should be opened
@@ -93,7 +77,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       setTimeout(function () {
         sectionsInChapter[event.data.section].scrollIntoView(true);
       }, 0);
-      this.trigger('updateTopBar');
+      this.topbar.trigger('updateTopBar');
     });
     /**
      * Attach library to wrapper
