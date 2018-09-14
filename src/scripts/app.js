@@ -9,12 +9,10 @@ export default class DigiBook extends H5P.EventDispatcher {
    * @param {string} contentId
    * @param {object} contentData
    */
-
   constructor(config, contentId, contentData = {}) {
     super();
-    this.activeChapter = 0;
-    
     var self = this;
+    this.activeChapter = 0;
     
     /**
      * Converts a list of chapters and splits it up to its respective sections
@@ -36,21 +34,15 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
       return sections;
     };
-
     
     //Add all chapters as a h5p runnable 
     this.columnElements = [];
-    var bookpage;
     for (let i = 0; i < config.chapters.length; i++) {
       this.columnElements.push(document.createElement('div'));
-      bookpage = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.columnElements[i]), contentData);
+      H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.columnElements[i]), contentData);
       this.columnElements[i].id = 'h5p-chapter-' + i;
       
-      //Add ID to each content type within a column
-      var x = this.columnElements[i].getElementsByClassName('h5p-column-content');
-      for (let j = 0; j < x.length; j++) {
-        x[j].id = config.chapters[i].params.content[j].content.subContentId;
-      } 
+
       
       //First chapter should be visible.
       //TODO: Make it user spesific?
@@ -58,11 +50,9 @@ export default class DigiBook extends H5P.EventDispatcher {
         this.columnElements[i].style.display = 'none';
       }
     }
-    
 
     this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId, this);
     this.topbar = new TopBar(contentId, config.chapters.length, this);
-    
     this.topbar.on('toggleMenu', () => {
       self.sidebar.div.hidden = !(self.sidebar.div.hidden);
     });
@@ -81,12 +71,7 @@ export default class DigiBook extends H5P.EventDispatcher {
           eventInput.chapter = (self.activeChapter-1);
         }
       }
-
-
       self.trigger('newChapter', eventInput);
-
-
-
     });
 
     /**
