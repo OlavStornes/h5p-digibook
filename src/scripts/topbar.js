@@ -7,9 +7,8 @@ class TopBar extends H5P.EventDispatcher {
     this.id = contentId;
     this.parent = parent;
     this.div = document.createElement('div');
-    this.div.classList.add('sticky');
+    this.div.classList.add('sticky', 'topbar');
     this.navList = document.createElement('ul');
-    this.div.id = 'topbar';
     this.totalChapters = totalChapters;
 
     
