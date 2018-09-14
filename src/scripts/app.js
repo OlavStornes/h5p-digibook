@@ -40,7 +40,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     for (let i = 0; i < config.chapters.length; i++) {
       this.columnElements.push(document.createElement('div'));
       H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.columnElements[i]), contentData);
-      this.columnElements[i].id = 'h5p-chapter-' + i;
+      this.columnElements[i].classList.add('h5p-digibook-chapter');
       
       //First chapter should be visible.
       //TODO: Make it user spesific?
