@@ -1,14 +1,26 @@
-
+.h5p-book-page {
+  /* height: 800px !important; */
+  overflow-y: scroll !important;
+  
+}
 
 .sidebar{
   border: 5px dotted blue;
+  position: fixed;
+  left: 0px;
+  /* height: 725px; */
+  z-index: 1;
+  background: white;
 }
 
 .topbar{
   border: 5px dotted red;
+  background: white;
   width: 100%;
   position: -webkit-sticky;
   position: sticky;
+  top: 0px;
+  z-index: 1;
 
 }
 
@@ -16,15 +28,9 @@
   color: red;
   list-style-type: none;
   margin: 0;
-  padding: 30px 0px;
-  /* overflow: hidden; */
-  /* background-color: #333333; */
+  padding: 10px 0px;
 }
 .topbar li{
-  /* align-items: left; */
   display: inline;
-
-  padding: 0px;
-
-
+  padding-left:10%;
 }
