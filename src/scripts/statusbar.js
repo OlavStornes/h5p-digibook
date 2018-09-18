@@ -17,23 +17,29 @@ class StatusBar extends H5P.EventDispatcher {
     this.bot.classList.add('h5p-digibook-status', 'h5p-digibook-bot');
     this.botNavList = document.createElement('ul');
     this.bot.appendChild(this.botNavList);
-    
-    //// this.addIcon('fa-search');
-    
+        
     this.topStatus = this.addStatus();
     this.botStatus = this.addStatus();
     this.topMenu = this.addMenu();
-    this.botMenu = this.addMenu();
-    this.topArrows = this.addArrows('top');
-    this.botArrows = this.addArrows('bot');
+    this.arrows = this.addArrows();
+
+    let topButtonRow = document.createElement('li');
+    topButtonRow.appendChild(this.arrows.topPrev);
+    topButtonRow.appendChild(this.arrows.topNext);
+
+    let botButtonRow = document.createElement('li');
+    botButtonRow.appendChild(this.arrows.botPrev);
+    botButtonRow.appendChild(this.arrows.botNext);
 
     
     this.topNavList.appendChild(this.topMenu);
     this.topNavList.appendChild(this.topStatus);
-    this.topNavList.appendChild(this.topArrows);
-
+    this.topNavList.appendChild(topButtonRow);
+    
+    
     this.botNavList.appendChild(this.botStatus);
-    this.botNavList.appendChild(this.botArrows);
+    this.botNavList.appendChild(botButtonRow);
+    // this.botNavList.appendChild(this.botArrows);
 
 
 
@@ -43,24 +49,24 @@ class StatusBar extends H5P.EventDispatcher {
       this.topStatus.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
       //assure that the buttons are valid in terms of chapter edges
       if (this.parent.activeChapter <= 0) {
-        this.topPrev.disabled = true;
-        this.botPrev.disabled = true;
+        this.arrows.topPrev.disabled = true;
+        this.arrows.botPrev.disabled = true;
 
       }
       else {
-        this.topPrev.disabled = false;
-        this.botPrev.disabled = false;
+        this.arrows.topPrev.disabled = false;
+        this.arrows.botPrev.disabled = false;
 
       }
 
       if ((this.parent.activeChapter+1) >= this.totalChapters) {
-        this.topNext.disabled = true;
-        this.botNext.disabled = true;
+        this.arrows.topNext.disabled = true;
+        this.arrows.botNext.disabled = true;
 
       }
       else {
-        this.topNext.disabled = false;
-        this.botNext.disabled = false;
+        this.arrows.topNext.disabled = false;
+        this.arrows.botNext.disabled = false;
 
       }
     });
@@ -85,43 +91,37 @@ class StatusBar extends H5P.EventDispatcher {
   }
 
 
-  addArrows(direction) {
+  addArrows() {
     let that = this;
-    let row = document.createElement('li');
+    
+    let acm = {};
+    
+    acm.topPrev = document.createElement('button');
+    acm.topNext = document.createElement('button');
+    acm.topPrev.innerHTML = "Previous";
+    acm.topNext.innerHTML = "Next";
+    acm.topPrev.onclick = function () {
+      that.trigger('seqChapter', 'prev');
+    };
+    acm.topNext.onclick = function () {
+      that.trigger('seqChapter', 'next');
+    };
+    
+    
+    acm.botPrev = document.createElement('button');
+    acm.botNext = document.createElement('button');
+    acm.botPrev.innerHTML = "Previous";
+    acm.botNext.innerHTML = "Next";
+    
+    acm.botPrev.onclick = function () {
+      that.trigger('seqChapter', 'prev');
+    };
+    acm.botNext.onclick = function () {
+      that.trigger('seqChapter', 'next');
+    };
+    
 
-    if (direction=='top') {
-      this.topPrev = document.createElement('button');
-      this.topNext = document.createElement('button');
-      this.topPrev.innerHTML = "Previous";
-      this.topNext.innerHTML = "Next";
-      this.topPrev.onclick = function () {
-        that.trigger('seqChapter', 'prev');
-      };
-      this.topNext.onclick = function () {
-        that.trigger('seqChapter', 'next');
-      };
-      
-      row.appendChild(this.topPrev);
-      row.appendChild(this.topNext);
-    }
-
-    else if (direction == 'bot') {
-      this.botPrev = document.createElement('button');
-      this.botNext = document.createElement('button');
-      this.botPrev.innerHTML = "Previous";
-      this.botNext.innerHTML = "Next";
-      this.botPrev.onclick = function () {
-        that.trigger('seqChapter', 'prev');
-      };
-      this.botNext.onclick = function () {
-        that.trigger('seqChapter', 'next');
-      };
-      
-      row.appendChild(this.botPrev);
-      row.appendChild(this.botNext);
-    }
-
-    return row;
+    return acm;
   }
 
   addMenu() {
