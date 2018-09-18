@@ -1,9 +1,3 @@
-.h5p-book-page {
-  /* height: 800px !important; */
-  /* overflow-y: scroll !important; */
-  
-}
-
 .sidebar{
   border: 5px dotted blue;
   position: fixed;
@@ -16,7 +10,7 @@
 .h5p-digibook-status{
   border: 5px dotted red;
   background: white;
-  width: 100%;
+  /* width: 100%; */
   z-index: 1;  
 }
 
