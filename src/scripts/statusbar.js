@@ -7,40 +7,42 @@ class StatusBar extends H5P.EventDispatcher {
     this.id = contentId;
     this.parent = parent;
     this.totalChapters = totalChapters;
+    this.arrows = this.addArrows();
 
+
+    let buttonRow;
+
+    // Top row initializer
     this.top = document.createElement('div');
     this.top.classList.add('h5p-digibook-status', 'h5p-digibook-top');
     this.topNavList = document.createElement('ul');
     this.top.appendChild(this.topNavList);
 
+    this.topStatus = this.addStatus();
+    this.botStatus = this.addStatus();
+    this.topMenu = this.addMenu();
+    
+    buttonRow = document.createElement('li');
+    buttonRow.appendChild(this.arrows.topPrev);
+    buttonRow.appendChild(this.arrows.topNext);
+
+    this.topNavList.appendChild(this.topMenu);
+    this.topNavList.appendChild(this.topStatus);
+    this.topNavList.appendChild(buttonRow);
+    
+
+    // Bottom row initializer
     this.bot = document.createElement('div');
     this.bot.classList.add('h5p-digibook-status', 'h5p-digibook-bot');
     this.botNavList = document.createElement('ul');
     this.bot.appendChild(this.botNavList);
         
-    this.topStatus = this.addStatus();
-    this.botStatus = this.addStatus();
-    this.topMenu = this.addMenu();
-    this.arrows = this.addArrows();
+    buttonRow = document.createElement('li');
+    buttonRow.appendChild(this.arrows.botPrev);
+    buttonRow.appendChild(this.arrows.botNext);
 
-    let topButtonRow = document.createElement('li');
-    topButtonRow.appendChild(this.arrows.topPrev);
-    topButtonRow.appendChild(this.arrows.topNext);
-
-    let botButtonRow = document.createElement('li');
-    botButtonRow.appendChild(this.arrows.botPrev);
-    botButtonRow.appendChild(this.arrows.botNext);
-
-    
-    this.topNavList.appendChild(this.topMenu);
-    this.topNavList.appendChild(this.topStatus);
-    this.topNavList.appendChild(topButtonRow);
-    
-    
     this.botNavList.appendChild(this.botStatus);
-    this.botNavList.appendChild(botButtonRow);
-    // this.botNavList.appendChild(this.botArrows);
-
+    this.botNavList.appendChild(buttonRow);
 
 
     this.on('updateStatusBar', () =>{
