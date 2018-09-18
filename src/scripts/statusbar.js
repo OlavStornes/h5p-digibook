@@ -2,53 +2,70 @@
  * Constructor function.
  */
 class StatusBar extends H5P.EventDispatcher {
-  constructor(contentId, totalChapters, parent, placement) {
+  constructor(contentId, totalChapters, parent) {
     super();
     this.id = contentId;
     this.parent = parent;
-    this.div = document.createElement('div');
-    this.div.classList.add('h5p-digibook-status', 'h5p-digibook-' + placement);
-    this.navList = document.createElement('ul');
     this.totalChapters = totalChapters;
 
+    this.top = document.createElement('div');
+    this.top.classList.add('h5p-digibook-status', 'h5p-digibook-top');
+    this.topNavList = document.createElement('ul');
+    this.top.appendChild(this.topNavList);
+
+    this.bot = document.createElement('div');
+    this.bot.classList.add('h5p-digibook-status', 'h5p-digibook-bot');
+    this.botNavList = document.createElement('ul');
+    this.bot.appendChild(this.botNavList);
     
-    this.status = this.addStatus();
-    this.menu = this.addMenu();
-    this.arrows = this.addArrows();
+    //// this.addIcon('fa-search');
     
-    this.navList.appendChild(this.menu);
-    this.addIcon('fa-search');
-    
-    this.navList.appendChild(this.status);
-    this.navList.appendChild(this.arrows);
+    this.topStatus = this.addStatus();
+    this.botStatus = this.addStatus();
+    this.topMenu = this.addMenu();
+    this.botMenu = this.addMenu();
+    this.topArrows = this.addArrows('top');
+    this.botArrows = this.addArrows('bot');
 
     
-    this.div.appendChild(this.navList);
+    this.topNavList.appendChild(this.topMenu);
+    this.topNavList.appendChild(this.topStatus);
+    this.topNavList.appendChild(this.topArrows);
+
+    this.botNavList.appendChild(this.botStatus);
+    this.botNavList.appendChild(this.botArrows);
 
 
 
-    this.on('updateTopBar', () =>{
+    this.on('updateStatusBar', () =>{
       //TODO: Change only the active chapter, 
       
-      this.status.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
+      this.topStatus.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
       //assure that the buttons are valid in terms of chapter edges
       if (this.parent.activeChapter <= 0) {
-        this.prev.disabled = true;
+        this.topPrev.disabled = true;
+        this.botPrev.disabled = true;
+
       }
       else {
-        this.prev.disabled = false;
+        this.topPrev.disabled = false;
+        this.botPrev.disabled = false;
+
       }
 
       if ((this.parent.activeChapter+1) >= this.totalChapters) {
-        this.next.disabled = true;
+        this.topNext.disabled = true;
+        this.botNext.disabled = true;
+
       }
       else {
-        this.next.disabled = false;
+        this.topNext.disabled = false;
+        this.botNext.disabled = false;
+
       }
     });
 
     this.on('seqChapter', (event) => {
-
       let eventInput = {section:0};
       //Event should be either 'next' or 'prev'
       if (event.data === 'next') {
@@ -66,27 +83,43 @@ class StatusBar extends H5P.EventDispatcher {
       this.parent.trigger('newChapter', eventInput);
     });
   }
-  addArrows() {
+
+
+  addArrows(direction) {
     let that = this;
     let row = document.createElement('li');
-    this.prev = document.createElement('button');
-    this.next = document.createElement('button');
 
-    
+    if (direction=='top') {
+      this.topPrev = document.createElement('button');
+      this.topNext = document.createElement('button');
+      this.topPrev.innerHTML = "Previous";
+      this.topNext.innerHTML = "Next";
+      this.topPrev.onclick = function () {
+        that.trigger('seqChapter', 'prev');
+      };
+      this.topNext.onclick = function () {
+        that.trigger('seqChapter', 'next');
+      };
+      
+      row.appendChild(this.topPrev);
+      row.appendChild(this.topNext);
+    }
 
-    this.prev.innerHTML = "Previous";
-
-    this.next.innerHTML = "Next";
-
-    this.prev.onclick = function () {
-      that.trigger('seqChapter', 'prev');
-    };
-    this.next.onclick = function () {
-      that.trigger('seqChapter', 'next');
-    };
-
-    row.appendChild(this.prev);
-    row.appendChild(this.next);
+    else if (direction == 'bot') {
+      this.botPrev = document.createElement('button');
+      this.botNext = document.createElement('button');
+      this.botPrev.innerHTML = "Previous";
+      this.botNext.innerHTML = "Next";
+      this.botPrev.onclick = function () {
+        that.trigger('seqChapter', 'prev');
+      };
+      this.botNext.onclick = function () {
+        that.trigger('seqChapter', 'next');
+      };
+      
+      row.appendChild(this.botPrev);
+      row.appendChild(this.botNext);
+    }
 
     return row;
   }
@@ -99,14 +132,12 @@ class StatusBar extends H5P.EventDispatcher {
     icon.onclick = function () {
       that.parent.trigger('toggleMenu');
     };
-
     row.appendChild(icon);
     return row;
   }
 
   addStatus() {
     let newbutton = document.createElement('li');
-
     newbutton.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
     return newbutton;
   }
@@ -119,9 +150,8 @@ class StatusBar extends H5P.EventDispatcher {
     let row = document.createElement('li');
     let newbutton = document.createElement('a');
     newbutton.classList.add('fa', iconcode);
-
     row.appendChild(newbutton);
-    this.navList.appendChild(row);
+    this.topNavList.appendChild(row);
   }
 }
 export default StatusBar;

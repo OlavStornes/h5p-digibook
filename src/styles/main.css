@@ -26,6 +26,10 @@
   top: 0px;
 }
 
+.h5p-digibook-bot{
+  bottom: 0;
+}
+
 .h5p-digibook-status ul{
   color: red;
   list-style-type: none;
