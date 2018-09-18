@@ -1,13 +1,13 @@
 /**
  * Constructor function.
  */
-class TopBar extends H5P.EventDispatcher {
-  constructor(contentId, totalChapters, parent) {
+class StatusBar extends H5P.EventDispatcher {
+  constructor(contentId, totalChapters, parent, placement) {
     super();
     this.id = contentId;
     this.parent = parent;
     this.div = document.createElement('div');
-    this.div.classList.add('sticky', 'topbar');
+    this.div.classList.add('h5p-digibook-status', 'h5p-digibook-' + placement);
     this.navList = document.createElement('ul');
     this.totalChapters = totalChapters;
 
@@ -124,4 +124,4 @@ class TopBar extends H5P.EventDispatcher {
     this.navList.appendChild(row);
   }
 }
-export default TopBar;
+export default StatusBar;

@@ -1,5 +1,5 @@
 import SideBar from './sidebar';
-import TopBar from './topbar';
+import StatusBar from './statusbar';
 
 export default class DigiBook extends H5P.EventDispatcher {
   /**
@@ -49,14 +49,16 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     }
 
-    this.sidebar = new SideBar(this.columnFinder(config.chapters), contentId, this);
-    this.topbar = new TopBar(contentId, config.chapters.length, this);
+    this.sideBar = new SideBar(this.columnFinder(config.chapters), contentId, this);
+    this.topBar = new StatusBar(contentId, config.chapters.length, this, 'top');
+    this.botBar = new StatusBar(contentId, config.chapters.length, this, 'bot');
+
     this.on('toggleMenu', () => {
-      this.sidebar.div.hidden = !(this.sidebar.div.hidden);
+      this.sideBar.div.hidden = !(this.sideBar.div.hidden);
     });
 
 
-    this.topbar.trigger('updateTopBar');    
+    this.topBar.trigger('updateTopBar');    
     /**
      * Input in event should be: 
      * @param {int} chapter The given chapter that should be opened
@@ -77,7 +79,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       setTimeout(function () {
         sectionsInChapter[event.data.section].scrollIntoView(true);
       }, 0);
-      this.topbar.trigger('updateTopBar');
+      this.topBar.trigger('updateTopBar');
     });
     /**
      * Attach library to wrapper
@@ -85,13 +87,14 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {jQuery} $wrapper
      */
     this.attach = function ($wrapper) {
-      $wrapper.get(0).appendChild(this.topbar.div);
+      $wrapper.get(0).appendChild(this.topBar.div);
       $wrapper.get(0).classList.add('h5p-book-page');
-      $wrapper.get(0).appendChild(this.sidebar.div);
+      $wrapper.get(0).appendChild(this.sideBar.div);
       
       this.columnElements.forEach(element => {
         $wrapper.get(0).appendChild(element);
       });
+      $wrapper.get(0).appendChild(this.botBar.div);
     };
   }
 }

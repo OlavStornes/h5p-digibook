@@ -1,6 +1,6 @@
 .h5p-book-page {
   /* height: 800px !important; */
-  overflow-y: scroll !important;
+  /* overflow-y: scroll !important; */
   
 }
 
@@ -13,24 +13,26 @@
   background: white;
 }
 
-.topbar{
+.h5p-digibook-status{
   border: 5px dotted red;
   background: white;
   width: 100%;
+  z-index: 1;  
+}
+
+.h5p-digibook-top{
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
-  z-index: 1;
-
 }
 
-.topbar ul{
+.h5p-digibook-status ul{
   color: red;
   list-style-type: none;
   margin: 0;
   padding: 10px 0px;
 }
-.topbar li{
+.h5p-digibook-status li{
   display: inline;
   padding-left:10%;
 }
