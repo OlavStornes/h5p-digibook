@@ -1,3 +1,9 @@
+.h5p-book-page {
+  /* height: 800px !important; */
+  overflow-y: auto !important;
+  
+}
+
 .sidebar{
   border: 5px dotted blue;
   position: fixed;
