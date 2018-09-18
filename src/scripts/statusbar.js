@@ -51,25 +51,16 @@ class StatusBar extends H5P.EventDispatcher {
       this.topStatus.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
       //assure that the buttons are valid in terms of chapter edges
       if (this.parent.activeChapter <= 0) {
-        this.arrows.topPrev.disabled = true;
-        this.arrows.botPrev.disabled = true;
-
+        this.editButtonStatus('Prev', true);
       }
       else {
-        this.arrows.topPrev.disabled = false;
-        this.arrows.botPrev.disabled = false;
-
+        this.editButtonStatus('Prev', false);
       }
-
       if ((this.parent.activeChapter+1) >= this.totalChapters) {
-        this.arrows.topNext.disabled = true;
-        this.arrows.botNext.disabled = true;
-
+        this.editButtonStatus('Next', true);
       }
       else {
-        this.arrows.topNext.disabled = false;
-        this.arrows.botNext.disabled = false;
-
+        this.editButtonStatus('Next', false);
       }
     });
 
@@ -154,6 +145,15 @@ class StatusBar extends H5P.EventDispatcher {
     newbutton.classList.add('fa', iconcode);
     row.appendChild(newbutton);
     this.topNavList.appendChild(row);
+  }
+
+  /**
+   * Edit button state on both the top and bottom bar 
+   * @param {bool} state 
+   */
+  editButtonStatus(target, state) {
+    this.arrows['top'+target].disabled = state;
+    this.arrows['bot'+target].disabled = state;
   }
 }
 export default StatusBar;
