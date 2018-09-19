@@ -8,7 +8,7 @@ class SideBar extends H5P.EventDispatcher {
     this.parent = parent;
     this.div = document.createElement('div');
     this.div.classList.add('h5p-digibook-navigation');
-    this.div.hidden = true;
+    // this.div.hidden = true;
     
     this.div.appendChild(this.parseColumnContent(columnSections, this));  
 

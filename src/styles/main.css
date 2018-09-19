@@ -10,12 +10,18 @@
   flex: 1;
 }
 
-
 .h5p-digibook-navigation{
   border: 5px dotted blue;
   background: white;
   flex: 0 0 12em;
   order: -1;
+  transition: all .5s ease-in-out;
+  overflow-x: hidden;
+}
+
+.h5p-digibook-hide {
+  flex: 0 0 0em;
+  transform: translate(-100%);
 }
 
 .h5p-digibook-status{

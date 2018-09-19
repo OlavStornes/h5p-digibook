@@ -66,7 +66,7 @@ export default class DigiBook extends H5P.EventDispatcher {
 
     // Establish all triggers
     this.on('toggleMenu', () => {
-      this.sideBar.div.hidden = !(this.sideBar.div.hidden);
+      this.sideBar.div.classList.toggle('h5p-digibook-hide');
       self.trigger('resize');
     });
     /**
