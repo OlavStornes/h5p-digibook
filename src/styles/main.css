@@ -15,8 +15,10 @@
   background: white;
   flex: 0 0 12em;
   order: -1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   transition: all .5s ease-in-out;
-  overflow-x: hidden;
 }
 
 .h5p-digibook-hide {
@@ -27,7 +29,6 @@
 .h5p-digibook-status{
   border: 5px dotted red;
   background: white;
-  /* width: 100%; */
   z-index: 1;  
 }
 
