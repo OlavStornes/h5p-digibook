@@ -8,8 +8,7 @@ class SideBar extends H5P.EventDispatcher {
     this.parent = parent;
     this.div = document.createElement('div');
     this.div.classList.add('h5p-digibook-navigation');
-    // this.div.hidden = true;
-    
+
     this.div.appendChild(this.parseColumnContent(columnSections, this));  
 
   }
@@ -39,10 +38,8 @@ class SideBar extends H5P.EventDispatcher {
         break;
     }
     return tmp;
-
   }
 
-  
   /**
    * Parse element array from app.js to a more readable format
    * @param {array} columnSections 

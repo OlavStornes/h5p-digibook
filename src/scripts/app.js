@@ -35,7 +35,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       return sections;
     };
     
-    //Add all chapters as a h5p runnable 
+    //Add all chapters as a separate h5p runnable column 
     this.columnElements = [];
     for (let i = 0; i < config.chapters.length; i++) {
       this.columnElements.push(document.createElement('div'));
@@ -74,6 +74,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
 
     this.on('scrollToTop', () => {
+      // debugger;
       this.statusBar.top.scrollIntoView(true);
     });
     /**
