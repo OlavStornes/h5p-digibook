@@ -72,6 +72,10 @@ export default class DigiBook extends H5P.EventDispatcher {
         self.trigger('resize');
       }, 500);
     });
+
+    this.on('scrollToTop', () => {
+      this.statusBar.top.scrollIntoView(true);
+    });
     /**
      * Input in event should be: 
      * @param {int} chapter The given chapter that should be opened
