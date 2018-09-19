@@ -1,16 +1,21 @@
-.h5p-book-page {
-  /* height: 800px !important; */
-  overflow-y: auto !important;
-  
+.h5p-digibook {
+  display: flex;
+  flex-direction: column;
 }
 
-.sidebar{
+
+.h5p-digibook-content {
+  overflow-y: auto !important;
+  display: flex;
+  flex: 1;
+}
+
+
+.h5p-digibook-navigation{
   border: 5px dotted blue;
-  position: fixed;
-  left: 0px;
-  /* height: 725px; */
-  z-index: 1;
   background: white;
+  flex: 0 0 12em;
+  order: -1;
 }
 
 .h5p-digibook-status{
@@ -20,13 +25,13 @@
   z-index: 1;  
 }
 
-.h5p-digibook-top{
+.h5p-digibook-header{
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
 }
 
-.h5p-digibook-bot{
+.h5p-digibook-footer{
   bottom: 0;
 }
 

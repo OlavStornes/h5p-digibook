@@ -14,7 +14,7 @@ class StatusBar extends H5P.EventDispatcher {
 
     // Top row initializer
     this.top = document.createElement('div');
-    this.top.classList.add('h5p-digibook-status', 'h5p-digibook-top');
+    this.top.classList.add('h5p-digibook-status', 'h5p-digibook-header');
     this.topNavList = document.createElement('ul');
     this.top.appendChild(this.topNavList);
 
@@ -33,7 +33,7 @@ class StatusBar extends H5P.EventDispatcher {
 
     // Bottom row initializer
     this.bot = document.createElement('div');
-    this.bot.classList.add('h5p-digibook-status', 'h5p-digibook-bot');
+    this.bot.classList.add('h5p-digibook-status', 'h5p-digibook-footer');
     this.botNavList = document.createElement('ul');
     this.bot.appendChild(this.botNavList);
         

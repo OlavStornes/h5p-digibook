@@ -52,12 +52,23 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.sideBar = new SideBar(this.columnFinder(config.chapters), contentId, this);
     this.statusBar = new StatusBar(contentId, config.chapters.length, this);
 
-    this.on('toggleMenu', () => {
-      this.sideBar.div.hidden = !(this.sideBar.div.hidden);
+
+    this.content = document.createElement('div');
+    this.content.classList.add('h5p-digibook-content');
+    this.content.appendChild(this.sideBar.div);
+    
+    this.columnElements.forEach(element => {
+      this.content.appendChild(element);
     });
 
 
     this.statusBar.trigger('updateStatusBar');    
+
+    // Establish all triggers
+    this.on('toggleMenu', () => {
+      this.sideBar.div.hidden = !(this.sideBar.div.hidden);
+      self.trigger('resize');
+    });
     /**
      * Input in event should be: 
      * @param {int} chapter The given chapter that should be opened
@@ -86,14 +97,9 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {jQuery} $wrapper
      */
     this.attach = function ($wrapper) {
+      $wrapper[0].classList.add('h5p-digibook');
       $wrapper.get(0).appendChild(this.statusBar.top);
-      
-      $wrapper.get(0).classList.add('h5p-book-page');
-      $wrapper.get(0).appendChild(this.sideBar.div);
-      
-      this.columnElements.forEach(element => {
-        $wrapper.get(0).appendChild(element);
-      });
+      $wrapper.get(0).appendChild(this.content);
       $wrapper.get(0).appendChild(this.statusBar.bot);
     };
   }
