@@ -1,4 +1,4 @@
-# H5P Boilerplate
+# H5P DigiBook
 
 ## Getting started
 
