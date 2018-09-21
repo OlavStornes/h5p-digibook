@@ -2,25 +2,18 @@
   {
   "name": "chapters",
   "type": "list",
-  "label": "Items",
+  "label": "Book contents",
   "entity": "Chapter",
   "min": 1,
   "max": 31,
   "field": {
-      "label": "COLUMN LABEL",
+      "label": "Chapter",
       "name": "Column",
       "type": "library",
-      "description": "cooldesc",
+      "description": "Please insert your chapter content here",
       "options": [
-        "H5P.Column 1.7"
+        "H5P.Column 1.8"
       ]
     }
-  },
-  {
-    "label": "NAVBAR LABEL",
-    "name": "navbar",
-    "type": "text",
-    "description": "desctest",
-    "default": "insert text here"
   }
 ]

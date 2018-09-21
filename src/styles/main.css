@@ -5,7 +5,7 @@
 
 
 .h5p-digibook-content {
-  overflow-y: auto !important;
+  overflow-y: auto;
   display: flex;
   flex: 1;
 }

@@ -37,16 +37,19 @@ export default class DigiBook extends H5P.EventDispatcher {
     
     //Add all chapters as a separate h5p runnable column 
     this.columnElements = [];
+    this.instances = [];
+    let tmpInstance = {};
     for (let i = 0; i < config.chapters.length; i++) {
       this.columnElements.push(document.createElement('div'));
-      H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.columnElements[i]), contentData);
+      tmpInstance = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.columnElements[i]), contentData);
       this.columnElements[i].classList.add('h5p-digibook-chapter');
-      
+      this.instances.push (tmpInstance);
       //First chapter should be visible.
       //TODO: Make it user spesific?
       if (i != 0) { 
         this.columnElements[i].style.display = 'none';
       }
+
     }
 
     this.sideBar = new SideBar(this.columnFinder(config.chapters), contentId, this);
@@ -74,7 +77,6 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
 
     this.on('scrollToTop', () => {
-      // debugger;
       this.statusBar.top.scrollIntoView(true);
     });
     /**
