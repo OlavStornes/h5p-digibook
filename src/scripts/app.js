@@ -67,7 +67,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
 
     this.on('scrollToTop', () => {
-      this.statusBar.top.scrollIntoView(true);
+      this.sideBar.div.scrollIntoView(true);
     });
     /**
      * Input in event should be: 
