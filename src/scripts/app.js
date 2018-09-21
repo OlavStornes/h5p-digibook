@@ -55,16 +55,6 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.sideBar = new SideBar(this.columnFinder(config.chapters), contentId, this);
     this.statusBar = new StatusBar(contentId, config.chapters.length, this);
 
-
-    this.content = document.createElement('div');
-    this.content.classList.add('h5p-digibook-content');
-    this.content.appendChild(this.sideBar.div);
-    
-    this.columnElements.forEach(element => {
-      this.content.appendChild(element);
-    });
-
-
     this.statusBar.trigger('updateStatusBar');    
 
     // Establish all triggers
@@ -107,9 +97,19 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {jQuery} $wrapper
      */
     this.attach = function ($wrapper) {
-      $wrapper[0].classList.add('h5p-digibook');
+      $wrapper[0].classList.add('h5p-scrollable-fullscreen');
+      // Needed to enable scrolling in fullscreen
+      $wrapper[0].id = "h5p-digibook";
       $wrapper.get(0).appendChild(this.statusBar.top);
-      $wrapper.get(0).appendChild(this.content);
+
+      let content = document.createElement('div');
+      content.classList.add('h5p-digibook-content');
+      content.appendChild(this.sideBar.div);
+      this.columnElements.forEach(element => {
+        content.appendChild(element);
+      });
+
+      $wrapper.get(0).appendChild(content);
       $wrapper.get(0).appendChild(this.statusBar.bot);
     };
   }
