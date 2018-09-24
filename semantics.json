@@ -1,18 +1,51 @@
 [
   {
-  "name": "chapters",
-  "type": "list",
-  "label": "Book contents",
-  "entity": "Chapter",
-  "min": 1,
-  "max": 31,
-  "field": {
-      "label": "Chapter",
-      "name": "Column",
-      "type": "library",
-      "description": "Please insert your chapter content here",
-      "options": [
-        "H5P.Column 1.8"
+    "name": "title",
+    "label": "Title",
+    "importance": "high",
+    "type": "text",
+    "optional": true,
+    "placeholder": "Here you can add an optional title.",
+    "description": "The title you'd like to show above the image"
+  },
+  {
+    "name": "chapters",
+    "type": "list",
+    "label": "Chapters",
+    "entity": "Chapter",
+    "widgets": [
+      {
+        "name": "VerticalTabs",
+        "label": "Default"
+      }
+    ],
+    "importance": "high",
+    "min": 1,
+    "max": 50,
+    "field": {
+      "name": "item",
+      "type": "group",
+      "label": "Item",
+      "importance": "low",
+      "expanded": true,
+      "fields": [
+        {
+          "name": "chaptitle",
+          "label": "Chapter title",
+          "importance": "high",
+          "type": "text",
+          "optional": true,
+          "placeholder": "Insert chapter here",
+          "description": "The name of the chapter"
+        },
+        {
+          "label": "Chapter",
+          "name": "Chapter",
+          "type": "library",
+          "options": [
+            "H5P.Column 1.8"
+          ]
+        }
       ]
     }
   }
