@@ -2,11 +2,11 @@
  * Constructor function.
  */
 class SideBar extends H5P.EventDispatcher {
-  constructor(chapters, contentId, parent) {
+  constructor(config, contentId, parent) {
     super();
     this.id = contentId;
     this.parent = parent;
-    this.div = this.parseChapters(chapters, this);
+    this.div = this.parseChapters(config, this);
 
   }
   /**
@@ -39,20 +39,27 @@ class SideBar extends H5P.EventDispatcher {
 
   /**
    * Parse an object of chapters to create the navigation bar
-   * @param {object} inputContent 
+   * @param {object} config 
    */
-  parseChapters(inputContent, parent) {
+  parseChapters(config, parent) {
     let that = this;
     const divElem = document.createElement('div');
     divElem.classList.add('h5p-digibook-navigation');
+
+    const mainTitle = document.createElement('p');
+    mainTitle.innerHTML = config.title;
+    mainTitle.classList.add('h5p-digibook-navigation-title');
+
+    divElem.appendChild(mainTitle);
     
-    for (let i = 0; i < inputContent.length; i++) {
-      const chapter = inputContent[i];
+    for (let i = 0; i < config.chapters.length; i++) {
+      const chapter = config.chapters[i];
       const ulElem = document.createElement('ul');
       const title = document.createElement('p');
+      const chapterDiv = document.createElement('div');
       title.innerHTML = chapter.chapter_title;
       
-      divElem.appendChild(title);
+      chapterDiv.appendChild(title);
 
       for (let j = 0; j < chapter.chapter.params.content.length; j++) {
         const section = chapter.chapter.params.content[j];
@@ -70,7 +77,8 @@ class SideBar extends H5P.EventDispatcher {
         ulElem.appendChild(liElem);
         
       }
-      divElem.appendChild(ulElem);
+      chapterDiv.appendChild(ulElem);
+      divElem.appendChild(chapterDiv);
     }
       
     return divElem;
