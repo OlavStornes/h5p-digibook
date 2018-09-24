@@ -14,26 +14,6 @@ export default class DigiBook extends H5P.EventDispatcher {
     var self = this;
     this.activeChapter = 0;
     
-    /**
-     * Converts a list of chapters and splits it up to its respective sections
-     * @param {Column[]} chapters - A list of columns 
-     * @returns an array of all the sections
-     */
-    this.columnFinder = function (chapters) {
-      let sections = [];
-      for (let i = 0; i < chapters.length; i++) {
-        //Index will be used in sorting of the sidebar
-        for (let j = 0; j < chapters[i].chapter.params.content.length; j++) {
-          let input = chapters[i].chapter.params.content[j].content;
-
-          input.chapter = i;
-          input.section = j;
-          sections.push(input);
-        }
-        
-      }
-      return sections;
-    };
     
     //Add all chapters as a separate h5p runnable column 
     this.columnElements = [];
@@ -52,7 +32,7 @@ export default class DigiBook extends H5P.EventDispatcher {
 
     }
 
-    this.sideBar = new SideBar(this.columnFinder(config.chapters), contentId, this);
+    this.sideBar = new SideBar(config.chapters, contentId, this);
     this.statusBar = new StatusBar(contentId, config.chapters.length, this);
 
     this.statusBar.trigger('updateStatusBar');    
