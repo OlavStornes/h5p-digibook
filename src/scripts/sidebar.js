@@ -41,28 +41,6 @@ class SideBar extends H5P.EventDispatcher {
   }
 
   /**
-   * Converts a list of chapters and splits it up to its respective sections
-   * @param {Column[]} chapters - A list of columns 
-   * @returns an array of all the sections
-   */
-  columnFinder(chapters) {
-    let content = { titles: [], sections: [] };
-    for (let i = 0; i < chapters.length; i++) {
-      content.titles.push(chapters[i].chapter_title);
-      //Index will be used in sorting of the sidebar
-      for (let j = 0; j < chapters[i].chapter.params.content.length; j++) {
-        let input = chapters[i].chapter.params.content[j].content;
-
-        input.chapter = i;
-        input.section = j;
-        content.sections.push(input);
-      }
-
-    }
-    return content;
-  }
-
-  /**
    * Parse element array from app.js to a more readable format
    * @param {array} inputContent 
    */
