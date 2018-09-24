@@ -2,14 +2,11 @@
  * Constructor function.
  */
 class SideBar extends H5P.EventDispatcher {
-  constructor(columnSections, contentId, parent) {
+  constructor(chapters, contentId, parent) {
     super();
     this.id = contentId;
     this.parent = parent;
-    this.div = document.createElement('div');
-    this.div.classList.add('h5p-digibook-navigation');
-
-    this.div.appendChild(this.parseColumnContent(columnSections, this));
+    this.div = this.parseChapters(chapters, this);
 
   }
   /**
@@ -21,8 +18,8 @@ class SideBar extends H5P.EventDispatcher {
     let tmp;
 
     switch (input.library.split(" ")[0]) {
-      case "H5P.AdvancedText":
 
+      case "H5P.AdvancedText":
         tmp = input.params.text.match(/<h2>(.+)<\/h2>/);
         if (tmp)
           tmp = tmp[1];
@@ -41,42 +38,42 @@ class SideBar extends H5P.EventDispatcher {
   }
 
   /**
-   * Parse element array from app.js to a more readable format
-   * @param {array} inputContent 
+   * Parse an object of chapters to create the navigation bar
+   * @param {object} inputContent 
    */
-  parseColumnContent(inputContent, parent) {
-    let ulElem = document.createElement('ul');
-    let liElem, aElem;
-    var that = this;
-    let title = "";
-
+  parseChapters(inputContent, parent) {
+    let that = this;
+    const divElem = document.createElement('div');
+    divElem.classList.add('h5p-digibook-navigation');
+    
     for (let i = 0; i < inputContent.length; i++) {
-      const element = inputContent[i];
+      const chapter = inputContent[i];
+      const ulElem = document.createElement('ul');
+      const title = document.createElement('p');
+      title.innerHTML = chapter.chapter_title;
       
-      title = element.chapter_title;
-      for (let j = 0; j < element.chapter.params.content.length; j++) {
-        const section = element.chapter.params.content[j];
-        
-        
-        liElem = document.createElement('li');
-        aElem = document.createElement('button');
+      divElem.appendChild(title);
+
+      for (let j = 0; j < chapter.chapter.params.content.length; j++) {
+        const section = chapter.chapter.params.content[j];
+        const liElem = document.createElement('li');
+        const aElem = document.createElement('button');
         
         aElem.innerHTML = this.parseLibrary(section.content);
         aElem.parent = parent;
         
         aElem.onclick = function () {
-          
           // Send a trigger upstream
           that.parent.trigger('newChapter', {chapter: i, section: j});
-          
         };
         liElem.appendChild(aElem);
         ulElem.appendChild(liElem);
         
       }
+      divElem.appendChild(ulElem);
     }
       
-    return ulElem;
+    return divElem;
   }
 }
 export default SideBar;
