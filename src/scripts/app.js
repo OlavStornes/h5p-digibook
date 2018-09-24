@@ -23,8 +23,8 @@ export default class DigiBook extends H5P.EventDispatcher {
       let sections = [];
       for (let i = 0; i < chapters.length; i++) {
         //Index will be used in sorting of the sidebar
-        for (let j = 0; j < chapters[i].params.content.length; j++) {
-          let input = chapters[i].params.content[j].content;
+        for (let j = 0; j < chapters[i].chapter.params.content.length; j++) {
+          let input = chapters[i].chapter.params.content[j].content;
 
           input.chapter = i;
           input.section = j;
@@ -41,7 +41,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     let tmpInstance = {};
     for (let i = 0; i < config.chapters.length; i++) {
       this.columnElements.push(document.createElement('div'));
-      tmpInstance = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(this.columnElements[i]), contentData);
+      tmpInstance = H5P.newRunnable(config.chapters[i].chapter, contentId, H5P.jQuery(this.columnElements[i]), contentData);
       this.columnElements[i].classList.add('h5p-digibook-chapter');
       this.instances.push (tmpInstance);
       //First chapter should be visible.

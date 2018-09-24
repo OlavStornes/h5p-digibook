@@ -30,7 +30,7 @@
       "expanded": true,
       "fields": [
         {
-          "name": "chaptitle",
+          "name": "chapter_title",
           "label": "Chapter title",
           "importance": "high",
           "type": "text",
@@ -40,7 +40,7 @@
         },
         {
           "label": "Chapter",
-          "name": "Chapter",
+          "name": "chapter",
           "type": "library",
           "options": [
             "H5P.Column 1.8"
