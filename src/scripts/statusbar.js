@@ -54,6 +54,8 @@ class StatusBar extends H5P.EventDispatcher {
     this.botNavList.appendChild(this.buttonToTop);
     this.botNavList.appendChild(this.botStatus);
     this.botNavList.appendChild(button0);
+    this.botNavList.appendChild(button1);
+
 
     
     this.on('updateStatusBar', () =>{
@@ -103,10 +105,10 @@ class StatusBar extends H5P.EventDispatcher {
     
     let acm = {};
     
-    acm.topPrev = document.createElement('button');
-    acm.topNext = document.createElement('button');
-    acm.topPrev.innerHTML = "Previous";
-    acm.topNext.innerHTML = "Next";
+    acm.topPrev = document.createElement('span');
+    acm.topNext = document.createElement('span');
+    acm.topPrev.classList.add('fas', 'fa-angle-left', 'fa-4x', 'fa-fw');
+    acm.topNext.classList.add('fas', 'fa-angle-right', 'fa-4x', 'fa-fw');
     acm.topPrev.onclick = function () {
       that.trigger('seqChapter', 'prev');
     };
@@ -115,10 +117,10 @@ class StatusBar extends H5P.EventDispatcher {
     };
     
     
-    acm.botPrev = document.createElement('button');
-    acm.botNext = document.createElement('button');
-    acm.botPrev.innerHTML = "Previous";
-    acm.botNext.innerHTML = "Next";
+    acm.botPrev = document.createElement('span');
+    acm.botNext = document.createElement('span');
+    acm.botPrev.classList.add('fas', 'fa-angle-left', 'fa-4x');
+    acm.botNext.classList.add('fas', 'fa-angle-right', 'fa-4x');
     
     acm.botPrev.onclick = function () {
       that.trigger('seqChapter', 'prev');
@@ -137,8 +139,9 @@ class StatusBar extends H5P.EventDispatcher {
   addMenu() {
     let that = this;
     let row = document.createElement('li');
-    let icon = document.createElement('button');
-    icon.innerHTML = "Toggle menu";
+    let icon = document.createElement('span');
+    // icon.innerHTML = "Toggle menu";
+    icon.classList.add('fas', 'fa-bars', 'fa-2x');
     icon.onclick = function () {
       that.parent.trigger('toggleMenu');
     };

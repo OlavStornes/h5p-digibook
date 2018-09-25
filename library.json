@@ -20,6 +20,11 @@
   "preloadedCss": [],
   "preloadedDependencies": [
     {
+      "machineName": "FontAwesome",
+      "majorVersion": 4,
+      "minorVersion": 5
+    },
+    {
       "machineName": "H5P.Column",
       "majorVersion": 1,
       "minorVersion": 8

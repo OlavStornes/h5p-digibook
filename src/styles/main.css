@@ -35,6 +35,8 @@
 }
 
 .h5p-digibook-status{
+  font-family: 'H5PFontAwesome4';
+
   border: 2px solid red;
   background: white;
   z-index: 1;  
@@ -53,7 +55,6 @@
 
 .h5p-digibook-status ul{
   display: flex;
-  color: red;
   list-style-type: none;
   margin: 0;
 }
@@ -61,8 +62,11 @@
 .h5p-digibook-status li{
   display: inline;
   flex-grow:0;
-  margin:10px;
+  margin:0;
+  padding:10px;
+
 }
+
 
 .h5p-digibook-status li:first-of-type{
   flex-grow:1;
