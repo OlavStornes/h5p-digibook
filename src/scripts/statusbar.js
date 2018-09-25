@@ -8,7 +8,7 @@ class StatusBar extends H5P.EventDispatcher {
     this.parent = parent;
     this.totalChapters = totalChapters;
     this.arrows = this.addArrows();
-    let buttonRow;
+    let button0, button1;
 
     /**
      * Top row initializer
@@ -23,13 +23,17 @@ class StatusBar extends H5P.EventDispatcher {
     this.topMenu = this.addMenu();
     this.buttonToTop = this.addToTop();
     
-    buttonRow = document.createElement('li');
-    buttonRow.appendChild(this.arrows.topPrev);
-    buttonRow.appendChild(this.arrows.topNext);
+    button0 = document.createElement('li');
+    button1 = document.createElement('li');
+
+    button0.appendChild(this.arrows.topPrev);
+    button1.appendChild(this.arrows.topNext);
 
     this.topNavList.appendChild(this.topMenu);
     this.topNavList.appendChild(this.topStatus);
-    this.topNavList.appendChild(buttonRow);
+    this.topNavList.appendChild(button0);
+    this.topNavList.appendChild(button1);
+
     
 
     /**
@@ -41,13 +45,15 @@ class StatusBar extends H5P.EventDispatcher {
     this.bot.appendChild(this.botNavList);
     
         
-    buttonRow = document.createElement('li');
-    buttonRow.appendChild(this.arrows.botPrev);
-    buttonRow.appendChild(this.arrows.botNext);
+    button0 = document.createElement('li');
+    button1 = document.createElement('li');
+
+    button0.appendChild(this.arrows.botPrev);
+    button1.appendChild(this.arrows.botNext);
     
     this.botNavList.appendChild(this.buttonToTop);
     this.botNavList.appendChild(this.botStatus);
-    this.botNavList.appendChild(buttonRow);
+    this.botNavList.appendChild(button0);
 
     
     this.on('updateStatusBar', () =>{
