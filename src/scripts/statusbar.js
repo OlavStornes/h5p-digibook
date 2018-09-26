@@ -155,7 +155,10 @@ class StatusBar extends H5P.EventDispatcher {
     row.appendChild(icon);
     return row;
   }
-
+  
+  /**
+   * Add a paragraph which indicates which chapter is active 
+   */
   addChapterTitle() {
     const row = document.createElement('li');
     const chapterTitle = document.createElement('p');

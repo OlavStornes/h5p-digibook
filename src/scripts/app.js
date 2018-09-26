@@ -14,10 +14,12 @@ export default class DigiBook extends H5P.EventDispatcher {
     const self = this;
     this.activeChapter = 0;
     
-    
-    //Add all chapters as a separate h5p runnable column 
-    this.columnElements = [];
+    // H5P-instances (columns)
     this.instances = [];
+    // Div-elements of the abovementioned h5p-instances
+    this.columnElements = [];
+    
+    //Go through all columns and initialise them
     for (let i = 0; i < config.chapters.length; i++) {
       this.columnElements.push(document.createElement('div'));
       const tmpInstance = H5P.newRunnable(config.chapters[i].chapter, contentId, H5P.jQuery(this.columnElements[i]), contentData);
@@ -39,9 +41,11 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.statusBar.updateStatusBar();    
 
     // Establish all triggers
+
     this.on('toggleMenu', () => {
       this.sideBar.div.classList.toggle('h5p-digibook-hide');
 
+      //The transition time is set in CSS at 0.5 seconds
       setTimeout(function () {
         self.trigger('resize');
       }, 500);

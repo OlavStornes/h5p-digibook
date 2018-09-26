@@ -1,4 +1,5 @@
 /**
+ * A component which helps in navigation
  * Constructor function.
  */
 class SideBar extends H5P.EventDispatcher {
@@ -20,6 +21,7 @@ class SideBar extends H5P.EventDispatcher {
     switch (input.library.split(" ")[0]) {
 
       case "H5P.AdvancedText":
+        // Finds the first H2-element inside a text-document
         tmp = input.params.text.match(/<h2>(.+)<\/h2>/);
         if (tmp)
           tmp = tmp[1];
@@ -51,16 +53,19 @@ class SideBar extends H5P.EventDispatcher {
     mainTitle.classList.add('h5p-digibook-navigation-title');
 
     divElem.appendChild(mainTitle);
-    
+
     for (let i = 0; i < config.chapters.length; i++) {
       const chapter = config.chapters[i];
       const ulElem = document.createElement('ul');
       const title = document.createElement('p');
       const chapterDiv = document.createElement('div');
+
+      //Each chapter has their own title
       title.innerHTML = chapter.chapter_title;
       
       chapterDiv.appendChild(title);
 
+      //Traverse all sections inside a chapter
       for (let j = 0; j < chapter.chapter.params.content.length; j++) {
         const section = chapter.chapter.params.content[j];
         const liElem = document.createElement('li');
