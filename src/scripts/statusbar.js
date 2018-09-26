@@ -60,24 +60,7 @@ class StatusBar extends H5P.EventDispatcher {
 
 
     
-    this.on('updateStatusBar', () =>{
-      //TODO: Change only the active chapter, 
-      
-      this.topStatus.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
-      //assure that the buttons are valid in terms of chapter edges
-      if (this.parent.activeChapter <= 0) {
-        this.editButtonStatus('Prev', true);
-      }
-      else {
-        this.editButtonStatus('Prev', false);
-      }
-      if ((this.parent.activeChapter+1) >= this.totalChapters) {
-        this.editButtonStatus('Next', true);
-      }
-      else {
-        this.editButtonStatus('Next', false);
-      }
-    });
+    this.on('updateStatusBar', (this.updateStatusBar));
 
     /**
      * Sequential traversal of chapters
@@ -98,6 +81,27 @@ class StatusBar extends H5P.EventDispatcher {
       this.parent.trigger('newChapter', eventInput);
     });
   }
+
+  updateStatusBar() {
+    //TODO: Change only the active chapter, 
+          
+    this.topStatus.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
+    this.topChapterTitle.firstChild.innerHTML = this.parent.instances[this.parent.activeChapter].title;
+    //assure that the buttons are valid in terms of chapter edges
+    if (this.parent.activeChapter <= 0) {
+      this.editButtonStatus('Prev', true);
+    }
+    else {
+      this.editButtonStatus('Prev', false);
+    }
+    if ((this.parent.activeChapter+1) >= this.totalChapters) {
+      this.editButtonStatus('Next', true);
+    }
+    else {
+      this.editButtonStatus('Next', false);
+    }
+  }
+  
 
   /**
    * Add traversal buttons for sequential travel (next and previous chapter)
@@ -156,9 +160,6 @@ class StatusBar extends H5P.EventDispatcher {
     const row = document.createElement('li');
     const chapterTitle = document.createElement('p');
 
-    this.on('updateStatusBar', () =>{
-      chapterTitle.innerHTML = this.parent.instances[this.parent.activeChapter].title;
-    });
     row.appendChild(chapterTitle);
     return row;
 
