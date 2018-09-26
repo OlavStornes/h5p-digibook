@@ -192,18 +192,6 @@ class StatusBar extends H5P.EventDispatcher {
   }
 
   /**
-   * Helper function to add icons
-   * @param {string} iconcode 
-   */
-  addIcon(iconcode) {
-    const row = document.createElement('li');
-    const newbutton = document.createElement('a');
-    newbutton.classList.add('fa', iconcode);
-    row.appendChild(newbutton);
-    this.topNavList.appendChild(row);
-  }
-
-  /**
    * Edit button state on both the top and bottom bar 
    * @param {bool} state 
    */
