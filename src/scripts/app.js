@@ -11,7 +11,7 @@ export default class DigiBook extends H5P.EventDispatcher {
    */
   constructor(config, contentId, contentData = {}) {
     super();
-    var self = this;
+    const self = this;
     this.activeChapter = 0;
     
     
@@ -55,8 +55,8 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {int} section The given section to redirect
      */
     this.on('newChapter', (event) => {
-      let targetChapter = self.columnElements[event.data.chapter];
-      let sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
+      const targetChapter = self.columnElements[event.data.chapter];
+      const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
       
       if (targetChapter.style.display === 'none') {  
         self.columnElements[self.activeChapter].style.display = 'none';
@@ -82,7 +82,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       $wrapper[0].id = "h5p-digibook";
       $wrapper.get(0).appendChild(this.statusBar.top);
 
-      let content = document.createElement('div');
+      const content = document.createElement('div');
       content.classList.add('h5p-digibook-content');
       content.appendChild(this.sideBar.div);
       this.columnElements.forEach(element => {

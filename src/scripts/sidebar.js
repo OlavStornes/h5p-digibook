@@ -42,7 +42,7 @@ class SideBar extends H5P.EventDispatcher {
    * @param {object} config 
    */
   parseChapters(config, parent) {
-    let that = this;
+    const that = this;
     const divElem = document.createElement('div');
     divElem.classList.add('h5p-digibook-navigation');
 

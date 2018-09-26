@@ -8,7 +8,6 @@ class StatusBar extends H5P.EventDispatcher {
     this.parent = parent;
     this.totalChapters = totalChapters;
     this.arrows = this.addArrows();
-    let button0, button1;
 
     /**
      * Top row initializer
@@ -25,17 +24,17 @@ class StatusBar extends H5P.EventDispatcher {
     
     this.topChapterTitle = this.addChapterTitle();
     
-    button0 = document.createElement('li');
-    button1 = document.createElement('li');
+    const buttonTopPrev = document.createElement('li');
+    const buttonTopNext = document.createElement('li');
 
-    button0.appendChild(this.arrows.topPrev);
-    button1.appendChild(this.arrows.topNext);
+    buttonTopPrev.appendChild(this.arrows.topPrev);
+    buttonTopNext.appendChild(this.arrows.topNext);
 
     this.topNavList.appendChild(this.topMenu);
     this.topNavList.appendChild(this.topChapterTitle);
     this.topNavList.appendChild(this.topStatus);
-    this.topNavList.appendChild(button0);
-    this.topNavList.appendChild(button1);
+    this.topNavList.appendChild(buttonTopPrev);
+    this.topNavList.appendChild(buttonTopNext);
 
     
 
@@ -48,16 +47,16 @@ class StatusBar extends H5P.EventDispatcher {
     this.bot.appendChild(this.botNavList);
     
         
-    button0 = document.createElement('li');
-    button1 = document.createElement('li');
+    const buttonBotPrev = document.createElement('li');
+    const buttonBotNext = document.createElement('li');
 
-    button0.appendChild(this.arrows.botPrev);
-    button1.appendChild(this.arrows.botNext);
+    buttonBotPrev.appendChild(this.arrows.botPrev);
+    buttonBotNext.appendChild(this.arrows.botNext);
     
     this.botNavList.appendChild(this.buttonToTop);
     this.botNavList.appendChild(this.botStatus);
-    this.botNavList.appendChild(button0);
-    this.botNavList.appendChild(button1);
+    this.botNavList.appendChild(buttonBotPrev);
+    this.botNavList.appendChild(buttonBotNext);
 
 
     
@@ -104,9 +103,9 @@ class StatusBar extends H5P.EventDispatcher {
    * Add traversal buttons for sequential travel (next and previous chapter)
    */
   addArrows() {
-    let that = this;
+    const that = this;
     
-    let acm = {};
+    const acm = {};
     
     acm.topPrev = document.createElement('span');
     acm.topNext = document.createElement('span');
@@ -140,9 +139,9 @@ class StatusBar extends H5P.EventDispatcher {
    * Add a menu button which hides and shows the navigation bar
    */
   addMenu() {
-    let that = this;
-    let row = document.createElement('li');
-    let icon = document.createElement('span');
+    const that = this;
+    const row = document.createElement('li');
+    const icon = document.createElement('span');
     // icon.innerHTML = "Toggle menu";
     icon.classList.add('fas', 'fa-bars', 'fa-2x');
     icon.onclick = function () {
@@ -168,9 +167,9 @@ class StatusBar extends H5P.EventDispatcher {
    * Add a button which scrolls to the top of the page
    */
   addToTop() {
-    let that = this;
-    let row = document.createElement('li');
-    let icon = document.createElement('button');
+    const that = this;
+    const row = document.createElement('li');
+    const icon = document.createElement('button');
     icon.innerHTML = "Scroll to top";
     icon.onclick = function () {
       that.parent.trigger('scrollToTop');
@@ -183,7 +182,7 @@ class StatusBar extends H5P.EventDispatcher {
    * Add a status-button which shows current and total chapters
    */
   addStatus() {
-    let newbutton = document.createElement('li');
+    const newbutton = document.createElement('li');
     newbutton.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
     return newbutton;
   }
@@ -193,8 +192,8 @@ class StatusBar extends H5P.EventDispatcher {
    * @param {string} iconcode 
    */
   addIcon(iconcode) {
-    let row = document.createElement('li');
-    let newbutton = document.createElement('a');
+    const row = document.createElement('li');
+    const newbutton = document.createElement('a');
     newbutton.classList.add('fa', iconcode);
     row.appendChild(newbutton);
     this.topNavList.appendChild(row);
