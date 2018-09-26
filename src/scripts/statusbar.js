@@ -23,6 +23,8 @@ class StatusBar extends H5P.EventDispatcher {
     this.topMenu = this.addMenu();
     this.buttonToTop = this.addToTop();
     
+    this.topChapterTitle = this.addChapterTitle();
+    
     button0 = document.createElement('li');
     button1 = document.createElement('li');
 
@@ -30,6 +32,7 @@ class StatusBar extends H5P.EventDispatcher {
     button1.appendChild(this.arrows.topNext);
 
     this.topNavList.appendChild(this.topMenu);
+    this.topNavList.appendChild(this.topChapterTitle);
     this.topNavList.appendChild(this.topStatus);
     this.topNavList.appendChild(button0);
     this.topNavList.appendChild(button1);
@@ -145,8 +148,21 @@ class StatusBar extends H5P.EventDispatcher {
     icon.onclick = function () {
       that.parent.trigger('toggleMenu');
     };
+    
     row.appendChild(icon);
     return row;
+  }
+
+  addChapterTitle() {
+    const row = document.createElement('li');
+    const chapterTitle = document.createElement('p');
+
+    this.on('updateStatusBar', () =>{
+      chapterTitle.innerHTML = this.parent.instances[this.parent.activeChapter].title;
+    });
+    row.appendChild(chapterTitle);
+    return row;
+
   }
   /**
    * Add a button which scrolls to the top of the page

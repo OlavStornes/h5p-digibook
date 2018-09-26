@@ -18,11 +18,11 @@ export default class DigiBook extends H5P.EventDispatcher {
     //Add all chapters as a separate h5p runnable column 
     this.columnElements = [];
     this.instances = [];
-    let tmpInstance = {};
     for (let i = 0; i < config.chapters.length; i++) {
       this.columnElements.push(document.createElement('div'));
-      tmpInstance = H5P.newRunnable(config.chapters[i].chapter, contentId, H5P.jQuery(this.columnElements[i]), contentData);
+      const tmpInstance = H5P.newRunnable(config.chapters[i].chapter, contentId, H5P.jQuery(this.columnElements[i]), contentData);
       this.columnElements[i].classList.add('h5p-digibook-chapter');
+      tmpInstance.title = config.chapters[i].chapter_title;
       this.instances.push (tmpInstance);
       //First chapter should be visible.
       //TODO: Make it user spesific?

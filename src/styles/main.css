@@ -68,7 +68,7 @@
 }
 
 
-.h5p-digibook-status li:first-of-type{
+.h5p-digibook-status li:nth-child(2){
   flex-grow:1;
 }
 
