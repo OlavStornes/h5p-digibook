@@ -69,6 +69,14 @@ export default class DigiBook extends H5P.EventDispatcher {
       if (targetChapter.style.display === 'none') {  
         self.columnElements[self.activeChapter].style.display = 'none';
         targetChapter.style.display = 'block';
+        
+        //If the content is short, hide the footer
+        if (targetChapter.clientHeight <= window.outerHeight) {
+          this.statusBar.bot.hidden = true;
+        }
+        else {
+          this.statusBar.bot.hidden = false;
+        }
       }
       self.activeChapter = event.data.chapter;
       
