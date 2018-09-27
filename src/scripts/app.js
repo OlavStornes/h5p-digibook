@@ -84,21 +84,24 @@ export default class DigiBook extends H5P.EventDispatcher {
             if (isNaN(redirObj.chapter)) {
               return;
             }
-            this.trigger('newChapter', redirObj);
+            this.newChapter(redirObj);
           }
         }
       }
     });
+    this.on('newChapter', (event) => {
+      this.newChapter(event.data);
+    });
+    
     /**
-     * Input in event should be: 
+     * Input in targetPage should be: 
      * @param {int} chapter - The given chapter that should be opened
      * @param {int} section - The given section to redirect
      */
-    this.on('newChapter', (event) => {
-
+    this.newChapter = function (targetPage) {
       //TODO: Check if the chapters and sections actually exists
-      if (event.data.chapter < self.columnElements.length) {
-        const targetChapter = self.columnElements[event.data.chapter];
+      if (targetPage.chapter < self.columnElements.length) {
+        const targetChapter = self.columnElements[targetPage.chapter];
         const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
 
         if (targetChapter.style.display === 'none') {
@@ -113,19 +116,19 @@ export default class DigiBook extends H5P.EventDispatcher {
             this.statusBar.bot.hidden = false;
           }
         }
-        self.activeChapter = event.data.chapter;
+        self.activeChapter = parseInt(targetPage.chapter);
 
         self.trigger('resize');
         //Avoid accidentaly referring to a section that does not exist
-        if (event.data.section < sectionsInChapter.length) { 
+        if (targetPage.section < sectionsInChapter.length) { 
           // Workaround on focusing on new element
           setTimeout(function () {
-            sectionsInChapter[event.data.section].scrollIntoView(true);
+            sectionsInChapter[targetPage.section].scrollIntoView(true);
           }, 0);
-          this.statusBar.trigger('updateStatusBar');
+          this.statusBar.updateStatusBar();
         }
       }
-    });
+    };
     /**
      * Attach library to wrapper
      *
