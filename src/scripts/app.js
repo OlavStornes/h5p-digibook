@@ -21,17 +21,20 @@ export default class DigiBook extends H5P.EventDispatcher {
     
     //Go through all columns and initialise them
     for (let i = 0; i < config.chapters.length; i++) {
-      this.columnElements.push(document.createElement('div'));
-      const tmpInstance = H5P.newRunnable(config.chapters[i].chapter, contentId, H5P.jQuery(this.columnElements[i]), contentData);
-      this.columnElements[i].classList.add('h5p-digibook-chapter');
-      tmpInstance.title = config.chapters[i].chapter_title;
-      this.instances.push (tmpInstance);
+      const newColumn = document.createElement('div');
+      const newInstance = H5P.newRunnable(config.chapters[i].chapter, contentId, H5P.jQuery(newColumn), contentData);
+      newColumn.classList.add('h5p-digibook-chapter');
+      newInstance.title = config.chapters[i].chapter_title;
       //First chapter should be visible.
       //TODO: Make it user spesific?
       if (i != 0) { 
-        this.columnElements[i].style.display = 'none';
+        newColumn.style.display = 'none';
       }
 
+      //Register both the HTML-element and the H5P-element
+      this.instances.push (newInstance);
+      this.columnElements.push(newColumn);
+      
     }
 
     this.sideBar = new SideBar(config, contentId, this);
@@ -56,8 +59,8 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
     /**
      * Input in event should be: 
-     * @param {int} chapter The given chapter that should be opened
-     * @param {int} section The given section to redirect
+     * @param {int} chapter - The given chapter that should be opened
+     * @param {int} section - The given section to redirect
      */
     this.on('newChapter', (event) => {
       const targetChapter = self.columnElements[event.data.chapter];
