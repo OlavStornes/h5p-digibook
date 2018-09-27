@@ -1,0 +1,19 @@
+.h5p-digibook-navigation{
+  border: 2px solid blue;
+  background: white;
+  padding-left: 10px;
+  flex: 0 0 16em;
+  order: -1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all .5s ease-in-out;
+}
+
+.h5p-digibook-navigation-title{
+  font-size: x-large;
+}
+.h5p-digibook-navigation p{
+  font-weight: bold;
+  /* margin: 0; */
+}
