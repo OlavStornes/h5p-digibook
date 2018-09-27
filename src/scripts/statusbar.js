@@ -23,6 +23,8 @@ class StatusBar extends H5P.EventDispatcher {
     this.buttonToTop = this.addToTop();
     
     this.topChapterTitle = this.addChapterTitle();
+    this.botChapterTitle = this.addChapterTitle();
+
     
     const buttonTopPrev = document.createElement('li');
     const buttonTopNext = document.createElement('li');
@@ -54,6 +56,7 @@ class StatusBar extends H5P.EventDispatcher {
     buttonBotNext.appendChild(this.arrows.botNext);
     
     this.botNavList.appendChild(this.buttonToTop);
+    this.botNavList.appendChild(this.botChapterTitle);
     this.botNavList.appendChild(this.botStatus);
     this.botNavList.appendChild(buttonBotPrev);
     this.botNavList.appendChild(buttonBotNext);
@@ -84,9 +87,15 @@ class StatusBar extends H5P.EventDispatcher {
 
   updateStatusBar() {
     //TODO: Change only the active chapter, 
-          
-    this.topStatus.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
-    this.topChapterTitle.firstChild.innerHTML = this.parent.instances[this.parent.activeChapter].title;
+    const status = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
+    
+    const chapterTitle =  this.parent.instances[this.parent.activeChapter].title;
+    this.topStatus.innerHTML = status;
+    this.botStatus.innerHTML = status;
+
+    this.topChapterTitle.firstChild.innerHTML = chapterTitle;
+    this.botChapterTitle.firstChild.innerHTML = chapterTitle;
+
     //assure that the buttons are valid in terms of chapter edges
     if (this.parent.activeChapter <= 0) {
       this.editButtonStatus('Prev', true);
