@@ -2,6 +2,9 @@
   overflow-y: auto;
 }
 
+.h5p-digibook-chapter {
+  max-width: 1000px;
+}
 
 .h5p-digibook-content {
   display: flex;
