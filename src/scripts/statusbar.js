@@ -196,7 +196,6 @@ class StatusBar extends H5P.EventDispatcher {
    */
   addStatus() {
     const newbutton = document.createElement('li');
-    newbutton.innerHTML = 'Chapter ' + (this.parent.activeChapter+1) + ' of ' + this.totalChapters;
     return newbutton;
   }
 
