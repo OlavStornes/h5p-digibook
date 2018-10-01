@@ -67,13 +67,18 @@ export default class DigiBook extends H5P.EventDispatcher {
      */
     document.addEventListener('readystatechange', event => {
       if (event.target.readyState === "complete") {
-        const url = new URL(location.href);
+        const rawparams = top.location.hash.replace('#', "").split('&').map(el => el.split("="));
         const redirObj = {};
-        redirObj.id = url.searchParams.get('h5pbookid');
 
-        if (redirObj.id == self.contentId) {
-          redirObj.chapter = url.searchParams.get('chp');
-          redirObj.section = url.searchParams.get('sec');
+
+        //Split up the hash parametres and assign to an object
+        rawparams.forEach(argPair => {
+          redirObj[argPair[0]] = argPair[1];
+        });
+        // redirObj.id = url.searchParams.get('h5pbookid');
+        if (redirObj.h5pbookid == self.contentId) {
+          // redirObj.chapter = url.searchParams.get('chp');
+          // redirObj.section = url.searchParams.get('sec');
 
           if (redirObj.chapter && redirObj.section) {
 
@@ -135,6 +140,7 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {jQuery} $wrapper
      */
     this.attach = function ($wrapper) {
+
       $wrapper[0].classList.add('h5p-scrollable-fullscreen');
       // Needed to enable scrolling in fullscreen
       $wrapper[0].id = "h5p-digibook";
