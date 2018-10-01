@@ -70,18 +70,15 @@ export default class DigiBook extends H5P.EventDispatcher {
         const rawparams = top.location.hash.replace('#', "").split('&').map(el => el.split("="));
         const redirObj = {};
 
-
+        
         //Split up the hash parametres and assign to an object
         rawparams.forEach(argPair => {
           redirObj[argPair[0]] = argPair[1];
         });
-        // redirObj.id = url.searchParams.get('h5pbookid');
+        
         if (redirObj.h5pbookid == self.contentId) {
-          // redirObj.chapter = url.searchParams.get('chp');
-          // redirObj.section = url.searchParams.get('sec');
-
           if (redirObj.chapter && redirObj.section) {
-
+            
             //asssert that the redirect parameters is two good bois 
             if (isNaN(redirObj.section)) {
               redirObj.section = 0;
@@ -95,6 +92,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     });
     this.on('newChapter', (event) => {
+      H5P.communicator.send("changeURL", event.data);
       this.newChapter(event.data);
     });
 
@@ -107,7 +105,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       const idString = 'h5pbookid' + newUrl.h5pbookid;
       const chapterString = 'chapter' + newUrl.chapter;
       const sectionString = 'section' + newUrl.section;
-      top.location.hash = "#" + idString + "&" + chapterString + "&" + sectionString;
+      return "#" + idString + "&" + chapterString + "&" + sectionString;
     };
     
     /**
@@ -143,7 +141,6 @@ export default class DigiBook extends H5P.EventDispatcher {
             sectionsInChapter[targetPage.section].scrollIntoView(true);
           }, 0);
           this.statusBar.updateStatusBar();
-          this.updateHash(targetPage);
         }
       }
     };
