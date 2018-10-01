@@ -97,6 +97,18 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.on('newChapter', (event) => {
       this.newChapter(event.data);
     });
+
+    /**
+     * Updates the hash in URL
+     * @param {object} newUrl An object with three parametres as shown below
+     * ! Has only been tested in a local enviroment
+     */
+    this.updateHash = function (newUrl) {
+      const idString = 'h5pbookid' + newUrl.h5pbookid;
+      const chapterString = 'chapter' + newUrl.chapter;
+      const sectionString = 'section' + newUrl.section;
+      top.location.hash = "#" + idString + "&" + chapterString + "&" + sectionString;
+    };
     
     /**
      * Input in targetPage should be: 
@@ -131,6 +143,7 @@ export default class DigiBook extends H5P.EventDispatcher {
             sectionsInChapter[targetPage.section].scrollIntoView(true);
           }, 0);
           this.statusBar.updateStatusBar();
+          this.updateHash(targetPage);
         }
       }
     };
