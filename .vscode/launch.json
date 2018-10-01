@@ -10,6 +10,13 @@
             "name": "Launch Chrome against localhost",
             "url": "http://localhost/drupal",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch chrome with arguments",
+            "url": "http://localhost/drupal#h5pbookid=30&chapter=1&section=0",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }
