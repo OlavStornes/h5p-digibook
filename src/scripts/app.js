@@ -61,9 +61,9 @@ export default class DigiBook extends H5P.EventDispatcher {
     /**
      * Allow for external redirects via GET parameters
      * @param {int} h5pbookid identifier of which book in question
-     * @param {int} chp Chapter which should be redirected to
-     * @param {int} sec Which section in the abovementioned chapter
-     * @example exampleurl/?h5p-bookid=X&chp=Y&sec=Z
+     * @param {int} chapter Chapter which should be redirected to
+     * @param {int} section Which section in the abovementioned chapter
+     * @example exampleurl/#h5pbookid=X&chapter=Y&section=Z
      */
     document.addEventListener('readystatechange', event => {
       if (event.target.readyState === "complete") {
