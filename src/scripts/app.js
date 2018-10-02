@@ -60,7 +60,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
 
     /**
-     * Allow for external redirects via GET parameters
+     * Allow for external redirects via hash parameters
      * @param {int} h5pbookid identifier of which book in question
      * @param {int} chapter Chapter which should be redirected to
      * @param {int} section Which section in the abovementioned chapter
@@ -77,65 +77,69 @@ export default class DigiBook extends H5P.EventDispatcher {
           redirObj[argPair[0]] = argPair[1];
         });
         
-        if (redirObj.h5pbookid == self.contentId) {
-          if (redirObj.chapter && redirObj.section) {
-            
-            //asssert that the redirect parameters is two good bois 
-            if (isNaN(redirObj.section)) {
-              redirObj.section = 0;
-            }
-            if (isNaN(redirObj.chapter)) {
-              return;
-            }
-            this.newChapter(redirObj);
+        if (redirObj.h5pbookid == self.contentId && redirObj.chapter && redirObj.section) {
+          //asssert that the redirect parameters is two good bois 
+          if (isNaN(redirObj.section)) {
+            redirObj.section = 0;
           }
+          if (isNaN(redirObj.chapter)) {
+            return;
+          }
+          this.newChapter(redirObj);
         }
       }
     });
 
+
+    /**
+     * 
+     */
     this.on('newChapter', (event) => {
       this.newHandler = event.data;
+
+      //Assert that the module itself is asking for a redirect
       this.newHandler.redirectFromComponent = true;
+
+      // Create the new hash
       const idString = 'h5pbookid=' + this.newHandler.h5pbookid;
       const chapterString = 'chapter=' + this.newHandler.chapter;
       const sectionString = 'section=' + this.newHandler.section;
       event.data.newHash = "#" + idString + "&" + chapterString + "&" + sectionString;
+
       H5P.communicator.send("changeURL", event.data);
     });
 
+
     top.onhashchange = function (event) {
-      //If true, we already have information regarding redirect in newHandler
-      //When using browser history, a convert is neccecary
-      if (self.newHandler.redirectFromComponent == false) {
+      /**
+       * If true, we already have information regarding redirect in newHandler
+       * When using browser history, a convert is neccecary
+       */
+      if (!self.newHandler.redirectFromComponent) {
         const hash = new URL(event.newURL).hash;
         
+        //Only attempt converting if there is actually a hash present
         if (hash) {
           const hashArray = hash.replace("#", "").split("&").map( el => el.split("="));
+          const tempHandler = {};
           hashArray.forEach(el => {
             const key = el[0];
             const value = el[1];
-            self.newHandler[key] = value;
+            tempHandler[key] = value;
           });
+
+          //assert that the handler actually is from this content type. 
+          if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter && tempHandler.section) {
+            self.newHandler = tempHandler;
+          }
+
         }
         else {
           return;
         }
-
       }
-      self.newChapter();
-      
-    };
 
-    /**
-     * Updates the hash in URL
-     * @param {object} newUrl An object with three parametres as shown below
-     * ! Has only been tested in a local enviroment
-     */
-    this.updateHash = function (newUrl) {
-      const idString = 'h5pbookid' + newUrl.h5pbookid;
-      const chapterString = 'chapter' + newUrl.chapter;
-      const sectionString = 'section' + newUrl.section;
-      return "#" + idString + "&" + chapterString + "&" + sectionString;
+      self.newChapter();      
     };
     
     /**
@@ -145,7 +149,7 @@ export default class DigiBook extends H5P.EventDispatcher {
      */
     this.newChapter = function () {
       const targetPage = this.newHandler;
-      //TODO: Check if the chapters and sections actually exists
+
       if (targetPage.chapter < self.columnElements.length) {
         const targetChapter = self.columnElements[targetPage.chapter];
         const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
