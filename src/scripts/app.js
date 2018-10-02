@@ -85,7 +85,8 @@ export default class DigiBook extends H5P.EventDispatcher {
           if (isNaN(redirObj.chapter)) {
             return;
           }
-          this.newChapter(redirObj);
+          this.newHandler = redirObj;
+          this.newChapter();
         }
       }
     });
@@ -106,7 +107,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       const sectionString = 'section=' + this.newHandler.section;
       event.data.newHash = "#" + idString + "&" + chapterString + "&" + sectionString;
 
-      H5P.communicator.send("changeURL", event.data);
+      top.H5P.communicator.send("changeURL", event.data);
     });
 
 
