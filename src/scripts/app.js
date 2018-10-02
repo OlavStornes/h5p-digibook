@@ -31,21 +31,21 @@ export default class DigiBook extends H5P.EventDispatcher {
       if (i != 0) {
         newColumn.style.display = 'none';
       }
-
       //Register both the HTML-element and the H5P-element
       this.instances.push (newInstance);
       this.columnElements.push(newColumn);
-
     }
 
+    //Initialize the support components
     this.sideBar = new SideBar(config, contentId, this);
     this.statusBar = new StatusBar(contentId, config.chapters.length, this);
 
     //Kickstart the statusbar
     this.statusBar.updateStatusBar();
 
-    // Establish all triggers
-
+    /**
+     * Establish all triggers
+     */
     this.on('toggleMenu', () => {
       this.sideBar.div.classList.toggle('h5p-digibook-hide');
 
@@ -58,39 +58,6 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.on('scrollToTop', () => {
       this.sideBar.div.scrollIntoView(true);
     });
-
-    /**
-     * Allow for external redirects via hash parameters
-     * @param {int} h5pbookid identifier of which book in question
-     * @param {int} chapter Chapter which should be redirected to
-     * @param {int} section Which section in the abovementioned chapter
-     * @example exampleurl/#h5pbookid=X&chapter=Y&section=Z
-     */
-    document.addEventListener('readystatechange', event => {
-      if (event.target.readyState === "complete") {
-        const rawparams = top.location.hash.replace('#', "").split('&').map(el => el.split("="));
-        const redirObj = {};
-
-        
-        //Split up the hash parametres and assign to an object
-        rawparams.forEach(argPair => {
-          redirObj[argPair[0]] = argPair[1];
-        });
-        
-        if (redirObj.h5pbookid == self.contentId && redirObj.chapter && redirObj.section) {
-          //asssert that the redirect parameters is two good bois 
-          if (isNaN(redirObj.section)) {
-            redirObj.section = 0;
-          }
-          if (isNaN(redirObj.chapter)) {
-            return;
-          }
-          this.newHandler = redirObj;
-          this.newChapter();
-        }
-      }
-    });
-
 
     /**
      * 
@@ -109,39 +76,6 @@ export default class DigiBook extends H5P.EventDispatcher {
 
       window.parent.H5P.communicator.send("changeHash", event.data);
     });
-
-
-    top.onhashchange = function (event) {
-      /**
-       * If true, we already have information regarding redirect in newHandler
-       * When using browser history, a convert is neccecary
-       */
-      if (!self.newHandler.redirectFromComponent) {
-        const hash = new URL(event.newURL).hash;
-        
-        //Only attempt converting if there is actually a hash present
-        if (hash) {
-          const hashArray = hash.replace("#", "").split("&").map( el => el.split("="));
-          const tempHandler = {};
-          hashArray.forEach(el => {
-            const key = el[0];
-            const value = el[1];
-            tempHandler[key] = value;
-          });
-
-          //assert that the handler actually is from this content type. 
-          if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter && tempHandler.section) {
-            self.newHandler = tempHandler;
-          }
-
-        }
-        else {
-          return;
-        }
-      }
-
-      self.newChapter();      
-    };
     
     /**
      * Input in targetPage should be: 
@@ -184,7 +118,6 @@ export default class DigiBook extends H5P.EventDispatcher {
     };
     /**
      * Attach library to wrapper
-     *
      * @param {jQuery} $wrapper
      */
     this.attach = function ($wrapper) {
@@ -203,6 +136,73 @@ export default class DigiBook extends H5P.EventDispatcher {
 
       $wrapper.get(0).appendChild(content);
       $wrapper.get(0).appendChild(this.statusBar.bot);
+    };
+
+    /**
+     * Allow for external redirects via hash parameters
+     * @param {int} h5pbookid identifier of which book in question
+     * @param {int} chapter Chapter which should be redirected to
+     * @param {int} section Which section in the abovementioned chapter
+     * @example exampleurl/#h5pbookid=X&chapter=Y&section=Z
+     */
+    document.addEventListener('readystatechange', event => {
+      if (event.target.readyState === "complete") {
+        const rawparams = top.location.hash.replace('#', "").split('&').map(el => el.split("="));
+        const redirObj = {};
+
+        
+        //Split up the hash parametres and assign to an object
+        rawparams.forEach(argPair => {
+          redirObj[argPair[0]] = argPair[1];
+        });
+        
+        if (redirObj.h5pbookid == self.contentId && redirObj.chapter && redirObj.section) {
+          //asssert that the redirect parameters is two good bois 
+          if (isNaN(redirObj.section)) {
+            redirObj.section = 0;
+          }
+          if (isNaN(redirObj.chapter)) {
+            return;
+          }
+          this.newHandler = redirObj;
+          this.newChapter();
+        }
+      }
+    });
+
+    /**
+     * Triggers whenever the hash changes, indicating that a chapter redirect is happening
+     */
+    top.onhashchange = function (event) {
+      /**
+       * If true, we already have information regarding redirect in newHandler
+       * When using browser history, a convert is neccecary
+       */
+      if (!self.newHandler.redirectFromComponent) {
+        const hash = new URL(event.newURL).hash;
+        
+        //Only attempt converting if there is actually a hash present
+        if (hash) {
+          const hashArray = hash.replace("#", "").split("&").map( el => el.split("="));
+          const tempHandler = {};
+          hashArray.forEach(el => {
+            const key = el[0];
+            const value = el[1];
+            tempHandler[key] = value;
+          });
+
+          //assert that the handler actually is from this content type. 
+          if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter && tempHandler.section) {
+            self.newHandler = tempHandler;
+          }
+
+        }
+        else {
+          return;
+        }
+      }
+
+      self.newChapter();      
     };
 
     // Assign the function changeHash to the parent communicator
