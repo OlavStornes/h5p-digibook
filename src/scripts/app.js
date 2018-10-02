@@ -104,20 +104,26 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
 
     top.onhashchange = function (event) {
-
       //If true, we already have information regarding redirect in newHandler
       //When using browser history, a convert is neccecary
       if (self.newHandler.redirectFromComponent == false) {
-        const hash = new URL(event.newURL).hash.replace("#", "").split("&")
-          .map( el => el.split("="));
-        hash.forEach(el => {
-          const key = el[0];
-          const value = el[1];
-          self.newHandler[key] = value;
-        });
+        const hash = new URL(event.newURL).hash;
+        
+        if (hash) {
+          const hashArray = hash.replace("#", "").split("&").map( el => el.split("="));
+          hashArray.forEach(el => {
+            const key = el[0];
+            const value = el[1];
+            self.newHandler[key] = value;
+          });
+        }
+        else {
+          return;
+        }
+
       }
-      
       self.newChapter();
+      
     };
 
     /**
