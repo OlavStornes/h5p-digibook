@@ -13,6 +13,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     super();
     const self = this;
     this.activeChapter = 0;
+    this.newHandler = {};
 
     // H5P-instances (columns)
     this.instances = [];
@@ -91,10 +92,33 @@ export default class DigiBook extends H5P.EventDispatcher {
         }
       }
     });
+
     this.on('newChapter', (event) => {
+      this.newHandler = event.data;
+      this.newHandler.redirectFromComponent = true;
+      const idString = 'h5pbookid=' + this.newHandler.h5pbookid;
+      const chapterString = 'chapter=' + this.newHandler.chapter;
+      const sectionString = 'section=' + this.newHandler.section;
+      event.data.newHash = "#" + idString + "&" + chapterString + "&" + sectionString;
       H5P.communicator.send("changeURL", event.data);
-      this.newChapter(event.data);
     });
+
+    top.onhashchange = function (event) {
+
+      //If true, we already have information regarding redirect in newHandler
+      //When using browser history, a convert is neccecary
+      if (self.newHandler.redirectFromComponent == false) {
+        const hash = new URL(event.newURL).hash.replace("#", "").split("&")
+          .map( el => el.split("="));
+        hash.forEach(el => {
+          const key = el[0];
+          const value = el[1];
+          self.newHandler[key] = value;
+        });
+      }
+      
+      self.newChapter();
+    };
 
     /**
      * Updates the hash in URL
@@ -113,7 +137,8 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {int} chapter - The given chapter that should be opened
      * @param {int} section - The given section to redirect
      */
-    this.newChapter = function (targetPage) {
+    this.newChapter = function () {
+      const targetPage = this.newHandler;
       //TODO: Check if the chapters and sections actually exists
       if (targetPage.chapter < self.columnElements.length) {
         const targetChapter = self.columnElements[targetPage.chapter];
@@ -141,6 +166,8 @@ export default class DigiBook extends H5P.EventDispatcher {
             sectionsInChapter[targetPage.section].scrollIntoView(true);
           }, 0);
           this.statusBar.updateStatusBar();
+          targetPage.redirectFromComponent = false;
+
         }
       }
     };
