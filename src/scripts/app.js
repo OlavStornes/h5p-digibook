@@ -74,7 +74,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       const sectionString = 'section=' + this.newHandler.section;
       event.data.newHash = "#" + idString + "&" + chapterString + "&" + sectionString;
 
-      window.parent.H5P.communicator.send("changeHash", event.data);
+      parent.H5P.communicator.send("changeHash", event.data);
     });
     
     /**
@@ -204,11 +204,11 @@ export default class DigiBook extends H5P.EventDispatcher {
 
       self.newChapter();      
     };
-
+    
     // Assign the function changeHash to the parent communicator
-    window.parent.H5P.communicator.on('changeHash', (event) => {
+    parent.H5P.communicator.on('changeHash', (event) => {
       if (event.context === 'h5p') {
-        window.parent.location.hash = event.newHash;
+        parent.location.hash = event.newHash;
       }
     });
   }
