@@ -1,7 +1,4 @@
 import "../styles/main.css";
-import "../styles/statusbar.css";
-import "../styles/sidebar.css";
-
 import DigiBook from "../scripts/app";
 
 // Load library
