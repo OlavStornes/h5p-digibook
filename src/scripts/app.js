@@ -207,7 +207,9 @@ export default class DigiBook extends H5P.EventDispatcher {
 
     // Assign the function changeHash to the parent communicator
     window.parent.H5P.communicator.on('changeHash', (event) => {
-      window.parent.location.hash = event.newHash;
+      if (event.context === 'h5p') {
+        window.parent.location.hash = event.newHash;
+      }
     });
   }
 }
