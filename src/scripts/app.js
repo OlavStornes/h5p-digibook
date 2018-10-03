@@ -13,6 +13,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     super();
     const self = this;
     this.activeChapter = 0;
+    this.newHandler = {};
 
     // H5P-instances (columns)
     this.instances = [];
@@ -30,21 +31,21 @@ export default class DigiBook extends H5P.EventDispatcher {
       if (i != 0) {
         newColumn.style.display = 'none';
       }
-
       //Register both the HTML-element and the H5P-element
       this.instances.push (newInstance);
       this.columnElements.push(newColumn);
-
     }
 
+    //Initialize the support components
     this.sideBar = new SideBar(config, contentId, this);
     this.statusBar = new StatusBar(contentId, config.chapters.length, this);
 
     //Kickstart the statusbar
     this.statusBar.updateStatusBar();
 
-    // Establish all triggers
-
+    /**
+     * Establish all triggers
+     */
     this.on('toggleMenu', () => {
       this.sideBar.div.classList.toggle('h5p-digibook-hide');
 
@@ -59,38 +60,21 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
 
     /**
-     * Allow for external redirects via GET parameters
-     * @param {int} h5pbookid identifier of which book in question
-     * @param {int} chp Chapter which should be redirected to
-     * @param {int} sec Which section in the abovementioned chapter
-     * @example exampleurl/?h5p-bookid=X&chp=Y&sec=Z
+     * 
      */
-    document.addEventListener('readystatechange', event => {
-      if (event.target.readyState === "complete") {
-        const url = new URL(location.href);
-        const redirObj = {};
-        redirObj.id = url.searchParams.get('h5pbookid');
-
-        if (redirObj.id == self.contentId) {
-          redirObj.chapter = url.searchParams.get('chp');
-          redirObj.section = url.searchParams.get('sec');
-
-          if (redirObj.chapter && redirObj.section) {
-
-            //asssert that the redirect parameters is two good bois 
-            if (isNaN(redirObj.section)) {
-              redirObj.section = 0;
-            }
-            if (isNaN(redirObj.chapter)) {
-              return;
-            }
-            this.newChapter(redirObj);
-          }
-        }
-      }
-    });
     this.on('newChapter', (event) => {
-      this.newChapter(event.data);
+      this.newHandler = event.data;
+
+      //Assert that the module itself is asking for a redirect
+      this.newHandler.redirectFromComponent = true;
+
+      // Create the new hash
+      const idString = 'h5pbookid=' + this.newHandler.h5pbookid;
+      const chapterString = 'chapter=' + this.newHandler.chapter;
+      const sectionString = 'section=' + this.newHandler.section;
+      event.data.newHash = "#" + idString + "&" + chapterString + "&" + sectionString;
+
+      window.parent.H5P.communicator.send("changeHash", event.data);
     });
     
     /**
@@ -98,8 +82,9 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {int} chapter - The given chapter that should be opened
      * @param {int} section - The given section to redirect
      */
-    this.newChapter = function (targetPage) {
-      //TODO: Check if the chapters and sections actually exists
+    this.newChapter = function () {
+      const targetPage = this.newHandler;
+
       if (targetPage.chapter < self.columnElements.length) {
         const targetChapter = self.columnElements[targetPage.chapter];
         const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
@@ -126,15 +111,17 @@ export default class DigiBook extends H5P.EventDispatcher {
             sectionsInChapter[targetPage.section].scrollIntoView(true);
           }, 0);
           this.statusBar.updateStatusBar();
+          targetPage.redirectFromComponent = false;
+
         }
       }
     };
     /**
      * Attach library to wrapper
-     *
      * @param {jQuery} $wrapper
      */
     this.attach = function ($wrapper) {
+
       $wrapper[0].classList.add('h5p-scrollable-fullscreen');
       // Needed to enable scrolling in fullscreen
       $wrapper[0].id = "h5p-digibook";
@@ -150,6 +137,78 @@ export default class DigiBook extends H5P.EventDispatcher {
       $wrapper.get(0).appendChild(content);
       $wrapper.get(0).appendChild(this.statusBar.bot);
     };
+
+    /**
+     * Allow for external redirects via hash parameters
+     * @param {int} h5pbookid identifier of which book in question
+     * @param {int} chapter Chapter which should be redirected to
+     * @param {int} section Which section in the abovementioned chapter
+     * @example exampleurl/#h5pbookid=X&chapter=Y&section=Z
+     */
+    document.addEventListener('readystatechange', event => {
+      if (event.target.readyState === "complete") {
+        const rawparams = top.location.hash.replace('#', "").split('&').map(el => el.split("="));
+        const redirObj = {};
+
+        
+        //Split up the hash parametres and assign to an object
+        rawparams.forEach(argPair => {
+          redirObj[argPair[0]] = argPair[1];
+        });
+        
+        if (redirObj.h5pbookid == self.contentId && redirObj.chapter && redirObj.section) {
+          //asssert that the redirect parameters is two good bois 
+          if (isNaN(redirObj.section)) {
+            redirObj.section = 0;
+          }
+          if (isNaN(redirObj.chapter)) {
+            return;
+          }
+          this.newHandler = redirObj;
+          this.newChapter();
+        }
+      }
+    });
+
+    /**
+     * Triggers whenever the hash changes, indicating that a chapter redirect is happening
+     */
+    top.onhashchange = function (event) {
+      /**
+       * If true, we already have information regarding redirect in newHandler
+       * When using browser history, a convert is neccecary
+       */
+      if (!self.newHandler.redirectFromComponent) {
+        const hash = new URL(event.newURL).hash;
+        
+        //Only attempt converting if there is actually a hash present
+        if (hash) {
+          const hashArray = hash.replace("#", "").split("&").map( el => el.split("="));
+          const tempHandler = {};
+          hashArray.forEach(el => {
+            const key = el[0];
+            const value = el[1];
+            tempHandler[key] = value;
+          });
+
+          //assert that the handler actually is from this content type. 
+          if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter && tempHandler.section) {
+            self.newHandler = tempHandler;
+          }
+
+        }
+        else {
+          return;
+        }
+      }
+
+      self.newChapter();      
+    };
+
+    // Assign the function changeHash to the parent communicator
+    window.parent.H5P.communicator.on('changeHash', (event) => {
+      window.parent.location.hash = event.newHash;
+    });
   }
 }
 

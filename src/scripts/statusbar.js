@@ -70,7 +70,10 @@ class StatusBar extends H5P.EventDispatcher {
      * Event should be either 'next' or 'prev'
      */
     this.on('seqChapter', (event) => {
-      let eventInput = {section:0};
+      let eventInput = {
+        section:0,
+        h5pbookid: this.parent.contentId
+      };
       if (event.data === 'next') {
         if (this.parent.activeChapter <= this.parent.columnElements.length) {
           eventInput.chapter = (this.parent.activeChapter+1);
