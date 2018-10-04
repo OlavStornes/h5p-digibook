@@ -41,7 +41,7 @@ export default class DigiBook extends H5P.EventDispatcher {
         newColumn.style.display = 'none';
       }
       //Register both the HTML-element and the H5P-element
-      this.instances.push (newInstance);
+      this.instances.push(newInstance);
       this.columnElements.push(newColumn);
     }
 
@@ -83,17 +83,20 @@ export default class DigiBook extends H5P.EventDispatcher {
       const sectionString = 'section=' + this.newHandler.section;
       event.data.newHash = "#" + idString + "&" + chapterString + "&" + sectionString;
 
-      if (this.internal) {  
+      if (this.internal) {
         parent.H5P.communicator.send("changeHash", event.data);
       }
+      else {
+        H5P.communicator.send('changeHash', event.data);
+      }
     });
-    
+
     /**
      * Input in targetPage should be: 
      * @param {int} chapter - The given chapter that should be opened
      * @param {int} section - The given section to redirect
      */
-    this.newChapter = function () {
+    this.changeChapter = function () {
       const targetPage = this.newHandler;
 
       if (targetPage.chapter < self.columnElements.length) {
@@ -116,7 +119,7 @@ export default class DigiBook extends H5P.EventDispatcher {
 
         self.trigger('resize');
         //Avoid accidentaly referring to a section that does not exist
-        if (targetPage.section < sectionsInChapter.length) { 
+        if (targetPage.section < sectionsInChapter.length) {
           // Workaround on focusing on new element
           setTimeout(function () {
             sectionsInChapter[targetPage.section].scrollIntoView(true);
@@ -161,12 +164,12 @@ export default class DigiBook extends H5P.EventDispatcher {
         const rawparams = top.location.hash.replace('#', "").split('&').map(el => el.split("="));
         const redirObj = {};
 
-        
+
         //Split up the hash parametres and assign to an object
         rawparams.forEach(argPair => {
           redirObj[argPair[0]] = argPair[1];
         });
-        
+
         if (redirObj.h5pbookid == self.contentId && redirObj.chapter && redirObj.section) {
           //asssert that the redirect parameters is two good bois 
           if (isNaN(redirObj.section)) {
@@ -176,7 +179,7 @@ export default class DigiBook extends H5P.EventDispatcher {
             return;
           }
           this.newHandler = redirObj;
-          this.newChapter();
+          this.changeChapter();
         }
       }
     });
@@ -184,17 +187,42 @@ export default class DigiBook extends H5P.EventDispatcher {
     /**
      * Triggers whenever the hash changes, indicating that a chapter redirect is happening
      */
-    top.onhashchange = function (event) {
+    if (this.internal) {
+
+      parent.onhashchange = (event) => {
+        if (event.newURL.indexOf('h5pbookid' !== -1)) {
+          const payload = {
+            newHash: new URL(event.newURL).hash,
+            context: 'h5p'};
+          this.redirectChapter(payload);
+        }
+      };
+
+    }
+    
+    else {
+      H5P.on(this, 'newHash',(event) => {
+        this.redirectChapter(event);
+      });
+    }
+
+    this.redirectChapter = function (event) {
       /**
        * If true, we already have information regarding redirect in newHandler
        * When using browser history, a convert is neccecary
        */
       if (!self.newHandler.redirectFromComponent) {
-        const hash = new URL(event.newURL).hash;
-        
+        let hash;
+        if (this.internal) {
+          hash = event.newHash;
+        }
+        else {
+          hash = event.data.newHash;
+        }
+
         //Only attempt converting if there is actually a hash present
         if (hash) {
-          const hashArray = hash.replace("#", "").split("&").map( el => el.split("="));
+          const hashArray = hash.replace("#", "").split("&").map(el => el.split("="));
           const tempHandler = {};
           hashArray.forEach(el => {
             const key = el[0];
@@ -213,7 +241,7 @@ export default class DigiBook extends H5P.EventDispatcher {
         }
       }
 
-      self.newChapter();      
+      self.changeChapter();
     };
     
     if (this.internal) {
