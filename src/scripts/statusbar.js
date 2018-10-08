@@ -99,8 +99,12 @@ class StatusBar extends H5P.EventDispatcher {
     this.topStatus.innerHTML = status;
     this.botStatus.innerHTML = status;
 
+    
     this.topChapterTitle.firstChild.innerHTML = chapterTitle;
     this.botChapterTitle.firstChild.innerHTML = chapterTitle;
+    
+    this.topChapterTitle.setAttribute("title", chapterTitle);
+    this.botChapterTitle.setAttribute("title", chapterTitle);
 
     //assure that the buttons are valid in terms of chapter edges
     if (this.parent.activeChapter <= 0) {
@@ -145,6 +149,7 @@ class StatusBar extends H5P.EventDispatcher {
     
     
     acm.botPrev = document.createElement('a');
+    
     acm.botNext = document.createElement('a');
     acm.botPrev.classList.add('fas', 'fa-angle-left', 'fa-4x');
     acm.botNext.classList.add('fas', 'fa-angle-right', 'fa-4x');
@@ -161,7 +166,12 @@ class StatusBar extends H5P.EventDispatcher {
         toTop: true
       });
     };
-    
+
+    //Add tooltip
+    acm.topNext.setAttribute("title", "Next page");
+    acm.botNext.setAttribute("title", "Next page");
+    acm.topPrev.setAttribute("title", "Previous page");
+    acm.botPrev.setAttribute("title", "Previous page");
 
     return acm;
   }
@@ -202,6 +212,7 @@ class StatusBar extends H5P.EventDispatcher {
     const row = document.createElement('li');
     const item = document.createElement('a');
     item.innerHTML = "Scroll to top";
+    item.setAttribute('title', 'Navigate to the top');
     item.onclick = function () {
       that.parent.trigger('scrollToTop');
     };
