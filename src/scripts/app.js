@@ -92,6 +92,19 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
 
     /**
+     * If the content is short, hide the footer
+     * @param {div} targetChapter 
+     */
+    this.shouldFooterBeVisible = (targetChapter) => {
+      if (targetChapter.clientHeight <= window.outerHeight) {
+        this.statusBar.bot.hidden = true;
+      }
+      else {
+        this.statusBar.bot.hidden = false;
+      }
+    }; 
+
+    /**
      * Input in targetPage should be: 
      * @param {int} chapter - The given chapter that should be opened
      * @param {int} section - The given section to redirect
@@ -108,12 +121,7 @@ export default class DigiBook extends H5P.EventDispatcher {
           targetChapter.style.display = 'block';
 
           //If the content is short, hide the footer
-          if (targetChapter.clientHeight <= window.outerHeight) {
-            this.statusBar.bot.hidden = true;
-          }
-          else {
-            this.statusBar.bot.hidden = false;
-          }
+          this.shouldFooterBeVisible(targetChapter);
         }
         self.activeChapter = parseInt(targetPage.chapter);
 
@@ -180,6 +188,11 @@ export default class DigiBook extends H5P.EventDispatcher {
           }
           this.newHandler = redirObj;
           this.changeChapter();
+        }
+
+        else {
+          // Check for the first chapters content height 
+          this.shouldFooterBeVisible(this.columnElements[0]);
         }
       }
     });
