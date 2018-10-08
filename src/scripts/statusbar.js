@@ -123,8 +123,8 @@ class StatusBar extends H5P.EventDispatcher {
     
     const acm = {};
     
-    acm.topPrev = document.createElement('span');
-    acm.topNext = document.createElement('span');
+    acm.topPrev = document.createElement('a');
+    acm.topNext = document.createElement('a');
     acm.topPrev.classList.add('fas', 'fa-angle-left', 'fa-4x', 'fa-fw');
     acm.topNext.classList.add('fas', 'fa-angle-right', 'fa-4x', 'fa-fw');
     acm.topPrev.onclick = function () {
@@ -135,8 +135,8 @@ class StatusBar extends H5P.EventDispatcher {
     };
     
     
-    acm.botPrev = document.createElement('span');
-    acm.botNext = document.createElement('span');
+    acm.botPrev = document.createElement('a');
+    acm.botNext = document.createElement('a');
     acm.botPrev.classList.add('fas', 'fa-angle-left', 'fa-4x');
     acm.botNext.classList.add('fas', 'fa-angle-right', 'fa-4x');
     
@@ -157,14 +157,14 @@ class StatusBar extends H5P.EventDispatcher {
   addMenu() {
     const that = this;
     const row = document.createElement('li');
-    const icon = document.createElement('span');
+    const item = document.createElement('a');
     // icon.innerHTML = "Toggle menu";
-    icon.classList.add('fas', 'fa-bars', 'fa-2x');
-    icon.onclick = function () {
+    item.classList.add('fas', 'fa-bars', 'fa-2x');
+    item.onclick = function () {
       that.parent.trigger('toggleMenu');
     };
     
-    row.appendChild(icon);
+    row.appendChild(item);
     return row;
   }
   
@@ -185,12 +185,12 @@ class StatusBar extends H5P.EventDispatcher {
   addToTop() {
     const that = this;
     const row = document.createElement('li');
-    const icon = document.createElement('button');
-    icon.innerHTML = "Scroll to top";
-    icon.onclick = function () {
+    const item = document.createElement('a');
+    item.innerHTML = "Scroll to top";
+    item.onclick = function () {
       that.parent.trigger('scrollToTop');
     };
-    row.appendChild(icon);
+    row.appendChild(item);
     return row;
   }
 
@@ -198,8 +198,8 @@ class StatusBar extends H5P.EventDispatcher {
    * Add a status-button which shows current and total chapters
    */
   addStatus() {
-    const newbutton = document.createElement('li');
-    return newbutton;
+    const statusElem = document.createElement('p');
+    return statusElem;
   }
 
   /**

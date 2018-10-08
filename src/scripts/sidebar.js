@@ -69,7 +69,7 @@ class SideBar extends H5P.EventDispatcher {
       for (let j = 0; j < chapter.chapter.params.content.length; j++) {
         const section = chapter.chapter.params.content[j];
         const liElem = document.createElement('li');
-        const aElem = document.createElement('button');
+        const aElem = document.createElement('a');
         
         aElem.innerHTML = this.parseLibrary(section.content);
         aElem.parent = parent;
