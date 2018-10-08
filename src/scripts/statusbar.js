@@ -71,15 +71,18 @@ class StatusBar extends H5P.EventDispatcher {
      */
     this.on('seqChapter', (event) => {
       let eventInput = {
-        section:0,
         h5pbookid: this.parent.contentId
       };
-      if (event.data === 'next') {
+      if (event.data.toTop) {
+        eventInput.section = 0;
+      }
+      
+      if (event.data.direction === 'next') {
         if (this.parent.activeChapter <= this.parent.columnElements.length) {
           eventInput.chapter = (this.parent.activeChapter+1);
         }
       }
-      else if (event.data === 'prev') {
+      else if (event.data.direction === 'prev') {
         if (this.parent.activeChapter > 0) {
           eventInput.chapter = (this.parent.activeChapter-1);
         }
@@ -128,10 +131,16 @@ class StatusBar extends H5P.EventDispatcher {
     acm.topPrev.classList.add('fas', 'fa-angle-left', 'fa-4x', 'fa-fw');
     acm.topNext.classList.add('fas', 'fa-angle-right', 'fa-4x', 'fa-fw');
     acm.topPrev.onclick = function () {
-      that.trigger('seqChapter', 'prev');
+      that.trigger('seqChapter', {
+        direction:'prev',
+        toTop: false
+      });
     };
     acm.topNext.onclick = function () {
-      that.trigger('seqChapter', 'next');
+      that.trigger('seqChapter', {
+        direction:'next',
+        toTop: false
+      });
     };
     
     
@@ -141,10 +150,16 @@ class StatusBar extends H5P.EventDispatcher {
     acm.botNext.classList.add('fas', 'fa-angle-right', 'fa-4x');
     
     acm.botPrev.onclick = function () {
-      that.trigger('seqChapter', 'prev');
+      that.trigger('seqChapter', {
+        direction:'prev',
+        toTop: true
+      });
     };
     acm.botNext.onclick = function () {
-      that.trigger('seqChapter', 'next');
+      that.trigger('seqChapter', {
+        direction:'next',
+        toTop: true
+      });
     };
     
 

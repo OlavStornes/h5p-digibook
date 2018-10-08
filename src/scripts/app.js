@@ -79,9 +79,12 @@ export default class DigiBook extends H5P.EventDispatcher {
 
       // Create the new hash
       const idString = 'h5pbookid=' + this.newHandler.h5pbookid;
-      const chapterString = 'chapter=' + this.newHandler.chapter;
-      const sectionString = 'section=' + this.newHandler.section;
-      event.data.newHash = "#" + idString + "&" + chapterString + "&" + sectionString;
+      const chapterString = '&chapter=' + this.newHandler.chapter;
+      let sectionString = "";
+      if (this.newHandler.section !== undefined) {
+        sectionString = '&section=' + this.newHandler.section;
+      }
+      event.data.newHash = "#" + idString + chapterString + sectionString;
 
       if (this.internal) {
         parent.H5P.communicator.send("changeHash", event.data);
@@ -124,15 +127,15 @@ export default class DigiBook extends H5P.EventDispatcher {
           this.shouldFooterBeVisible(targetChapter);
         }
         self.activeChapter = parseInt(targetPage.chapter);
-
+        
         self.trigger('resize');
+        this.statusBar.updateStatusBar();
         //Avoid accidentaly referring to a section that does not exist
         if (targetPage.section < sectionsInChapter.length) {
           // Workaround on focusing on new element
           setTimeout(function () {
             sectionsInChapter[targetPage.section].scrollIntoView(true);
           }, 0);
-          this.statusBar.updateStatusBar();
           targetPage.redirectFromComponent = false;
 
         }
@@ -248,18 +251,15 @@ export default class DigiBook extends H5P.EventDispatcher {
             });
             
             //assert that the handler actually is from this content type. 
-            if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter && tempHandler.section) {
+            if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter) {
               self.newHandler = tempHandler;
             }
           }
           /** 
            * H5p-context switch on no newhash = history backwards
-           * Redirect to first chapter top of page
-           * Expected - Scroll to the top, as the page originally was"
+           * Redirect to first chapter 
            */
           else {
-            window.top.scrollTo(0,0);
-            // return;
             self.newHandler = {
               chapter: 0,
               h5pbookid: self.h5pbookid
