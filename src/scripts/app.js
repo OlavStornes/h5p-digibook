@@ -225,27 +225,45 @@ export default class DigiBook extends H5P.EventDispatcher {
        * When using browser history, a convert is neccecary
        */
       if (!self.newHandler.redirectFromComponent) {
-        let hash;
+        let tmpEvent;
         if (this.internal) {
-          hash = event.newHash;
+          tmpEvent = event;
         }
         else {
-          hash = event.data.newHash;
+          tmpEvent = event.data;
         }
 
+        
         //Only attempt converting if there is actually a hash present
-        if (hash) {
-          const hashArray = hash.replace("#", "").split("&").map(el => el.split("="));
-          const tempHandler = {};
-          hashArray.forEach(el => {
-            const key = el[0];
-            const value = el[1];
-            tempHandler[key] = value;
-          });
+        if (tmpEvent.context === 'h5p') {
+          const hash = tmpEvent.newHash;
 
-          //assert that the handler actually is from this content type. 
-          if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter && tempHandler.section) {
-            self.newHandler = tempHandler;
+          if (hash) {
+            const hashArray = hash.replace("#", "").split("&").map(el => el.split("="));
+            const tempHandler = {};
+            hashArray.forEach(el => {
+              const key = el[0];
+              const value = el[1];
+              tempHandler[key] = value;
+            });
+            
+            //assert that the handler actually is from this content type. 
+            if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter && tempHandler.section) {
+              self.newHandler = tempHandler;
+            }
+          }
+          /** 
+           * H5p-context switch on no newhash = history backwards
+           * Redirect to first chapter top of page
+           * Expected - Scroll to the top, as the page originally was"
+           */
+          else {
+            window.top.scrollTo(0,0);
+            // return;
+            self.newHandler = {
+              chapter: 0,
+              h5pbookid: self.h5pbookid
+            };
           }
 
         }
