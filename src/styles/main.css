@@ -16,7 +16,6 @@
 }
 .h5p-digibook-navigation p{
   font-weight: bold;
-  /* margin: 0; */
 }
 
 .h5p-digibook-navigation{
@@ -38,8 +37,6 @@
 }
 
 .h5p-digibook-status{
-  /* width: 1163px; */
-  /* height: 84px; */
   padding: 1.25em;
   border-left-width: 1px;
   border-style: solid;
@@ -48,33 +45,50 @@
   background-size: cover;
   box-shadow: 10px 10px 30px rgba(166,166,166,0.2);
   z-index: 1;  
-}
-
-.h5p-digibook-status ul{
   display: flex;
-  list-style-type: none;
   margin: 0;
   overflow: hidden;
-  justify-content: center;
-  align-items: center;
 }
 
+.h5p-digibook-status div{
+  align-self: center;
+  display:flex;
+}
 
 .h5p-digibook-status-menu {
-  width: 2.750em;
   height: 2.750em;
-  display: flex;
-  /* text-align: center; */
+  width: 2.750em;
+  flex-shrink: 0;
   border: 2px solid #ffffff;
   border-radius: 2px;
   background-color: #ffffff;
   background-size: cover;
 }
 
+.h5p-digibook-status-button:hover{
+  background-color: #845eaa0d;
+  background-size: cover;
+}
+.h5p-digibook-status-button:active{
+  background-color: #845eaa1a;
+  background-size: cover;
+}
+
+
 .h5p-digibook-status-menu.h5p-digibook-status-menu-active {
   background-color: #8660ab;
   opacity: 20;
+}
 
+.h5p-digibook-status-menu.h5p-digibook-status-menu-active:hover{
+  background-color: #845eaae6;
+
+  background-size: cover;
+}
+.h5p-digibook-status-menu.h5p-digibook-status-menu-active:active{
+  background-color: #845eaaf2;
+
+  background-size: cover;
 }
 
 .h5p-digibook-status-menu a{
@@ -92,6 +106,8 @@
 }
 
 .h5p-digibook-status-progress{
+  flex-shrink: 0;
+
   width: 88px;
   height: 22px;
   /* 1 / 5 */
@@ -112,11 +128,11 @@
 
 .h5p-digibook-status-chapter{
   overflow: hidden;
+  flex-grow: 1;
 }
 
 
 .h5p-digibook-status-chapter p{
-  /* height: 22px; */
   font-family: Arial;
   font-size: 20px;
   color: #4c4452;
@@ -131,15 +147,15 @@
 .h5p-digibook-status-arrow{
   width: 2.750em;
   height: 2.750em;
-  border: 2px solid #ffffff;
-  border-radius: 2px;
+  flex-shrink: 0;
+  border: 0.125em solid #ffffff;
+  border-radius: 0.125em;
   background-color: #ffffff;
   background-size: cover;
 }
 
 .h5p-digibook-status-arrow a{
-  /* width: 30px;
-  height: 30px; */
+  margin:auto;
   font-size: 2.313em;
   color: #8660ab;
 }
@@ -147,28 +163,6 @@
   opacity: 0.5
 }
 
-.h5p-digibook-status-button:hover{
-  background-color: #845eaa0d;
-  background-size: cover;
-}
-.h5p-digibook-status-button:active{
-  background-color: #845eaa1a;
-  background-size: cover;
-}
-
-/* 
-.h5p-digibook-status li{
-  display: inline;
-  flex-grow:0;
-  margin:0;
-  padding:10px;
-
-} */
-
-
-.h5p-digibook-status li:nth-child(2){
-  flex-grow:1;
-}
 
 .h5p-digibook-status-header{
   position: -webkit-sticky;
