@@ -1,0 +1,56 @@
+@font-face {
+  font-family: 'h5p-book';
+  src:  url('../fonts/h5p-book.eot?a3wrpr');
+  src:  url('../fonts/h5p-book.eot?a3wrpr#iefix') format('embedded-opentype'),
+    url('../fonts/h5p-book.ttf?a3wrpr') format('truetype'),
+    url('../fonts/h5p-book.woff?a3wrpr') format('woff'),
+    url('../fonts/h5p-book.svg?a3wrpr#h5p-book') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'h5p-book' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-close:before {
+  content: "\e900";
+}
+.icon-expanded:before {
+  content: "\e901";
+}
+.icon-collapsed:before {
+  content: "\e902";
+}
+.icon-chapter-started:before {
+  content: "\e903";
+}
+.icon-chapter-done:before {
+  content: "\e904";
+}
+.icon-chapter-blank:before {
+  content: "\e905";
+}
+.icon-menu:before {
+  content: "\e906";
+}
+.icon-previous:before {
+  content: "\e907";
+}
+.icon-next:before {
+  content: "\e908";
+}
+.icon-up:before {
+  content: "\e909";
+}
