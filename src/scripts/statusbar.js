@@ -203,7 +203,7 @@ class StatusBar extends H5P.EventDispatcher {
   addChapterTitle() {
     const row = document.createElement('li');
     const chapterTitle = document.createElement('p');
-    chapterTitle.classList.add('h5p-digibook-status-chapter');
+    row.classList.add('h5p-digibook-status-chapter');
 
     row.appendChild(chapterTitle);
     return row;
