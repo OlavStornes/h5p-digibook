@@ -132,8 +132,8 @@ class StatusBar extends H5P.EventDispatcher {
     
     acm.topPrev = document.createElement('a');
     acm.topNext = document.createElement('a');
-    acm.topPrev.classList.add('fas', 'fa-angle-left', 'fa-4x', 'fa-fw');
-    acm.topNext.classList.add('fas', 'fa-angle-right', 'fa-4x', 'fa-fw');
+    acm.topPrev.classList.add('icon-previous');
+    acm.topNext.classList.add('icon-next');
     acm.topPrev.onclick = function () {
       that.trigger('seqChapter', {
         direction:'prev',
@@ -151,8 +151,8 @@ class StatusBar extends H5P.EventDispatcher {
     acm.botPrev = document.createElement('a');
     
     acm.botNext = document.createElement('a');
-    acm.botPrev.classList.add('fas', 'fa-angle-left', 'fa-4x');
-    acm.botNext.classList.add('fas', 'fa-angle-right', 'fa-4x');
+    acm.botPrev.classList.add('icon-previous');
+    acm.botNext.classList.add('icon-next');
     
     acm.botPrev.onclick = function () {
       that.trigger('seqChapter', {
@@ -184,7 +184,7 @@ class StatusBar extends H5P.EventDispatcher {
     const row = document.createElement('li');
     const item = document.createElement('a');
     // icon.innerHTML = "Toggle menu";
-    item.classList.add('fas', 'fa-bars', 'fa-2x');
+    item.classList.add('icon-menu');
     item.onclick = function () {
       that.parent.trigger('toggleMenu');
     };
@@ -192,7 +192,7 @@ class StatusBar extends H5P.EventDispatcher {
     row.appendChild(item);
     return row;
   }
-  
+
   /**
    * Add a paragraph which indicates which chapter is active 
    */
@@ -211,7 +211,7 @@ class StatusBar extends H5P.EventDispatcher {
     const that = this;
     const row = document.createElement('li');
     const item = document.createElement('a');
-    item.innerHTML = "Scroll to top";
+    item.classList.add ('icon-menu');
     item.setAttribute('title', 'Navigate to the top');
     item.onclick = function () {
       that.parent.trigger('scrollToTop');
