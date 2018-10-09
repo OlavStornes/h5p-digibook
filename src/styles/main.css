@@ -22,7 +22,7 @@
 .h5p-digibook-navigation{
   border: 2px solid blue;
   background: white;
-  padding-left: 10px;
+  /* padding-left: 10px; */
   flex: 0 0 16em;
   order: -1;
   overflow: hidden;
@@ -61,22 +61,37 @@
 
 
 .h5p-digibook-status-menu {
-  width: 44px;
-  height: 44px;
+  width: 2.750em;
+  height: 2.750em;
+  display: flex;
+  /* text-align: center; */
   border: 2px solid #ffffff;
   border-radius: 2px;
   background-color: #ffffff;
   background-size: cover;
 }
 
+.h5p-digibook-status-menu.h5p-digibook-status-menu-active {
+  background-color: #8660ab;
+  opacity: 20;
+
+}
+
 .h5p-digibook-status-menu a{
-  /* width: 30px;
-  height: 30px; */
-  font-size: 30px;
+  margin: auto;
+  font-size: 1.875em;
+}
+
+.h5p-digibook-status-menu a.icon-menu{
   color: #8660ab;
 }
 
-.h5p-digibook-status-progress {
+.h5p-digibook-status-menu a.icon-close{
+  color: #ffffff;
+  font-size: 1.500em;
+}
+
+.h5p-digibook-status-progress{
   width: 88px;
   height: 22px;
   /* 1 / 5 */
@@ -96,13 +111,20 @@
 }
 
 .h5p-digibook-status-chapter{
-  width: 300px;
-  height: 22px;
+  overflow: hidden;
+}
+
+
+.h5p-digibook-status-chapter p{
+  /* height: 22px; */
   font-family: Arial;
   font-size: 20px;
   color: #4c4452;
   font-weight: 700;
   text-decoration: none solid rgb(76, 68, 82);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 1.250rem;
 }
 
 

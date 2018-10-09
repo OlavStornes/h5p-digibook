@@ -35,7 +35,7 @@ class StatusBar extends H5P.EventDispatcher {
     buttonTopNext.classList.add('h5p-digibook-status-arrow');
 
 
-    this.topNavList.appendChild(this.topMenu);
+    this.topNavList.appendChild(this.topMenu['li']);
     this.topNavList.appendChild(this.topChapterTitle);
     this.topNavList.appendChild(this.topStatus['li']);
     this.topNavList.appendChild(buttonTopPrev);
@@ -189,12 +189,23 @@ class StatusBar extends H5P.EventDispatcher {
     // icon.innerHTML = "Toggle menu";
     item.classList.add('icon-menu');
     row.classList.add('h5p-digibook-status-menu', 'h5p-digibook-status-button');
-    item.onclick = function () {
+    row.onclick = function () {
       that.parent.trigger('toggleMenu');
+      this.classList.toggle('h5p-digibook-status-menu-active');
+      item.classList.toggle('icon-menu');
+      item.classList.toggle('icon-close');
+      
     };
     
     row.appendChild(item);
-    return row;
+    return {
+      li:row,
+      a:item
+    };
+  }
+
+  toggleMenuIcon() {
+
   }
 
   /**
@@ -203,7 +214,7 @@ class StatusBar extends H5P.EventDispatcher {
   addChapterTitle() {
     const row = document.createElement('li');
     const chapterTitle = document.createElement('p');
-    chapterTitle.classList.add('h5p-digibook-status-chapter');
+    row.classList.add('h5p-digibook-status-chapter');
 
     row.appendChild(chapterTitle);
     return row;
