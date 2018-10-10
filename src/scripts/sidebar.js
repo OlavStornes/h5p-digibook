@@ -83,6 +83,7 @@ class SideBar extends H5P.EventDispatcher {
       
       const p = document.createElement('button');
       p.innerHTML = this.parseLibrary(section.content);
+      p.classList.add('h5p-digibook-navigation-sections-single');
       
       sectionsDiv.appendChild(p);
       
