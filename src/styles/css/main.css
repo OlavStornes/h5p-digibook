@@ -132,19 +132,6 @@
 .h5p-digibook-status-footer {
   bottom: 0; }
 
-.h5p-digibook-navigation-maintitle {
-  width: 16.563em;
-  height: 5.813em;
-  background-color: #8660ab;
-  background-size: cover; }
-  .h5p-digibook-navigation-maintitle p {
-    align-self: center;
-    font-family: Arial;
-    font-size: 1em;
-    color: #ffffff;
-    font-weight: 400;
-    text-decoration: none solid white; }
-
 .h5p-digibook-navigation {
   width: 16.563em;
   background-color: #ffffff;
@@ -160,55 +147,65 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
-
-.h5p-digibook-navigation-sections {
-  max-height: 500px;
-  transition: max-height 1.25s ease-in;
-  width: 16.563em;
-  border-left-width: 0.063em;
-  border-style: solid;
-  border-color: #e9e4ed;
-  background-color: #ffffff;
-  background-size: cover; }
-  .h5p-digibook-navigation-sections.h5p-digibook-navigation-section-hidden {
-    max-height: 0;
-    transition: max-height 1.15s ease-out;
-    overflow: hidden;
-    background: #d5d5d5; }
-  .h5p-digibook-navigation-sections p {
-    width: 12.625em;
-    height: 2.500em;
+  .h5p-digibook-navigation-maintitle {
+    width: 16.563em;
+    height: 5.813em;
+    background-color: #8660ab;
+    background-size: cover; }
+    .h5p-digibook-navigation-maintitle p {
+      align-self: center;
+      font-family: Arial;
+      font-size: 1em;
+      color: #ffffff;
+      font-weight: 400;
+      text-decoration: none solid white; }
+  .h5p-digibook-navigation-sections {
+    max-height: 500px;
+    transition: max-height 1.25s ease-in;
+    width: 16.563em;
+    border-left-width: 0.063em;
+    border-style: solid;
+    border-color: #e9e4ed;
+    background-color: #ffffff;
+    background-size: cover; }
+    .h5p-digibook-navigation-sections p {
+      width: 12.625em;
+      height: 2.500em;
+      font-family: Arial;
+      font-size: 0.750em;
+      color: #4c4452;
+      font-weight: 400;
+      text-decoration: none solid #4c4452;
+      line-height: 1.563em; }
+    .h5p-digibook-navigation-sections-section-hidden {
+      max-height: 0;
+      transition: max-height 1.15s ease-out;
+      overflow: hidden;
+      background: #d5d5d5; }
+  .h5p-digibook-navigation-chapter-title {
+    width: 16.563em;
+    height: 2.688em;
+    padding: 0px 0px 0px 30px;
+    border-left-width: 0.063em;
+    border-style: solid;
+    border-color: #e9e4ed;
+    background-color: #f9f8fa;
+    background-size: cover;
     font-family: Arial;
     font-size: 0.750em;
     color: #4c4452;
-    font-weight: 400;
-    text-decoration: none solid #4c4452;
-    line-height: 1.563em; }
-
-.h5p-digibook-navigation-chapter-title {
-  width: 16.563em;
-  height: 2.688em;
-  padding: 0px 0px 0px 30px;
-  border-left-width: 0.063em;
-  border-style: solid;
-  border-color: #e9e4ed;
-  background-color: #f9f8fa;
-  background-size: cover;
-  font-family: Arial;
-  font-size: 0.750em;
-  color: #4c4452;
-  font-weight: 700;
-  text-decoration: none solid #4c4452; }
-  .h5p-digibook-navigation-chapter-title > p {
-    width: 13.125em;
-    background-color: #f9f8fa;
-    font-family: Arial;
-    font-size: 0.750em;
-    color: #8660ab;
     font-weight: 700;
-    text-decoration: none solid #8660ab;
-    line-height: 1.563em; }
-  .h5p-digibook-navigation-chapter-title:hover {
-    background-color: rgba(134, 96, 171, 0.05); }
-  .h5p-digibook-navigation-chapter-title:active {
-    background-color: rgba(134, 96, 171, 0.1); }
+    text-decoration: none solid #4c4452; }
+    .h5p-digibook-navigation-chapter-title > p {
+      width: 13.125em;
+      background-color: #f9f8fa;
+      font-family: Arial;
+      font-size: 0.750em;
+      color: #8660ab;
+      font-weight: 700;
+      text-decoration: none solid #8660ab;
+      line-height: 1.563em; }
+    .h5p-digibook-navigation-chapter-title:hover {
+      background-color: rgba(134, 96, 171, 0.05); }
+    .h5p-digibook-navigation-chapter-title:active {
+      background-color: rgba(134, 96, 171, 0.1); }
