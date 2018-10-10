@@ -9,15 +9,36 @@ class SideBar extends H5P.EventDispatcher {
     this.parent = parent;
     this.div = document.createElement('div');
     this.chapters = [];
+    
 
-    this.addMainTitle(config.title);
+    this.titleElem = this.addMainTitle(config.title);
     this.findAllChapters(config);
 
-    this.populateChapters();
+    this.chapterElems = this.getChapterElements();
+
+
+
+    //Appending phase
+    this.div.appendChild(this.titleElem.div);
+
+    this.chapterElems.forEach(element => {
+      this.div.appendChild(element);
+    });
+
+
+
   }
 
   addMainTitle(title) {
-    this.div.innerHTML = title;
+    const div = document.createElement('div');
+    const p = document.createElement('p');
+
+    p.innerHTML = title;
+    div.appendChild(p);
+    return {
+      div, 
+      p
+    };
   }
 
   findAllChapters(config) {
@@ -51,11 +72,13 @@ class SideBar extends H5P.EventDispatcher {
     };
   }
 
-  populateChapters() {
+  getChapterElements() {
+    let tmp = [];
     this.chapters.forEach(chapter => {
       const elem = this.createElemFromChapter(chapter);
-      this.div.append(elem.div);
+      tmp.push(elem.div);
     });
+    return tmp;
   }
 
 
