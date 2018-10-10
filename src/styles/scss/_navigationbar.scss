@@ -22,3 +22,17 @@
   order: -1;
   transition: all .5s ease-in-out;
 }
+
+div.h5p-digibook-navigation-sections.h5p-digibook-navigation-section-hidden {
+  max-height: 0;
+  transition: max-height 1.15s ease-out;
+  overflow: hidden;
+  background: #d5d5d5;
+
+}
+
+.h5p-digibook-navigation-sections {
+  max-height: 500px;
+  transition: max-height 1.25s ease-in;
+}
+

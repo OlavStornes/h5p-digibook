@@ -52,7 +52,7 @@ class SideBar extends H5P.EventDispatcher {
   toggleChapterShow(element) {
 
     const x = element.target.nextSibling;
-    x.classList.toggle('h5p-digibook-navigation-hidden');
+    x.classList.toggle('h5p-digibook-navigation-section-hidden');
   }
 
   createElemFromChapter(chapter, chapterIndex) {
