@@ -27,6 +27,7 @@
     "babel-preset-latest": "^6.22.0",
     "cross-env": "^4.0.0",
     "css-loader": "^0.26.2",
+    "file-loader": "^2.0.0",
     "style-loader": "^0.13.2",
     "webpack": "^2.7.0"
   }
