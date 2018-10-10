@@ -136,6 +136,7 @@
   background-size: cover;
 }
 .h5p-digibook-status-progressbar-front { 
+  transition: 1s;
   height: 0.313em;
   background-color: #8660ab;
 }
