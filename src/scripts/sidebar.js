@@ -73,7 +73,19 @@ class SideBar extends H5P.EventDispatcher {
 
     
     title.innerHTML = chapter.chapter_title;
+    //TODO: Split this up to a separate titlediv
+    const arrowIcon = document.createElement('span');
+    const circleIcon = document.createElement('span');
+
+    arrowIcon.classList.add('icon-collapsed');
+    circleIcon.classList.add('icon-chapter-blank');
+
+
+
+    titleDiv.appendChild(arrowIcon);
     titleDiv.appendChild(title);
+    titleDiv.appendChild(circleIcon);
+
     chapterDiv.appendChild(titleDiv);
 
     titleDiv.onclick = (event) => {

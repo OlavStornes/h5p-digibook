@@ -183,6 +183,7 @@
       overflow: hidden;
       background: #d5d5d5; }
   .h5p-digibook-navigation-chapter-title {
+    display: flex;
     width: 16.563em;
     height: 2.688em;
     padding: 0px 0px 0px 30px;
