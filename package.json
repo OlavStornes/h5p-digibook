@@ -7,7 +7,9 @@
     "test": "ava",
     "build": "cross-env NODE_ENV='production' webpack -p",
     "watch": "webpack --watch",
-    "scss": "node-sass --watch src/styles/scss -o src/styles/css"
+    "scss:watch": "node-sass --watch src/styles/scss -o src/styles/css",
+    "scss:build": "node-sass src/styles/scss -o src/styles/css"
+    
   },
   "repository": {
     "type": "git",
