@@ -35,6 +35,8 @@ class SideBar extends H5P.EventDispatcher {
     const div = document.createElement('div');
     const p = document.createElement('p');
 
+    div.classList.add('h5p-digibook-navigation-maintitle');
+
     p.innerHTML = title;
     div.appendChild(p);
     return {
@@ -61,18 +63,20 @@ class SideBar extends H5P.EventDispatcher {
     //Initialize elements
     const chapterDiv = document.createElement('div');
     const sectionsDiv = document.createElement('div');
+    const titleDiv = document.createElement('div');
     const title = document.createElement('p');
 
     //Add classes
-    title.classList.add('h5p-digibook-navigation-chapter-title');
+    titleDiv.classList.add('h5p-digibook-navigation-chapter-title');
     chapterDiv.classList.add('h5p-digibook-navigation-chapter');
     sectionsDiv.classList.add('h5p-digibook-navigation-sections');
 
     
     title.innerHTML = chapter.chapter_title;
-    chapterDiv.appendChild(title);
+    titleDiv.appendChild(title);
+    chapterDiv.appendChild(titleDiv);
 
-    title.onclick = (event) => {
+    titleDiv.onclick = (event) => {
       this.toggleChapterShow(event);
     };
 
@@ -81,7 +85,7 @@ class SideBar extends H5P.EventDispatcher {
     for (let i = 0; i < sections.length; i++) {
       const section = sections[i];
       
-      const p = document.createElement('button');
+      const p = document.createElement('p');
       p.innerHTML = this.parseLibrary(section.content);
       p.classList.add('h5p-digibook-navigation-sections-single');
       
