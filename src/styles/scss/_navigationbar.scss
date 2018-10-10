@@ -2,19 +2,23 @@
     font-size: x-large;
   }
 
-  .h5p-digibook-navigation {
-    p {
-      font-weight: bold;
-    }
-    width: 15em;
-    border: 2px solid blue;
-    background: white;
-    /* padding-left: 10px; */
+.h5p-digibook-navigation {
+  p {
+    font-weight: bold;
+  }
+  div {
+    // width: 15em;
     display:grid;
-    flex: 0 0 16em;
-    order: -1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    transition: all .5s ease-in-out;
+    
   }
+  border: 2px solid blue;
+  width: 15em;
+  background: white;
+  /* padding-left: 10px; */
+  flex: 0 0 16em;
+  order: -1;
+  transition: all .5s ease-in-out;
+}
