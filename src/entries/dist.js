@@ -1,5 +1,5 @@
-import "../styles/main.css";
-import "../styles/style.css";
+import "../styles/css/main.css";
+import "../styles/css/style.css";
 import DigiBook from "../scripts/app";
 
 // Load library

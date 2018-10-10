@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'h5p-book';
-  src:  url('../fonts/h5p-book.eot?a3wrpr');
-  src:  url('../fonts/h5p-book.eot?a3wrpr#iefix') format('embedded-opentype'),
-    url('../fonts/h5p-book.ttf?a3wrpr') format('truetype'),
-    url('../fonts/h5p-book.woff?a3wrpr') format('woff'),
-    url('../fonts/h5p-book.svg?a3wrpr#h5p-book') format('svg');
+  src:  url('../../fonts/h5p-book.eot?a3wrpr');
+  src:  url('../../fonts/h5p-book.eot?a3wrpr#iefix') format('embedded-opentype'),
+    url('../../fonts/h5p-book.ttf?a3wrpr') format('truetype'),
+    url('../../fonts/h5p-book.woff?a3wrpr') format('woff'),
+    url('../../fonts/h5p-book.svg?a3wrpr#h5p-book') format('svg');
   font-weight: normal;
   font-style: normal;
 }

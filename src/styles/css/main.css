@@ -1,0 +1,149 @@
+#h5p-digibook.h5p-scrollable-fullscreen {
+  overflow-y: auto; }
+
+.h5p-digibook-chapter {
+  max-width: 1000px; }
+
+.h5p-digibook-content {
+  display: flex;
+  flex: 1; }
+
+.h5p-digibook-navigation-title {
+  font-size: x-large; }
+
+.h5p-digibook-navigation {
+  border: 2px solid blue;
+  background: white;
+  /* padding-left: 10px; */
+  flex: 0 0 16em;
+  order: -1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all .5s ease-in-out; }
+  .h5p-digibook-navigation p {
+    font-weight: bold; }
+
+.h5p-digibook-hide {
+  flex: 0 0 0em;
+  transform: translate(-100%); }
+
+.h5p-digibook-status {
+  padding: 1.25em;
+  border: 0;
+  border-left-width: 1px;
+  border-style: solid;
+  border-color: #8660ab;
+  background-color: #ffffff;
+  background-size: cover;
+  box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
+  z-index: 1;
+  display: flex;
+  margin: 0;
+  overflow: hidden; }
+  .h5p-digibook-status div {
+    align-self: center;
+    display: flex; }
+
+.h5p-digibook-status-menu {
+  height: 2.750em;
+  width: 2.750em;
+  flex-shrink: 0;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  background-color: #ffffff;
+  background-size: cover; }
+
+.h5p-digibook-status-button:hover {
+  background-color: rgba(134, 96, 171, 0.05);
+  background-size: cover; }
+
+.h5p-digibook-status-button:active {
+  background-color: rgba(134, 96, 171, 0.1);
+  background-size: cover; }
+
+.h5p-digibook-status-menu.h5p-digibook-status-menu-active {
+  background-color: #8660ab;
+  opacity: 20; }
+  .h5p-digibook-status-menu.h5p-digibook-status-menu-active:hover {
+    background-color: rgba(134, 96, 171, 0.9);
+    background-size: cover; }
+  .h5p-digibook-status-menu.h5p-digibook-status-menu-active:active {
+    background-color: rgba(134, 96, 171, 0.95);
+    background-size: cover; }
+
+.h5p-digibook-status-menu a {
+  margin: auto;
+  font-size: 1.875em; }
+  .h5p-digibook-status-menu a.icon-menu {
+    color: #8660ab; }
+  .h5p-digibook-status-menu a.icon-close {
+    color: #ffffff;
+    font-size: 1.500em; }
+
+.h5p-digibook-status-progress {
+  flex-shrink: 0;
+  width: 88px;
+  height: 22px; }
+
+.h5p-digibook-status-progress-number {
+  font-family: Arial;
+  font-size: 20px;
+  color: #8660ab;
+  font-weight: 700;
+  text-decoration: none solid #8660ab;
+  text-align: right; }
+
+.h5p-digibook-status-progress-divider {
+  font-family: Arial;
+  font-size: 20px;
+  color: #4c4452;
+  font-weight: 700;
+  text-decoration: none solid #4c4452;
+  text-align: right; }
+
+.h5p-digibook-status-progressbar-back {
+  width: 100%;
+  background-color: #8660ab;
+  background-size: cover; }
+
+.h5p-digibook-status-progressbar-front {
+  transition: 1s;
+  height: 0.313em;
+  background-color: #8660ab; }
+
+.h5p-digibook-status-chapter {
+  overflow: hidden;
+  flex-grow: 1; }
+  .h5p-digibook-status-chapter p {
+    font-family: Arial;
+    font-size: 20px;
+    color: #4c4452;
+    font-weight: 700;
+    text-decoration: none solid #4c4452;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 1.250rem; }
+
+.h5p-digibook-status-arrow {
+  width: 2.750em;
+  height: 2.750em;
+  flex-shrink: 0;
+  border: 0.125em solid #ffffff;
+  border-radius: 0.125em;
+  background-color: #ffffff;
+  background-size: cover; }
+  .h5p-digibook-status-arrow a {
+    margin: auto;
+    font-size: 2.313em;
+    color: #8660ab; }
+    .h5p-digibook-status-arrow a.disabled {
+      opacity: 0.5; }
+
+.h5p-digibook-status-header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px; }
+
+.h5p-digibook-status-footer {
+  bottom: 0; }
