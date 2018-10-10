@@ -7,9 +7,58 @@ class SideBar extends H5P.EventDispatcher {
     super();
     this.id = contentId;
     this.parent = parent;
-    this.div = this.parseChapters(config, this);
+    this.div = document.createElement('div');
+    this.chapters = [];
 
+    this.addMainTitle(config.title);
+    this.findAllChapters(config);
+
+    this.populateChapters();
   }
+
+  addMainTitle(title) {
+    this.div.innerHTML = title;
+  }
+
+  findAllChapters(config) {
+    for (let i = 0; i < config.chapters.length; i++) {
+      this.chapters.push(config.chapters[i]);
+    }
+  }
+
+  createElemFromChapter(chapter) {
+    const div = document.createElement('div');
+    div.classList.add('h5p-digibook-navigation');
+
+    div.innerHTML = chapter.chapter_title;
+    const sections = chapter.chapter.params.content;
+
+    // chapter.chapter.params.content.forEach(section => {
+    //   sections.push(section);
+    // });
+
+    sections.forEach(section => {
+      const p = document.createElement('button');
+      p.innerHTML = this.parseLibrary(section.content);
+
+      div.appendChild(p);
+    });
+
+
+    return {
+      div,
+      sections
+    };
+  }
+
+  populateChapters() {
+    this.chapters.forEach(chapter => {
+      const elem = this.createElemFromChapter(chapter);
+      this.div.append(elem.div);
+    });
+  }
+
+
   /**
    * Parses the library which is used
    * TODO: Implement a more flexible system for library/title detection

@@ -6,9 +6,11 @@
     p {
       font-weight: bold;
     }
+    width: 15em;
     border: 2px solid blue;
     background: white;
     /* padding-left: 10px; */
+    display:grid;
     flex: 0 0 16em;
     order: -1;
     overflow: hidden;
