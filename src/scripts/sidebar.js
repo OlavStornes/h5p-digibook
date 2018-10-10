@@ -60,34 +60,48 @@ class SideBar extends H5P.EventDispatcher {
     }
   }
 
-  createElemFromChapter(chapter) {
+  createElemFromChapter(chapter, chapterIndex) {
+    const that = this;
+
+    //Initialize elements
     const chapterDiv = document.createElement('div');
     const sectionsDiv = document.createElement('div');
     const title = document.createElement('p');
+
+    //Add classes
     title.classList.add('h5p-digibook-navigation-chapter-title');
     chapterDiv.classList.add('h5p-digibook-navigation-chapter');
     sectionsDiv.classList.add('h5p-digibook-navigation-sections');
 
+    
     title.innerHTML = chapter.chapter_title;
-
     chapterDiv.appendChild(title);
 
+    title.onclick = (event) => {
+      this.toggleChapterShow(event);
+    };
+
+    // Add sections to the chapter
     const sections = chapter.chapter.params.content;
-    sections.forEach(section => {
+    for (let i = 0; i < sections.length; i++) {
+      const section = sections[i];
+      
       const p = document.createElement('button');
       p.innerHTML = this.parseLibrary(section.content);
-
+      
       sectionsDiv.appendChild(p);
-      title.onclick = (event) => {
-        this.toggleChapterShow(event);
+      
+      p.onclick = () => {
+        that.parent.trigger('newChapter', {
+          h5pbookid: that.parent.contentId,
+          chapter: chapterIndex,
+          section: i
+        });
       };
-      p.onclick = (event) => {
-        console.log("This should redirect");
-      };
-    });
+    }
     chapterDiv.appendChild(sectionsDiv);
 
-
+    
     return {
       chapterDiv,
       sectionsDiv,
@@ -97,10 +111,11 @@ class SideBar extends H5P.EventDispatcher {
 
   getChapterElements() {
     let tmp = [];
-    this.chapters.forEach(chapter => {
-      const elem = this.createElemFromChapter(chapter);
+    for (let i = 0; i < this.chapters.length; i++) {
+      const chapter = this.chapters[i];      
+      const elem = this.createElemFromChapter(chapter, i);
       tmp.push(elem.chapterDiv);
-    });
+    }
     return tmp;
   }
 
