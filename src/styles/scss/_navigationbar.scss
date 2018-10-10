@@ -14,10 +14,10 @@
     white-space: nowrap;
     
   }
-  border: 2px solid blue;
-  width: 15em;
-  background: white;
-  /* padding-left: 10px; */
+  width: 16.563em;
+  background-color: #ffffff;
+  background-size: cover;
+  box-shadow: 10px 10px 30px rgba(166,166,166,0.2);
   flex: 0 0 16em;
   order: -1;
   transition: all .5s ease-in-out;
@@ -42,12 +42,23 @@
     overflow: hidden;
     background: #d5d5d5;
   }
+  button{
+    width: 12.625em;
+    height: 2.500em;
+    font-family: Arial;
+    font-size: 0.750em;
+    color: #4c4452;
+    font-weight: 400;
+    text-decoration: none solid rgb(76, 68, 82);
+    line-height: 1.563em;
+  }
 }
 
 .h5p-digibook-navigation-chapter-title {
   width: 16.563em;
   height: 2.688em;
   padding: 0px 0px 0px 30px;
+  border:0;
   border-left-width: 0.063em;
   border-style: solid;
   border-color: #e9e4ed;
