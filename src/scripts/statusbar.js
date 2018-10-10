@@ -53,6 +53,8 @@ class StatusBar extends H5P.EventDispatcher {
 
     buttonBotPrev.appendChild(this.arrows.botPrev);
     buttonBotNext.appendChild(this.arrows.botNext);
+    buttonBotPrev.classList.add('h5p-digibook-status-arrow', 'h5p-digibook-status-button');
+    buttonBotNext.classList.add('h5p-digibook-status-arrow', 'h5p-digibook-status-button');
     
     this.bot.appendChild(this.buttonToTop);
     this.bot.appendChild(this.botChapterTitle);
@@ -223,7 +225,8 @@ class StatusBar extends H5P.EventDispatcher {
     const that = this;
     const row = document.createElement('div');
     const item = document.createElement('a');
-    item.classList.add ('icon-up', 'h5p-digibook-status-button');
+    row.classList.add('h5p-digibook-status-button', 'h5p-digibook-status-arrow')
+    item.classList.add ('icon-up');
     item.setAttribute('title', 'Navigate to the top');
     item.onclick = function () {
       that.parent.trigger('scrollToTop');
