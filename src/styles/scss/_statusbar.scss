@@ -1,0 +1,144 @@
+.h5p-digibook-status {
+    padding: 1.25em;
+    border: 0;
+    border-left-width: 1px;
+    border-style: solid;
+    border-color: $base-color;
+    background-color: #ffffff;
+    background-size: cover;
+    box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
+    z-index: 1;
+    display: flex;
+    margin: 0;
+    overflow: hidden;
+    div {
+      align-self: center;
+      display: flex;
+    }
+  }
+
+  .h5p-digibook-status-menu {
+    height: 2.750em;
+    width: 2.750em;
+    flex-shrink: 0;
+    border: 2px solid #ffffff;
+    border-radius: 2px;
+    background-color: #ffffff;
+    background-size: cover;
+  }
+
+  .h5p-digibook-status-button {
+    &:hover {
+      background-color: rgba($base-color, 0.05);
+      background-size: cover;
+    }
+    &:active {
+      background-color: rgba($base-color, 0.1);
+      background-size: cover;
+    }
+  }
+
+  .h5p-digibook-status-menu {
+    &.h5p-digibook-status-menu-active {
+      background-color: $base-color;
+      opacity: 20;
+      &:hover {
+        background-color: rgba($base-color, 0.9);
+        background-size: cover;
+      }
+      &:active {
+        background-color: rgba($base-color, 0.95);
+        background-size: cover;
+      }
+    }
+    a {
+      margin: auto;
+      font-size: 1.875em;
+      &.icon-menu {
+        color: $base-color;
+      }
+      &.icon-close {
+        color: #ffffff;
+        font-size: 1.500em;
+      }
+    }
+  }
+
+  .h5p-digibook-status-progress {
+    flex-shrink: 0;
+    width: 88px;
+    height: 22px;
+  }
+
+  .h5p-digibook-status-progress-number {
+    font-family: Arial;
+    font-size: 20px;
+    color: $base-color;
+    font-weight: 700;
+    text-decoration: none solid rgb(134, 96, 171);
+    text-align: right;
+  }
+
+  .h5p-digibook-status-progress-divider {
+    font-family: Arial;
+    font-size: 20px;
+    color: #4c4452;
+    font-weight: 700;
+    text-decoration: none solid rgb(76, 68, 82);
+    text-align: right;
+  }
+
+  .h5p-digibook-status-progressbar-back {
+    width: 100%;
+    background-color: $base-color;
+    background-size: cover;
+  }
+
+  .h5p-digibook-status-progressbar-front {
+    transition: 1s;
+    height: 0.313em;
+    background-color: $base-color;
+  }
+
+  .h5p-digibook-status-chapter {
+    overflow: hidden;
+    flex-grow: 1;
+    p {
+      font-family: Arial;
+      font-size: 20px;
+      color: #4c4452;
+      font-weight: 700;
+      text-decoration: none solid rgb(76, 68, 82);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 1.250rem;
+    }
+  }
+
+  .h5p-digibook-status-arrow {
+    width: 2.750em;
+    height: 2.750em;
+    flex-shrink: 0;
+    border: 0.125em solid #ffffff;
+    border-radius: 0.125em;
+    background-color: #ffffff;
+    background-size: cover;
+    a {
+      margin: auto;
+      font-size: 2.313em;
+      color: $base-color;
+      &.disabled {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .h5p-digibook-status-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+  }
+
+  .h5p-digibook-status-footer {
+    bottom: 0;
+  }
