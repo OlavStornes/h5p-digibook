@@ -148,59 +148,5 @@ class SideBar extends H5P.EventDispatcher {
     }
     return tmp;
   }
-
-  /**
-   * Parse an object of chapters to create the navigation bar
-   * @param {object} config 
-   */
-  parseChapters(config, parent) {
-    const that = this;
-    const divElem = document.createElement('div');
-    divElem.classList.add('h5p-digibook-navigation');
-
-    const mainTitle = document.createElement('p');
-    mainTitle.innerHTML = config.title;
-    mainTitle.classList.add('h5p-digibook-navigation-title');
-
-    divElem.appendChild(mainTitle);
-
-    for (let i = 0; i < config.chapters.length; i++) {
-      const chapter = config.chapters[i];
-      const ulElem = document.createElement('ul');
-      const title = document.createElement('p');
-      const chapterDiv = document.createElement('div');
-
-      //Each chapter has their own title
-      title.innerHTML = chapter.chapter_title;
-
-      chapterDiv.appendChild(title);
-
-      //Traverse all sections inside a chapter
-      for (let j = 0; j < chapter.chapter.params.content.length; j++) {
-        const section = chapter.chapter.params.content[j];
-        const liElem = document.createElement('li');
-        const aElem = document.createElement('a');
-
-        aElem.innerHTML = this.parseLibrary(section.content);
-        aElem.parent = parent;
-
-        aElem.onclick = function () {
-          // Send a trigger upstream
-          that.parent.trigger('newChapter', {
-            h5pbookid: that.parent.contentId,
-            chapter: i,
-            section: j
-          });
-        };
-        liElem.appendChild(aElem);
-        ulElem.appendChild(liElem);
-
-      }
-      chapterDiv.appendChild(ulElem);
-      divElem.appendChild(chapterDiv);
-    }
-
-    return divElem;
-  }
 }
 export default SideBar;
