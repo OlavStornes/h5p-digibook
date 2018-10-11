@@ -88,7 +88,7 @@
 
 .h5p-digibook-status-progressbar-back {
   width: 100%;
-  background-color: #8660ab;
+  background-color: rgba(134, 96, 171, 0.2);
   background-size: cover; }
 
 .h5p-digibook-status-progressbar-front {
@@ -149,7 +149,7 @@
 
 .h5p-digibook-navigation-sections {
   max-height: 500px;
-  transition: max-height 1.25s ease-in;
+  transition: max-height 0.5s ease-in;
   width: 16.563em;
   border-left-width: 0.063em;
   border-style: solid;
@@ -167,21 +167,22 @@
     text-decoration: none solid #4c4452;
     line-height: 1.563em; }
 
-.h5p-digibook-navigation-section-hidden {
+.h5p-digibook-navigation-closed .h5p-digibook-navigation-sections {
   max-height: 0;
-  transition: max-height 1.15s ease-out;
+  transition: max-height 0.5s ease-out;
   overflow: hidden;
   background: #d5d5d5; }
 
+.h5p-digibook-navigation-closed .h5p-digibook-navigation-chapter-title {
+  background-color: white; }
+
 .h5p-digibook-navigation-chapter-title {
   display: flex;
-  width: 16.563em;
-  height: 2.688em;
-  padding: 0px 0px 0px 30px;
+  padding: 0 0 0 1.875em;
   border-left-width: 0.063em;
   border-style: solid;
   border-color: #e9e4ed;
-  background-color: #f9f8fa;
+  background-color: rgba(134, 96, 171, 0.1);
   background-size: cover;
   font-family: Arial;
   font-size: 0.750em;
@@ -190,13 +191,17 @@
   text-decoration: none solid #4c4452; }
   .h5p-digibook-navigation-chapter-title p {
     width: 13.125em;
-    background-color: #f9f8fa;
+    background-color: transparent;
     font-family: Arial;
     font-size: 0.750em;
     color: #8660ab;
     font-weight: 700;
     text-decoration: none solid #8660ab;
-    line-height: 1.563em; }
+    line-height: 1.563em;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+  .h5p-digibook-navigation-chapter-title span {
+    align-self: center; }
   .h5p-digibook-navigation-chapter-title:hover {
     background-color: rgba(134, 96, 171, 0.05); }
   .h5p-digibook-navigation-chapter-title:active {
