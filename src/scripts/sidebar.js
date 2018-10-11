@@ -8,6 +8,7 @@ class SideBar extends H5P.EventDispatcher {
     this.id = contentId;
     this.parent = parent;
     this.div = document.createElement('div');
+    this.content = document.createElement('div');
     this.div.classList.add('h5p-digibook-navigation');
 
     this.chapters = [];
@@ -24,9 +25,10 @@ class SideBar extends H5P.EventDispatcher {
     this.div.appendChild(this.titleElem.div);
 
     this.chapterElems.forEach(element => {
-      this.div.appendChild(element);
+      this.content.appendChild(element);
     });
-
+    
+    this.div.appendChild(this.content);
 
 
   }
@@ -75,8 +77,8 @@ class SideBar extends H5P.EventDispatcher {
 
   //Fires whenever a redirect is happening in parent
   redirectHandler(newChapter) {
-    const elemsClosing = this.chapterElems.filter(x => this.chapterElems.indexOf(x) != newChapter);
-    elemsClosing.map(x => this.editChapterStatus(x, true));
+    this.chapterElems.filter(x => 
+      this.chapterElems.indexOf(x) != newChapter).forEach(x => this.editChapterStatus(x, true));
 
 
     const targetElem = this.chapterElems[newChapter];
