@@ -170,8 +170,7 @@
 .h5p-digibook-navigation-closed .h5p-digibook-navigation-sections {
   max-height: 0;
   transition: max-height 0.5s ease-out;
-  overflow: hidden;
-  background: #d5d5d5; }
+  overflow: hidden; }
 
 .h5p-digibook-navigation-closed .h5p-digibook-navigation-chapter-title {
   background-color: white; }
