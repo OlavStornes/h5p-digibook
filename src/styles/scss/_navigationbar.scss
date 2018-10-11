@@ -20,8 +20,8 @@
 
 .h5p-digibook-navigation-sections {
     max-height: 500px;
-    transition: max-height 1.25s ease-in;
-    width: 16.563em; // height: 220px;
+    transition: max-height 0.5s ease-in;
+    width: 16.563em;
     border-left-width: 0.063em;
     border-style: solid;
     border-color: #e9e4ed;
@@ -40,22 +40,26 @@
     }
 }
 
-.h5p-digibook-navigation-section-hidden {
-    max-height: 0;
-    transition: max-height 1.15s ease-out;
-    overflow: hidden;
-    background: #d5d5d5;
+.h5p-digibook-navigation-closed {
+    .h5p-digibook-navigation-sections {
+        max-height: 0;
+        transition: max-height 0.5s ease-out;
+        overflow: hidden;
+        background: #d5d5d5;
+    }
+    .h5p-digibook-navigation-chapter-title {
+        background-color: white;
+    }
 }
 
 .h5p-digibook-navigation-chapter-title {
-    display: flex;
-    width: 16.563em;
-    height: 2.688em;
-    padding: 0px 0px 0px 30px;
+    display: flex; // width: 16.563em;
+    // height: 2.688em;
+    padding: 0 0 0 1.875em;
     border-left-width: 0.063em;
     border-style: solid;
     border-color: #e9e4ed;
-    background-color: #f9f8fa;
+    background-color: rgba($base-color, 0.1);
     background-size: cover;
     font-family: Arial;
     font-size: 0.750em;
@@ -64,13 +68,18 @@
     text-decoration: none solid rgb(76, 68, 82);
     p {
         width: 13.125em; // height: 25px;
-        background-color: #f9f8fa;
+        background-color: transparent;
         font-family: Arial;
         font-size: 0.750em;
         color: #8660ab;
         font-weight: 700;
         text-decoration: none solid rgb(134, 96, 171);
         line-height: 1.563em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    span {
+        align-self: center;
     }
     &:hover {
         background-color: rgba($base-color, 0.05);
