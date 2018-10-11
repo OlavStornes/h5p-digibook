@@ -52,24 +52,43 @@ class SideBar extends H5P.EventDispatcher {
   }
 
 
+  editChapterStatus(element, closing) {
+    if (closing) {
+      element.classList.add('h5p-digibook-navigation-closed');
+      const arrow = element.getElementsByClassName('icon-expanded')[0];
+      if (arrow) {
+        arrow.classList.remove('icon-expanded');
+        arrow.classList.add('icon-collapsed');
+      }
+      
+    }
+    else {
+      element.classList.remove('h5p-digibook-navigation-closed');
+      const arrow = element.getElementsByClassName('icon-collapsed')[0];
+      if (arrow) {
+        arrow.classList.remove('icon-collapsed');
+        arrow.classList.add('icon-expanded');
+      }
+    }
+  }
+  
+
   //Fires whenever a redirect is happening in parent
   redirectHandler(newChapter) {
-    const test = this.chapterElems.filter(x => this.chapterElems.indexOf(x) != newChapter);
-    test.map(x => x.classList.add('h5p-digibook-navigation-closed'));
+    const elemsClosing = this.chapterElems.filter(x => this.chapterElems.indexOf(x) != newChapter);
+    elemsClosing.map(x => this.editChapterStatus(x, true));
 
 
     const targetElem = this.chapterElems[newChapter];
-    targetElem.classList.remove('h5p-digibook-navigation-closed');
+    this.editChapterStatus(targetElem, false);
   }
 
 
 
-  toggleChapterShow(element) {
-
-    const x = element.currentTarget;
-    
-    x.parentElement.classList.toggle('h5p-digibook-navigation-closed');
-    // x.classList.toggle('h5p-digibook-navigation-chapter-title-closed');
+  toggleChapter(element) {
+    const x = element.target.parentElement;
+    const bool = !(x.classList.contains('h5p-digibook-navigation-closed'));
+    this.editChapterStatus(x, bool);
   }
 
   createElemFromChapter(chapter, chapterIndex) {
@@ -103,7 +122,7 @@ class SideBar extends H5P.EventDispatcher {
     chapterDiv.appendChild(titleDiv);
 
     titleDiv.onclick = (event) => {
-      this.toggleChapterShow(event);
+      this.toggleChapter(event);
     };
 
     // Add sections to the chapter
