@@ -9,7 +9,6 @@
     "watch": "webpack --watch",
     "scss:watch": "node-sass --watch src/styles/scss -o src/styles/css",
     "scss:build": "node-sass src/styles/scss -o src/styles/css"
-    
   },
   "repository": {
     "type": "git",
@@ -22,7 +21,7 @@
   "author": "Olav Daling Stornes",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.19.1",
+    "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^6.3.2",
