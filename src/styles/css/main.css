@@ -140,23 +140,23 @@
   flex: 0 0 16em;
   order: -1;
   transition: all .5s ease-in-out; }
-  .h5p-digibook-navigation p {
+  .h5p-digibook-navigation > a {
     font-weight: bold; }
-  .h5p-digibook-navigation div {
+  .h5p-digibook-navigation > div {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
 
-.h5p-digibook-navigation-sections {
+.h5p-digibook-navigation-sectionlist {
   max-height: 500px;
   transition: max-height 0.5s ease-in;
   width: 16.563em;
-  border-left-width: 0.063em;
-  border-style: solid;
-  border-color: #e9e4ed;
+  border: 0px;
+  border-left: 0.063em solid #e9e4ed;
   background-color: #ffffff;
   background-size: cover; }
-  .h5p-digibook-navigation-sections p {
+  .h5p-digibook-navigation-sectionlist a {
+    padding: 0 0 0 1.875em;
     background: transparent;
     width: 12.625em;
     height: 2.500em;
@@ -167,7 +167,10 @@
     text-decoration: none solid #4c4452;
     line-height: 1.563em; }
 
-.h5p-digibook-navigation-closed .h5p-digibook-navigation-sections {
+.h5p-digibook-navigation-section :hover {
+  cursor: pointer; }
+
+.h5p-digibook-navigation-closed .h5p-digibook-navigation-sectionlist {
   max-height: 0;
   transition: max-height 0.5s ease-out;
   overflow: hidden; }
@@ -177,10 +180,9 @@
 
 .h5p-digibook-navigation-chapter-title {
   display: flex;
-  padding: 0 0 0 1.875em;
-  border-left-width: 0.063em;
-  border-style: solid;
-  border-color: #e9e4ed;
+  height: 2.688em;
+  padding: 0 1.125em 0 1.875em;
+  border-left: 0.063em solid #e9e4ed;
   background-color: rgba(134, 96, 171, 0.1);
   background-size: cover;
   font-family: Arial;
@@ -193,6 +195,7 @@
     background-color: transparent;
     font-family: Arial;
     font-size: 0.750em;
+    flex-grow: 1;
     color: #8660ab;
     font-weight: 700;
     text-decoration: none solid #8660ab;
