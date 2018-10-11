@@ -88,7 +88,7 @@ class SideBar extends H5P.EventDispatcher {
 
 
   toggleChapter(element) {
-    const x = element.target.parentElement;
+    const x = element.currentTarget.parentElement;
     const bool = !(x.classList.contains('h5p-digibook-navigation-closed'));
     this.editChapterStatus(x, bool);
   }
