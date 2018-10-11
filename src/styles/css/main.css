@@ -133,13 +133,13 @@
   bottom: 0; }
 
 .h5p-digibook-navigation {
-  width: 16.563em;
   background-color: #ffffff;
   background-size: cover;
   box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
   flex: 0 0 16em;
   order: -1;
-  transition: all .5s ease-in-out; }
+  transition: all .5s ease-in-out;
+  width: 16.563em; }
   .h5p-digibook-navigation > a {
     font-weight: bold; }
   .h5p-digibook-navigation > div {
@@ -148,76 +148,76 @@
     white-space: nowrap; }
 
 .h5p-digibook-navigation-sectionlist {
-  max-height: 500px;
-  transition: max-height 0.5s ease-in;
-  width: 16.563em;
+  background-color: #ffffff;
+  background-size: cover;
   border: 0px;
   border-left: 0.063em solid #e9e4ed;
-  background-color: #ffffff;
-  background-size: cover; }
+  max-height: 500px;
+  transition: max-height 0.5s ease-in;
+  width: 16.563em; }
   .h5p-digibook-navigation-sectionlist a {
-    padding: 0 0 0 1.875em;
     background: transparent;
-    width: 12.625em;
-    height: 2.500em;
+    color: #4c4452;
     font-family: Arial;
     font-size: 0.750em;
-    color: #4c4452;
     font-weight: 400;
+    height: 2.500em;
+    line-height: 1.563em;
+    padding: 0 0 0 1.875em;
     text-decoration: none solid #4c4452;
-    line-height: 1.563em; }
+    width: 12.625em; }
 
 .h5p-digibook-navigation-section :hover {
   cursor: pointer; }
 
-.h5p-digibook-navigation-closed .h5p-digibook-navigation-sectionlist {
-  max-height: 0;
-  transition: max-height 0.5s ease-out;
-  overflow: hidden; }
-
 .h5p-digibook-navigation-closed .h5p-digibook-navigation-chapter-title {
   background-color: white; }
 
+.h5p-digibook-navigation-closed .h5p-digibook-navigation-sectionlist {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out; }
+
 .h5p-digibook-navigation-chapter-title {
-  display: flex;
-  height: 2.688em;
-  padding: 0 1.125em 0 1.875em;
-  border-left: 0.063em solid #e9e4ed;
   background-color: rgba(134, 96, 171, 0.1);
   background-size: cover;
+  border-left: 0.063em solid #e9e4ed;
+  color: #4c4452;
+  display: flex;
   font-family: Arial;
   font-size: 0.750em;
-  color: #4c4452;
   font-weight: 700;
+  height: 2.688em;
+  padding: 0 1.125em 0 1.875em;
   text-decoration: none solid #4c4452; }
   .h5p-digibook-navigation-chapter-title p {
-    width: 13.125em;
+    color: #8660ab;
     background-color: transparent;
     font-family: Arial;
     font-size: 0.750em;
-    flex-grow: 1;
-    color: #8660ab;
     font-weight: 700;
-    text-decoration: none solid #8660ab;
+    flex-grow: 1;
     line-height: 1.563em;
     overflow: hidden;
-    text-overflow: ellipsis; }
+    text-decoration: none solid #8660ab;
+    text-overflow: ellipsis;
+    width: 13.125em; }
   .h5p-digibook-navigation-chapter-title span {
     align-self: center; }
-  .h5p-digibook-navigation-chapter-title:hover {
-    background-color: rgba(134, 96, 171, 0.05); }
   .h5p-digibook-navigation-chapter-title:active {
     background-color: rgba(134, 96, 171, 0.1); }
+  .h5p-digibook-navigation-chapter-title:hover {
+    background-color: rgba(134, 96, 171, 0.05); }
 
 .h5p-digibook-navigation-maintitle {
-  width: 16.563em;
-  height: 5.813em;
   background-color: #8660ab;
-  background-size: cover; }
+  background-size: cover;
+  height: 5.813em;
+  width: 16.563em; }
   .h5p-digibook-navigation-maintitle p {
     align-self: center;
+    color: #ffffff;
     font-family: Arial;
     font-size: 1em;
-    color: #ffffff;
     font-weight: 400;
     text-decoration: none solid white; }

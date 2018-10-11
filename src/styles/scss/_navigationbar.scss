@@ -1,17 +1,15 @@
 .h5p-digibook-navigation {
-    width: 16.563em;
     background-color: #ffffff;
     background-size: cover;
     box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
     flex: 0 0 16em;
     order: -1;
     transition: all .5s ease-in-out;
-    >a{
+    width: 16.563em;
+    >a {
         font-weight: bold;
     }
     >div {
-        // width: 15em;
-        // display:grid;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -19,92 +17,92 @@
 }
 
 .h5p-digibook-navigation-sectionlist {
+    background-color: #ffffff;
+    background-size: cover;
+    border: 0px;
+    border-left: 0.063em solid #e9e4ed;
     max-height: 500px;
     transition: max-height 0.5s ease-in;
     width: 16.563em;
-    border: 0px;
-    border-left: 0.063em solid #e9e4ed;
-    background-color: #ffffff;
-    background-size: cover;
     a {
-      padding: 0 0 0 1.875em;
-      background: transparent;
-      width: 12.625em;
-      height: 2.500em;
-      font-family: Arial;
-      font-size: 0.750em;
-      color: #4c4452;
-      font-weight: 400;
-      text-decoration: none solid rgb(76, 68, 82);
-      line-height: 1.563em;
+        background: transparent;
+        color: #4c4452;
+        font-family: Arial;
+        font-size: 0.750em;
+        font-weight: 400;
+        height: 2.500em;
+        line-height: 1.563em;
+        padding: 0 0 0 1.875em;
+        text-decoration: none solid rgb(76, 68, 82);
+        width: 12.625em;
     }
 }
 
 .h5p-digibook-navigation-section {
-  :hover{
-    cursor:pointer
-  }
+    :hover {
+        cursor: pointer
+    }
 }
 
 .h5p-digibook-navigation-closed {
-    .h5p-digibook-navigation-sectionlist {
-        max-height: 0;
-        transition: max-height 0.5s ease-out;
-        overflow: hidden;
-    }
     .h5p-digibook-navigation-chapter-title {
         background-color: white;
+    }
+    .h5p-digibook-navigation-sectionlist {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-out;
     }
 }
 
 .h5p-digibook-navigation-chapter-title {
-    display: flex; // width: 16.563em;
-    height: 2.688em;
-    padding: 0 1.125em 0 1.875em;
-    border-left: 0.063em solid #e9e4ed;
     background-color: rgba($base-color, 0.1);
     background-size: cover;
+    border-left: 0.063em solid #e9e4ed;
+    color: #4c4452;
+    display: flex; // width: 16.563em;
     font-family: Arial;
     font-size: 0.750em;
-    color: #4c4452;
     font-weight: 700;
+    height: 2.688em;
+    padding: 0 1.125em 0 1.875em;
     text-decoration: none solid rgb(76, 68, 82);
     p {
-        width: 13.125em; // height: 25px;
+        color: $base-color;
         background-color: transparent;
         font-family: Arial;
         font-size: 0.750em;
-        flex-grow: 1;
-        color: $base-color;
         font-weight: 700;
-        text-decoration: none solid rgb(134, 96, 171);
+        flex-grow: 1;
         line-height: 1.563em;
         overflow: hidden;
+        text-decoration: none solid rgb(134, 96, 171);
         text-overflow: ellipsis;
+        width: 13.125em; // height: 25px;
     }
     span {
         align-self: center;
     }
-    &:hover {
-        background-color: rgba($base-color, 0.05);
-    }
     &:active {
         background-color: rgba($base-color, 0.1);
+    }
+    &:hover {
+        background-color: rgba($base-color, 0.05);
     }
 }
 
 .h5p-digibook-navigation-maintitle {
-    width: 16.563em;
-    height: 5.813em;
     background-color: $base-color;
     background-size: cover;
+    height: 5.813em;
+    width: 16.563em;
     p {
         // width: 13.250em;
         // height: 2.313em;
         align-self: center;
+        color: #ffffff;
         font-family: Arial;
         font-size: 1em;
-        color: #ffffff;
         font-weight: 400;
         text-decoration: none solid rgb(255, 255, 255);
     }
