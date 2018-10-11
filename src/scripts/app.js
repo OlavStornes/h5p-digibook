@@ -130,6 +130,7 @@ export default class DigiBook extends H5P.EventDispatcher {
         
         self.trigger('resize');
         this.statusBar.updateStatusBar();
+        this.sideBar.redirectHandler(targetPage.chapter);
         //Avoid accidentaly referring to a section that does not exist
         if (targetPage.section < sectionsInChapter.length) {
           // Workaround on focusing on new element

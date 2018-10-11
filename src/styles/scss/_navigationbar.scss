@@ -1,18 +1,110 @@
-.h5p-digibook-navigation-title {
-    font-size: x-large;
-  }
-
-  .h5p-digibook-navigation {
-    p {
-      font-weight: bold;
-    }
-    border: 2px solid blue;
-    background: white;
-    /* padding-left: 10px; */
+.h5p-digibook-navigation {
+    background-color: #ffffff;
+    background-size: cover;
+    box-shadow: 0.625em 0.625em 1.875em rgba(166, 166, 166, 0.2);
     flex: 0 0 16em;
     order: -1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     transition: all .5s ease-in-out;
-  }
+    width: 16.563em;
+    >a {
+        font-weight: bold;
+    }
+    >div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.h5p-digibook-navigation-sectionlist {
+    background-color: #ffffff;
+    background-size: cover;
+    max-height: 31.250em;
+    transition: max-height 0.5s ease-in;
+    width: 16.563em;
+    a {
+        background: transparent;
+        color: #4c4452;
+        font-family: Arial;
+        font-size: 0.750em;
+        font-weight: 400;
+        height: 2.500em;
+        line-height: 1.563em;
+        padding: 0 0 0 1.875em;
+        text-decoration: none solid rgb(76, 68, 82);
+        width: 12.625em;
+    }
+}
+
+.h5p-digibook-navigation-section {
+    :hover {
+        cursor: pointer
+    }
+}
+
+.h5p-digibook-navigation-closed {
+    .h5p-digibook-navigation-chapter-title {
+        background-color: white;
+        p{
+            color: black;
+        }
+    }
+    .h5p-digibook-navigation-sectionlist {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-out;
+    }
+}
+.h5p-digibook-navigation-chapter{
+    border-left: 1px solid #e9e4ed;
+}
+.h5p-digibook-navigation-chapter-title {
+    background-color: rgba($base-color, 0.1);
+    background-size: cover;
+    color: #4c4452;
+    display: flex; // width: 16.563em;
+    font-family: Arial;
+    font-size: 0.750em;
+    font-weight: 700;
+    height: 2.688em;
+    padding: 0 1.125em 0 1.875em;
+    text-decoration: none solid rgb(76, 68, 82);
+    p {
+        color: $base-color;
+        background-color: transparent;
+        font-family: Arial;
+        font-size: 0.750em;
+        font-weight: 700;
+        flex-grow: 1;
+        line-height: 1.563em;
+        margin-left: 2em;
+        margin-right: 2em;
+        overflow: hidden;
+        text-decoration: none solid rgb(134, 96, 171);
+        text-overflow: ellipsis;
+        width: 13.125em; // height: 25px;
+    }
+    span {
+        align-self: center;
+    }
+    &:active {
+        background-color: rgba($base-color, 0.1);
+    }
+    &:hover {
+        background-color: rgba($base-color, 0.05);
+    }
+}
+
+.h5p-digibook-navigation-maintitle {
+    background-color: $base-color;
+    background-size: cover;
+    p {
+        align-self: center;
+        color: #ffffff;
+        font-family: Arial;
+        font-size: 1em;
+        font-weight: 400;
+        padding-left: 1.938em;
+        text-decoration: none solid rgb(255, 255, 255);
+    }
+}
