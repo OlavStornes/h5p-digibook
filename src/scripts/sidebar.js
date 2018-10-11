@@ -51,10 +51,25 @@ class SideBar extends H5P.EventDispatcher {
     }
   }
 
+
+  //Fires whenever a redirect is happening in parent
+  redirectHandler(newChapter) {
+    const test = this.chapterElems.filter(x => this.chapterElems.indexOf(x) != newChapter);
+    test.map(x => x.classList.add('h5p-digibook-navigation-closed'));
+
+
+    const targetElem = this.chapterElems[newChapter];
+    targetElem.classList.remove('h5p-digibook-navigation-closed');
+  }
+
+
+
   toggleChapterShow(element) {
 
-    const x = element.target.nextSibling;
-    x.classList.toggle('h5p-digibook-navigation-section-hidden');
+    const x = element.currentTarget;
+    
+    x.parentElement.classList.toggle('h5p-digibook-navigation-closed');
+    // x.classList.toggle('h5p-digibook-navigation-chapter-title-closed');
   }
 
   createElemFromChapter(chapter, chapterIndex) {
@@ -67,13 +82,12 @@ class SideBar extends H5P.EventDispatcher {
     const title = document.createElement('p');
 
     //Add classes
-    titleDiv.classList.add('h5p-digibook-navigation-chapter-title');
+    titleDiv.classList.add('h5p-digibook-navigation-chapter-title', 'h5p-digibook-navigation-chapter-title-closed');
     chapterDiv.classList.add('h5p-digibook-navigation-chapter');
     sectionsDiv.classList.add('h5p-digibook-navigation-sections');
 
     
     title.innerHTML = chapter.chapter_title;
-    //TODO: Split this up to a separate titlediv
     const arrowIcon = document.createElement('span');
     const circleIcon = document.createElement('span');
 
