@@ -1,7 +1,7 @@
 .h5p-digibook-navigation {
     background-color: #ffffff;
     background-size: cover;
-    box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
+    box-shadow: 0.625em 0.625em 1.875em rgba(166, 166, 166, 0.2);
     flex: 0 0 16em;
     order: -1;
     transition: all .5s ease-in-out;
@@ -19,9 +19,7 @@
 .h5p-digibook-navigation-sectionlist {
     background-color: #ffffff;
     background-size: cover;
-    border: 0px;
-    border-left: 0.063em solid #e9e4ed;
-    max-height: 500px;
+    max-height: 31.250em;
     transition: max-height 0.5s ease-in;
     width: 16.563em;
     a {
@@ -47,6 +45,9 @@
 .h5p-digibook-navigation-closed {
     .h5p-digibook-navigation-chapter-title {
         background-color: white;
+        p{
+            color: black;
+        }
     }
     .h5p-digibook-navigation-sectionlist {
         max-height: 0;
@@ -54,11 +55,12 @@
         transition: max-height 0.5s ease-out;
     }
 }
-
+.h5p-digibook-navigation-chapter{
+    border-left: 1px solid #e9e4ed;
+}
 .h5p-digibook-navigation-chapter-title {
     background-color: rgba($base-color, 0.1);
     background-size: cover;
-    border-left: 0.063em solid #e9e4ed;
     color: #4c4452;
     display: flex; // width: 16.563em;
     font-family: Arial;
@@ -75,6 +77,8 @@
         font-weight: 700;
         flex-grow: 1;
         line-height: 1.563em;
+        margin-left: 2em;
+        margin-right: 2em;
         overflow: hidden;
         text-decoration: none solid rgb(134, 96, 171);
         text-overflow: ellipsis;
@@ -94,16 +98,13 @@
 .h5p-digibook-navigation-maintitle {
     background-color: $base-color;
     background-size: cover;
-    height: 5.813em;
-    width: 16.563em;
     p {
-        // width: 13.250em;
-        // height: 2.313em;
         align-self: center;
         color: #ffffff;
         font-family: Arial;
         font-size: 1em;
         font-weight: 400;
+        padding-left: 1.938em;
         text-decoration: none solid rgb(255, 255, 255);
     }
 }
