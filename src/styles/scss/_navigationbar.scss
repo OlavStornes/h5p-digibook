@@ -1,107 +1,98 @@
-
 .h5p-digibook-navigation {
-  p {
-    font-weight: bold;
-  }
-  div {
-    // width: 15em;
-    display:grid;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    
-  }
-  width: 16.563em;
-  background-color: #ffffff;
-  background-size: cover;
-  box-shadow: 10px 10px 30px rgba(166,166,166,0.2);
-  flex: 0 0 16em;
-  order: -1;
-  transition: all .5s ease-in-out;
-  
-  &-maintitle {
     width: 16.563em;
-    height: 5.813em;
-    background-color: $base-color;
+    background-color: #ffffff;
     background-size: cover;
-    & p{
-      // width: 13.250em;
-      // height: 2.313em;
-      align-self: center;
-      font-family: Arial;
-      font-size: 1em;
-      color: #ffffff;
-      font-weight: 400;
-      text-decoration: none solid rgb(255, 255, 255);
+    box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
+    flex: 0 0 16em;
+    order: -1;
+    transition: all .5s ease-in-out;
+    p {
+        font-weight: bold;
     }
-  }
-  
-  
-  
-  &-sections {
+    div {
+        // width: 15em;
+        // display:grid;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.h5p-digibook-navigation-sections {
     max-height: 500px;
     transition: max-height 1.25s ease-in;
-    width: 16.563em;
-    // height: 220px;
+    width: 16.563em; // height: 220px;
     border-left-width: 0.063em;
     border-style: solid;
     border-color: #e9e4ed;
     background-color: #ffffff;
     background-size: cover;
-    p{
-      width: 12.625em;
-      height: 2.500em;
-      font-family: Arial;
-      font-size: 0.750em;
-      color: #4c4452;
-      font-weight: 400;
-      text-decoration: none solid rgb(76, 68, 82);
-      line-height: 1.563em;
+    p {
+        background: transparent;
+        width: 12.625em;
+        height: 2.500em;
+        font-family: Arial;
+        font-size: 0.750em;
+        color: #4c4452;
+        font-weight: 400;
+        text-decoration: none solid rgb(76, 68, 82);
+        line-height: 1.563em;
     }
+}
 
-    &-section-hidden{
-      max-height: 0;
-      transition: max-height 1.15s ease-out;
-      overflow: hidden;
-      background: #d5d5d5;
-    }
-  }
+.h5p-digibook-navigation-section-hidden {
+    max-height: 0;
+    transition: max-height 1.15s ease-out;
+    overflow: hidden;
+    background: #d5d5d5;
+}
 
-
-    &-chapter-title {
-      display:flex;
-      width: 16.563em;
-      height: 2.688em;
-      padding: 0px 0px 0px 30px;
-      border-left-width: 0.063em;
-      border-style: solid;
-      border-color: #e9e4ed;
-      background-color: #f9f8fa;
+.h5p-digibook-navigation-chapter-title {
+    display: flex;
+    width: 16.563em;
+    height: 2.688em;
+    padding: 0px 0px 0px 30px;
+    border-left-width: 0.063em;
+    border-style: solid;
+    border-color: #e9e4ed;
+    background-color: #f9f8fa;
     background-size: cover;
     font-family: Arial;
     font-size: 0.750em;
     color: #4c4452;
     font-weight: 700;
     text-decoration: none solid rgb(76, 68, 82);
-    
-    &>p{
-      width: 13.125em;
-      // height: 25px;
-      background-color: #f9f8fa;
-      font-family: Arial;
-      font-size: 0.750em;
-      color: #8660ab;
-      font-weight: 700;
-      text-decoration: none solid rgb(134, 96, 171);
-      line-height: 1.563em;
-      
+    p {
+        width: 13.125em; // height: 25px;
+        background-color: #f9f8fa;
+        font-family: Arial;
+        font-size: 0.750em;
+        color: #8660ab;
+        font-weight: 700;
+        text-decoration: none solid rgb(134, 96, 171);
+        line-height: 1.563em;
     }
-    &:hover{
-      background-color: rgba($base-color, 0.05);
+    &:hover {
+        background-color: rgba($base-color, 0.05);
     }
-    &:active{
-      background-color: rgba($base-color, 0.1);
+    &:active {
+        background-color: rgba($base-color, 0.1);
     }
-  }
+}
 
+.h5p-digibook-navigation-maintitle {
+    width: 16.563em;
+    height: 5.813em;
+    background-color: $base-color;
+    background-size: cover;
+    p {
+        // width: 13.250em;
+        // height: 2.313em;
+        align-self: center;
+        font-family: Arial;
+        font-size: 1em;
+        color: #ffffff;
+        font-weight: 400;
+        text-decoration: none solid rgb(255, 255, 255);
+    }
 }
