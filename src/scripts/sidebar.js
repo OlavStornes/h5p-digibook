@@ -98,19 +98,27 @@ class SideBar extends H5P.EventDispatcher {
     this.editChapterStatus(targetElem, false);
   }
 
-  updateChapterTitle(targetSection, targetChapter) {
+  updateChapterTitle(targetChapter) {
     const x = this.chapters[targetChapter];
+    let targetElem = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-chapter-title')[0];
+    targetElem = targetElem.getElementsByClassName('h5p-digibook-navigation-chapter-progress')[0];
     if (x.hasTasks) {
-      let targetElem = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-chapter-title')[0];
-      targetElem = targetElem.getElementsByClassName('h5p-digibook-navigation-chapter-progress')[0];
-      if (x.tasksLeft >= 1) {
-        targetElem.classList.remove('icon-chapter-blank');
-        targetElem.classList.add('icon-chapter-started');
+      if (x.tasksLeft == x.maxTasks) {
+        targetElem.classList.remove('icon-chapter-started', 'icon-chapter-done');
+        targetElem.classList.add('icon-chapter-blank');
       }
-      else {
-        targetElem.classList.remove('icon-chapter-blank');
+      else if (x.tasksLeft === 0) {
+        targetElem.classList.remove('icon-chapter-blank', 'icon-chapter-started');
         targetElem.classList.add('icon-chapter-done');
       }
+      else {
+        targetElem.classList.remove('icon-chapter-blank', 'icon-chapter-done');
+        targetElem.classList.add('icon-chapter-started');
+      }
+    }
+    else {
+      targetElem.classList.remove('icon-chapter-blank');
+      targetElem.classList.add('icon-chapter-done');
     }
   }
 
@@ -134,7 +142,7 @@ class SideBar extends H5P.EventDispatcher {
 
         
         this.chapters[targetChapter].tasksLeft -= 1;
-        this.updateChapterTitle(i, targetChapter);
+        this.updateChapterTitle(targetChapter);
       }
     }
   }
@@ -228,6 +236,9 @@ class SideBar extends H5P.EventDispatcher {
           section: i
         });
       };
+    }
+    if (chapter.tasksLeft) {
+      chapter.maxTasks = chapter.tasksLeft;
     }
     chapterDiv.appendChild(sectionsDiv);
 
