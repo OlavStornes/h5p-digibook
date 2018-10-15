@@ -33,6 +33,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     for (let i = 0; i < config.chapters.length; i++) {
       const newColumn = document.createElement('div');
       const newInstance = H5P.newRunnable(config.chapters[i].chapter, contentId, H5P.jQuery(newColumn), contentData);
+      newInstance.childInstances = newInstance.getInstances();
       newColumn.classList.add('h5p-digibook-chapter');
       newInstance.title = config.chapters[i].chapter_title;
       //First chapter should be visible.
