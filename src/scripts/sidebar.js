@@ -110,9 +110,12 @@ class SideBar extends H5P.EventDispatcher {
     this.editChapterStatus(x, bool);
   }
 
-  isH5PTask(library) {
-    const onlyLibrary = library.split(" ")[0];
-    return onlyLibrary !== 'H5P.AdvancedText';
+  isH5PTask(H5PObject) {
+
+    if (typeof H5PObject.getMaxScore === 'function') {
+      return H5PObject.getMaxScore() > 0;
+    }
+    return false;
   }
 
   createElemFromChapter(chapter, chapterIndex) {
