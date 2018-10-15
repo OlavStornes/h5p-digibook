@@ -153,7 +153,7 @@ class SideBar extends H5P.EventDispatcher {
     const circleIcon = document.createElement('span');
 
     arrowIcon.classList.add('icon-collapsed');
-    circleIcon.classList.add('icon-chapter-blank');
+    circleIcon.classList.add('icon-chapter-blank', 'h5p-digibook-navigation-chapter-progress');
 
 
 
