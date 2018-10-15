@@ -104,7 +104,6 @@ class SideBar extends H5P.EventDispatcher {
       let targetElem = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-chapter-title')[0];
       targetElem = targetElem.getElementsByClassName('h5p-digibook-navigation-chapter-progress')[0];
       if (x.tasksLeft >= 1) {
-        x.tasksLeft =- 1;
         targetElem.classList.remove('icon-chapter-blank');
         targetElem.classList.add('icon-chapter-started');
       }
@@ -133,6 +132,8 @@ class SideBar extends H5P.EventDispatcher {
           icon.classList.add('icon-chapter-done');
         }
 
+        
+        this.chapters[targetChapter].tasksLeft -= 1;
         this.updateChapterTitle(i, targetChapter);
       }
     }
@@ -189,7 +190,7 @@ class SideBar extends H5P.EventDispatcher {
     };
 
     chapter.hasTasks = false;
-    
+
     // Add sections to the chapter
     const sections = this.parent.instances[chapterIndex].childInstances;
     for (let i = 0; i < sections.length; i++) {
