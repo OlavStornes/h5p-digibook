@@ -97,8 +97,25 @@ class SideBar extends H5P.EventDispatcher {
     const targetElem = this.chapterElems[newChapter];
     this.editChapterStatus(targetElem, false);
   }
-
-
+  /**
+   * Set a section progress indicator
+   * 
+   * @param {string} targetId 
+   * @param {string} chapter 
+   */
+  setSectionStatusByID(targetId, chapter) {
+    for (let i = 0; i < this.chapters[chapter].sections.length; i++) {
+      const element = this.chapters[chapter].sections[i];
+      if (element.subContentId === targetId) {
+        const tmp = this.chapterElems[chapter].getElementsByClassName('h5p-digibook-navigation-section')[i];
+        const icon = tmp.getElementsByTagName('span')[0];
+        if (icon) {
+          icon.classList.remove('icon-chapter-blank');
+          icon.classList.add('icon-chapter-done');
+        }
+      }
+    }
+  }
 
   toggleChapter(element) {
     const x = element.currentTarget.parentElement;

@@ -95,6 +95,12 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     });
 
+    H5P.externalDispatcher.on('xAPI', function (event) {
+      if (event.getVerb() === 'answered') {
+        self.sideBar.setSectionStatusByID(this.contentData.subContentId, self.activeChapter);
+      }
+    });
+
     /**
      * If the content is short, hide the footer
      * @param {div} targetChapter 
@@ -276,6 +282,7 @@ export default class DigiBook extends H5P.EventDispatcher {
 
       self.changeChapter();
     };
+
     
     if (this.internal) {
 
