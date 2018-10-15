@@ -10,15 +10,10 @@ class SideBar extends H5P.EventDispatcher {
     this.div = document.createElement('div');
     this.content = document.createElement('div');
     this.div.classList.add('h5p-digibook-navigation');
-
-    this.chapters = [];
-
-
+    
     this.titleElem = this.addMainTitle(config.title);
-    this.findAllChapters(config);
-
+    this.chapters = this.findAllChapters(parent.instances, config.chapters);
     this.chapterElems = this.getChapterElements();
-
 
 
     //Appending phase
@@ -134,8 +129,8 @@ class SideBar extends H5P.EventDispatcher {
     sectionsDiv.classList.add('h5p-digibook-navigation-sectionlist');
 
     
-    title.innerHTML = chapter.chapter_title;
-    title.setAttribute("title", chapter.chapter_title);
+    title.innerHTML = chapter.title;
+    title.setAttribute("title", chapter.title);
 
     const arrowIcon = document.createElement('span');
     const circleIcon = document.createElement('span');
@@ -156,7 +151,7 @@ class SideBar extends H5P.EventDispatcher {
     };
 
     // Add sections to the chapter
-    const sections = chapter.chapter.params.content;
+    const sections = this.parent.instances[chapterIndex].childInstances;
     for (let i = 0; i < sections.length; i++) {
       const section = sections[i];
       
@@ -164,11 +159,11 @@ class SideBar extends H5P.EventDispatcher {
       const a = document.createElement('a');
       const icon = document.createElement('span');
       singleSection.classList.add('h5p-digibook-navigation-section');
-      a.innerHTML = this.parseLibrary(section.content);
+      a.innerHTML = section.title;
 
       icon.classList.add('h5p-digibook-navigation-section-taskicon');
       
-      if (this.isH5PTask(section.content.library)) {
+      if (this.isH5PTask(section)) {
         icon.classList.add('icon-chapter-blank');
       }
       singleSection.appendChild(icon);
