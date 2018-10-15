@@ -109,6 +109,8 @@ class SideBar extends H5P.EventDispatcher {
 
     
     title.innerHTML = chapter.chapter_title;
+    title.setAttribute("title", chapter.chapter_title);
+
     const arrowIcon = document.createElement('span');
     const circleIcon = document.createElement('span');
 
