@@ -93,6 +93,11 @@ class SideBar extends H5P.EventDispatcher {
     this.editChapterStatus(x, bool);
   }
 
+  isH5PTask(library) {
+    const onlyLibrary = library.split(" ")[0];
+    return onlyLibrary !== 'H5P.AdvancedText';
+  }
+
   createElemFromChapter(chapter, chapterIndex) {
     const that = this;
 
@@ -136,9 +141,17 @@ class SideBar extends H5P.EventDispatcher {
       
       const singleSection = document.createElement('div');
       const a = document.createElement('a');
+      const icon = document.createElement('span');
       singleSection.classList.add('h5p-digibook-navigation-section');
       a.innerHTML = this.parseLibrary(section.content);
 
+      icon.classList.add('h5p-digibook-navigation-section-taskicon');
+      
+      if (this.isH5PTask(section.content.library)) {
+        icon.classList.add('icon-chapter-blank');
+      }
+      singleSection.appendChild(icon);
+      
       singleSection.appendChild(a);
       
       sectionsDiv.appendChild(singleSection);
