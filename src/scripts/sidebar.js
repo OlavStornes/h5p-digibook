@@ -68,6 +68,7 @@ class SideBar extends H5P.EventDispatcher {
         title:chapterTitle
       });
     }
+    return chapters;
   }
 
 
