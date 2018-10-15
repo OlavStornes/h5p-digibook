@@ -47,9 +47,26 @@ class SideBar extends H5P.EventDispatcher {
     };
   }
 
-  findAllChapters(config) {
-    for (let i = 0; i < config.chapters.length; i++) {
-      this.chapters.push(config.chapters[i]);
+
+  findSectionsInChapter(chapter, config) {
+    const tmp = [];
+    for (let j = 0; j < chapter.childInstances.length; j++) {
+      const section = chapter.childInstances[j];
+      section.title = this.parseLibrary(config[j].content);
+      tmp.push(section);
+    }
+    return tmp;
+  }
+
+  findAllChapters(instances, config) {
+    const chapters = [];
+    for (let i = 0; i < instances.length; i++) {
+      const sections = this.findSectionsInChapter(instances[i], config[i].chapter.params.content);
+      const chapterTitle = config[i].chapter_title;
+      chapters.push({
+        sections,
+        title:chapterTitle
+      });
     }
   }
 
