@@ -167,6 +167,8 @@ class SideBar extends H5P.EventDispatcher {
       this.toggleChapter(event);
     };
 
+    chapter.hasTasks = false;
+    
     // Add sections to the chapter
     const sections = this.parent.instances[chapterIndex].childInstances;
     for (let i = 0; i < sections.length; i++) {
@@ -181,6 +183,14 @@ class SideBar extends H5P.EventDispatcher {
       icon.classList.add('h5p-digibook-navigation-section-taskicon');
       
       if (this.isH5PTask(section)) {
+        sections[i].taskDone = false;
+        if (chapter.tasksLeft) {
+          chapter.tasksLeft += 1;
+        }
+        else {
+          chapter.tasksLeft = 1;
+        }
+        chapter.hasTasks = true;
         icon.classList.add('icon-chapter-blank');
       }
       singleSection.appendChild(icon);
