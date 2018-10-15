@@ -2,10 +2,21 @@
  * Constructor function.
  */
 class StatusBar extends H5P.EventDispatcher {
-  constructor(contentId, totalChapters, parent) {
+  constructor(contentId, totalChapters, parent, params) {
     super();
     this.id = contentId;
     this.parent = parent;
+
+    this.params = this.extend(
+      {
+        l10n: {
+          nextPage: 'Next page',
+          previousPage: 'Previous page'
+        }
+      },
+      params || {}
+    );
+
     this.totalChapters = totalChapters;
     this.arrows = this.addArrows();
 
@@ -185,10 +196,10 @@ class StatusBar extends H5P.EventDispatcher {
     };
 
     //Add tooltip
-    acm.topNext.setAttribute("title", "Next page");
-    acm.botNext.setAttribute("title", "Next page");
-    acm.topPrev.setAttribute("title", "Previous page");
-    acm.botPrev.setAttribute("title", "Previous page");
+    acm.topNext.setAttribute("title", this.params.l10n.nextPage);
+    acm.botNext.setAttribute("title", this.params.l10n.nextPage);
+    acm.topPrev.setAttribute("title", this.params.l10n.previousPage);
+    acm.botPrev.setAttribute("title", this.params.l10n.previousPage);
 
     return acm;
   }
@@ -314,6 +325,28 @@ class StatusBar extends H5P.EventDispatcher {
       this.arrows['top'+target].classList.remove('disabled');
       this.arrows['bot'+target].classList.remove('disabled');
     }
+  }
+
+  /**
+   * Extend an array just like JQuery's extend.
+   *
+   * @param {object} arguments Objects to be merged.
+   * @return {object} Merged objects.
+   */
+  extend() {
+    for (let i = 1; i < arguments.length; i++) {
+      for (let key in arguments[i]) {
+        if (arguments[i].hasOwnProperty(key)) {
+          if (typeof arguments[0][key] === 'object' && typeof arguments[i][key] === 'object') {
+            this.extend(arguments[0][key], arguments[i][key]);
+          }
+          else {
+            arguments[0][key] = arguments[i][key];
+          }
+        }
+      }
+    }
+    return arguments[0];
   }
 }
 export default StatusBar;

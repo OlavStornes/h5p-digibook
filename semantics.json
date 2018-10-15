@@ -48,5 +48,23 @@
         }
       ]
     }
+  },
+  {
+    "name": "nextPage",
+    "type": "text",
+    "label": "Translation for \"Next page\"",
+    "importance": "low",
+    "default": "Next page",
+    "common": true,
+    "optional": true
+  },
+  {
+    "name": "previousPage",
+    "type": "text",
+    "label": "Translation for \"Previous page\"",
+    "importance": "low",
+    "default": "Previous page",
+    "common": true,
+    "optional": true
   }
 ]

@@ -1,0 +1,39 @@
+{
+  "semantics": [
+    {
+      "label": "Title",
+      "placeholder": "Here you can add an optional title.",
+      "description": "The title you'd like to show above the image"
+    },
+    {
+      "label": "Chapters",
+      "entity": "Chapter",
+      "widgets": [
+        {
+          "label": "Default"
+        }
+      ],
+      "field": {
+        "label": "Item",
+        "fields": [
+          {
+            "label": "Chapter title",
+            "placeholder": "Insert chapter here",
+            "description": "The name of the chapter"
+          },
+          {
+            "label": "Chapter"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Translation for \"Next page\"",
+      "default": "Next page"
+    },
+    {
+      "label": "Translation for \"Previous page\"",
+      "default": "Previous page"
+    }
+  ]
+}
