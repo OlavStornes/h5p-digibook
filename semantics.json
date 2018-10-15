@@ -50,6 +50,42 @@
     }
   },
   {
+    "name": "read",
+    "type": "text",
+    "label": "Translation for \"Read\"",
+    "importance": "low",
+    "default": "Read",
+    "common": true,
+    "optional": true
+  },
+  {
+    "name": "displayTOC",
+    "type": "text",
+    "label": "Translation for \"Display 'Table of contents'\"",
+    "importance": "low",
+    "default": "Display 'Table of contents'",
+    "common": true,
+    "optional": true
+  },
+  {
+    "name": "hideTOC",
+    "type": "text",
+    "label": "Translation for \"Hide 'Table of contents'\"",
+    "importance": "low",
+    "default": "Hide 'Table of contents'",
+    "common": true,
+    "optional": true
+  },
+  {
+    "name": "nextPage",
+    "type": "text",
+    "label": "Translation for \"Next page\"",
+    "importance": "low",
+    "default": "Next page",
+    "common": true,
+    "optional": true
+  },
+  {
     "name": "nextPage",
     "type": "text",
     "label": "Translation for \"Next page\"",
@@ -64,6 +100,42 @@
     "label": "Translation for \"Previous page\"",
     "importance": "low",
     "default": "Previous page",
+    "common": true,
+    "optional": true
+  },
+  {
+    "name": "chapterCompleted",
+    "type": "text",
+    "label": "Translation for \"Chapter completed!\"",
+    "importance": "low",
+    "default": "Chapter completed!",
+    "common": true,
+    "optional": true
+  },
+  {
+    "name": "partCompleted",
+    "type": "text",
+    "label": "Translation for \"@pages of @total completed\" (@pages and @total will be replaced by actual values)",
+    "importance": "low",
+    "default": "@pages of @total completed",
+    "common": true,
+    "optional": true
+  },
+  {
+    "name": "incompleteChapter",
+    "type": "text",
+    "label": "Translation for \"Incomplete chapter\"",
+    "importance": "low",
+    "default": "Incomplete chapter",
+    "common": true,
+    "optional": true
+  },
+  {
+    "name": "navigateToTop",
+    "type": "text",
+    "label": "Translation for \"Navigate to the top\"",
+    "importance": "low",
+    "default": "Navigate to the top",
     "common": true,
     "optional": true
   }
