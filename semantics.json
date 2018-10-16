@@ -50,14 +50,14 @@
     }
   },
   {
-    "name": "behaviouralSettings",
+    "name": "behaviour",
     "type": "group",
     "label": "Behavioural settings",
     "fields": [
       {
         "name": "tableOfContents",
         "type": "boolean",
-        "label": "Display table of contents",
+        "label": "Display table of contents as default",
         "description": "When enabled the table of contents is showed when opening the book",
         "default": true
       },
@@ -71,8 +71,8 @@
       {
         "name": "progressType",
         "type": "boolean",
-        "label": "Enable automatic progress type",
-        "description": "If enabled a page without tasks is considered done when viewed. A page with tasks when all tasks are done. If unchecked there will be a button at the bottom of every page for the user to click when done with the page.",
+        "label": "Enable automatic progress",
+        "description": "If enabled a page without tasks is considered done when viewed. A page with tasks when all tasks are done. If disabled there will be a button at the bottom of every page for the user to click when done with the page.",
         "default": true,
         "widget": "showWhen",
         "showWhen": {
