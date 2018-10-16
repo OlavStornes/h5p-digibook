@@ -33,6 +33,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     for (let i = 0; i < config.chapters.length; i++) {
       const newColumn = document.createElement('div');
       const newInstance = H5P.newRunnable(config.chapters[i].chapter, contentId, H5P.jQuery(newColumn), contentData);
+      newInstance.childInstances = newInstance.getInstances();
       newColumn.classList.add('h5p-digibook-chapter');
       newInstance.title = config.chapters[i].chapter_title;
       //First chapter should be visible.
@@ -100,6 +101,12 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     });
 
+    H5P.externalDispatcher.on('xAPI', function (event) {
+      if (event.getVerb() === 'answered') {
+        self.sideBar.setSectionStatusByID(this.contentData.subContentId, self.activeChapter);
+      }
+    });
+
     /**
      * If the content is short, hide the footer
      * @param {div} targetChapter 
@@ -118,8 +125,9 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {int} chapter - The given chapter that should be opened
      * @param {int} section - The given section to redirect
      */
-    this.changeChapter = function () {
+    this.changeChapter = function (redirectOnLoad) {
       const targetPage = this.newHandler;
+      const oldChapter = this.activeChapter;
 
       if (targetPage.chapter < self.columnElements.length) {
         const targetChapter = self.columnElements[targetPage.chapter];
@@ -137,6 +145,11 @@ export default class DigiBook extends H5P.EventDispatcher {
         self.trigger('resize');
         this.statusBar.updateStatusBar();
         this.sideBar.redirectHandler(targetPage.chapter);
+        
+        if (!redirectOnLoad) {
+          this.sideBar.updateChapterTitle(oldChapter);
+        }
+
         //Avoid accidentaly referring to a section that does not exist
         if (targetPage.section < sectionsInChapter.length) {
           // Workaround on focusing on new element
@@ -197,7 +210,7 @@ export default class DigiBook extends H5P.EventDispatcher {
             return;
           }
           this.newHandler = redirObj;
-          this.changeChapter();
+          this.changeChapter(true);
         }
 
         else {
@@ -281,6 +294,7 @@ export default class DigiBook extends H5P.EventDispatcher {
 
       self.changeChapter();
     };
+
     
     if (this.internal) {
 
