@@ -286,6 +286,15 @@ class StatusBar extends H5P.EventDispatcher {
     };
   }
 
+  addMarkAsReadButton() {
+    const checkMark = document.createElement('span');
+    checkMark.classList.add('icon-chapter-done', 'h5p-digibook-status-progress-marker');
+    checkMark.onclick = () => {
+      console.log("OH BOI CLICK");
+    };
+    return checkMark;
+  }
+
   /**
    * Add a status-button which shows current and total chapters
    */
@@ -309,6 +318,12 @@ class StatusBar extends H5P.EventDispatcher {
     p.appendChild(divider);
     p.appendChild(total);
 
+    
+    if (this.params.behaviour.progressIndicators && !this.params.behaviour.autoProgressType) {
+      const checkMark = this.addMarkAsReadButton();
+      div.appendChild(checkMark);
+    }
+    
     div.appendChild(p);
     return {
       div,
