@@ -47,7 +47,12 @@ export default class DigiBook extends H5P.EventDispatcher {
 
     //Initialize the support components
     this.sideBar = new SideBar(config, contentId, this);
-    this.statusBar = new StatusBar(contentId, config.chapters.length, this);
+    this.statusBar = new StatusBar(contentId, config.chapters.length, this, {
+      l10n: {
+        nextPage: config.nextPage,
+        previousPage: config.previousPage
+      }
+    });
 
     //Kickstart the statusbar
     this.statusBar.updateStatusBar();

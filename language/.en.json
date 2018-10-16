@@ -1,0 +1,71 @@
+{
+  "semantics": [
+    {
+      "label": "Title",
+      "placeholder": "Here you can add an optional title.",
+      "description": "The title you'd like to show above the image"
+    },
+    {
+      "label": "Chapters",
+      "entity": "Chapter",
+      "widgets": [
+        {
+          "label": "Default"
+        }
+      ],
+      "field": {
+        "label": "Item",
+        "fields": [
+          {
+            "label": "Chapter title",
+            "placeholder": "Insert chapter here",
+            "description": "The name of the chapter"
+          },
+          {
+            "label": "Chapter"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Translation for \"Read\"",
+      "default": "Read"
+    },
+    {
+      "label": "Translation for \"Display 'Table of contents'\"",
+      "default": "Display 'Table of contents'"
+    },
+    {
+      "label": "Translation for \"Hide 'Table of contents'\"",
+      "default": "Hide 'Table of contents'"
+    },
+    {
+      "label": "Translation for \"Next page\"",
+      "default": "Next page"
+    },
+    {
+      "label": "Translation for \"Next page\"",
+      "default": "Next page"
+    },
+    {
+      "label": "Translation for \"Previous page\"",
+      "default": "Previous page"
+    },
+    {
+      "label": "Translation for \"Chapter completed!\"",
+      "default": "Chapter completed!"
+    },
+    {
+      "label": "Translation for \"@pages of @total completed\" (@pages and @total will be replaced by actual values)",
+      "default": "@pages of @total completed"
+    },
+    {
+      "label": "Translation for \"Incomplete chapter\"",
+      "default": "Incomplete chapter"
+    },
+    {
+      "label": "Translation for \"Navigate to the top\"",
+      "default": "Navigate to the top"
+    }
+  ]
+}
