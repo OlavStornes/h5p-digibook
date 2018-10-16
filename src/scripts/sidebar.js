@@ -7,7 +7,7 @@ class SideBar extends H5P.EventDispatcher {
     super();
     this.id = contentId;
     this.parent = parent;
-    this.params = config.behaviour;
+    this.behaviour = config.behaviour;
     this.div = document.createElement('div');
     this.content = document.createElement('div');
     this.div.classList.add('h5p-digibook-navigation');
@@ -175,7 +175,7 @@ class SideBar extends H5P.EventDispatcher {
     titleDiv.classList.add('h5p-digibook-navigation-chapter-title');
 
     chapterDiv.classList.add('h5p-digibook-navigation-chapter');
-    if (this.params.tableOfContents) {
+    if (this.behaviour.tableOfContents) {
       chapterDiv.classList.add('h5p-digibook-navigation-closed');
     } 
 
@@ -190,7 +190,9 @@ class SideBar extends H5P.EventDispatcher {
     const circleIcon = document.createElement('span');
 
     arrowIcon.classList.add('icon-collapsed');
-    circleIcon.classList.add('icon-chapter-blank', 'h5p-digibook-navigation-chapter-progress');
+    if (this.behaviour.progressIndicators) {
+      circleIcon.classList.add('icon-chapter-blank', 'h5p-digibook-navigation-chapter-progress');
+    }
 
 
 
@@ -218,7 +220,7 @@ class SideBar extends H5P.EventDispatcher {
       // icon.classList.add('h5p-digibook-navigation-section-taskicon');
       a.classList.add('icon-chapter-blank');
       
-      if (this.isH5PTask(section)) {
+      if (this.behaviour.progressIndicators && this.isH5PTask(section)) {
         sections[i].taskDone = false;
         if (chapter.tasksLeft) {
           chapter.tasksLeft += 1;

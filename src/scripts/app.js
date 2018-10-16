@@ -14,6 +14,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     const self = this;
     this.activeChapter = 0;
     this.newHandler = {};
+    this.behaviour = config.behaviour;
 
     // H5P-instances (columns)
     this.instances = [];
@@ -54,7 +55,7 @@ export default class DigiBook extends H5P.EventDispatcher {
         previousPage: config.previousPage,
         navigateToTop: config.navigateToTop
       },
-      behaviour: config.behaviour
+      behaviour: this.behaviour
     });
 
     //Kickstart the statusbar
@@ -104,7 +105,9 @@ export default class DigiBook extends H5P.EventDispatcher {
 
     H5P.externalDispatcher.on('xAPI', function (event) {
       if (event.getVerb() === 'answered') {
-        self.sideBar.setSectionStatusByID(this.contentData.subContentId, self.activeChapter);
+        if (self.behaviour.progressIndicators) {
+          self.sideBar.setSectionStatusByID(this.contentData.subContentId, self.activeChapter);
+        }
       }
     });
 
