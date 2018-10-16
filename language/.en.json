@@ -28,6 +28,23 @@
       }
     },
     {
+      "label": "Behavioural settings",
+      "fields": [
+        {
+          "label": "Display table of contents",
+          "description": "When enabled the table of contents is showed when opening the book"
+        },
+        {
+          "label": "Display Progress Indicators",
+          "description": "When enabled there will be indicators per page showing the user if he is done with the page or not."
+        },
+        {
+          "label": "Enable automatic progress type",
+          "description": "If enabled a page without tasks is considered done when viewed. A page with tasks when all tasks are done. If unchecked there will be a button at the bottom of every page for the user to click when done with the page."
+        }
+      ]
+    },
+    {
       "label": "Translation for \"Read\"",
       "default": "Read"
     },
