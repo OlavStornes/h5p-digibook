@@ -7,6 +7,7 @@ class SideBar extends H5P.EventDispatcher {
     super();
     this.id = contentId;
     this.parent = parent;
+    this.params = config.behaviour;
     this.div = document.createElement('div');
     this.content = document.createElement('div');
     this.div.classList.add('h5p-digibook-navigation');
@@ -172,7 +173,13 @@ class SideBar extends H5P.EventDispatcher {
 
     //Add classes
     titleDiv.classList.add('h5p-digibook-navigation-chapter-title');
-    chapterDiv.classList.add('h5p-digibook-navigation-chapter', 'h5p-digibook-navigation-closed');
+
+    chapterDiv.classList.add('h5p-digibook-navigation-chapter');
+    if (this.params.tableOfContents) {
+      chapterDiv.classList.add('h5p-digibook-navigation-closed');
+    } 
+
+
     sectionsDiv.classList.add('h5p-digibook-navigation-sectionlist');
 
     
@@ -209,7 +216,7 @@ class SideBar extends H5P.EventDispatcher {
       const icon = document.createElement('span');
       singleSection.classList.add('h5p-digibook-navigation-section');
       a.innerHTML = section.title;
-
+      a.classList.add('icon-close');
       icon.classList.add('h5p-digibook-navigation-section-taskicon');
       
       if (this.isH5PTask(section)) {
