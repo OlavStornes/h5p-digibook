@@ -11,7 +11,8 @@ class StatusBar extends H5P.EventDispatcher {
       {
         l10n: {
           nextPage: 'Next page',
-          previousPage: 'Previous page'
+          previousPage: 'Previous page',
+          navigateToTop: 'Navigate to the top'
         }
       },
       params || {}
@@ -268,7 +269,7 @@ class StatusBar extends H5P.EventDispatcher {
     const a = document.createElement('a');
     div.classList.add('h5p-digibook-status-button', 'h5p-digibook-status-arrow');
     a.classList.add ('icon-up');
-    a.setAttribute('title', 'Navigate to the top');
+    a.setAttribute('title', this.params.l10n.navigateToTop);
     a.onclick = function () {
       that.parent.trigger('scrollToTop');
     };
