@@ -135,7 +135,7 @@ class SideBar extends H5P.EventDispatcher {
       if (element.subContentId === targetId) {
         element.taskDone = true;
         const tmp = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-section')[i];
-        const icon = tmp.getElementsByTagName('span')[0];
+        const icon = tmp.getElementsByTagName('a')[0];
         if (icon) {
           icon.classList.remove('icon-chapter-blank');
           icon.classList.add('icon-chapter-done');
@@ -213,11 +213,10 @@ class SideBar extends H5P.EventDispatcher {
       
       const singleSection = document.createElement('div');
       const a = document.createElement('a');
-      const icon = document.createElement('span');
       singleSection.classList.add('h5p-digibook-navigation-section');
       a.innerHTML = section.title;
-      a.classList.add('icon-close');
-      icon.classList.add('h5p-digibook-navigation-section-taskicon');
+      // icon.classList.add('h5p-digibook-navigation-section-taskicon');
+      a.classList.add('icon-chapter-blank');
       
       if (this.isH5PTask(section)) {
         sections[i].taskDone = false;
@@ -228,9 +227,9 @@ class SideBar extends H5P.EventDispatcher {
           chapter.tasksLeft = 1;
         }
         chapter.hasTasks = true;
-        icon.classList.add('icon-chapter-blank');
+        a.classList.add('h5p-digibook-navigation-section-task');
       }
-      singleSection.appendChild(icon);
+      // singleSection.appendChild(icon);
       
       singleSection.appendChild(a);
       

@@ -151,7 +151,6 @@
   background-color: #ffffff;
   background-size: cover;
   max-height: 31.250em;
-  padding-left: 1.5em;
   transition: max-height 0.5s ease-in;
   width: 16.563em; }
   .h5p-digibook-navigation-sectionlist a {
@@ -165,6 +164,12 @@
     padding: 0 0 0 1.875em;
     text-decoration: none solid #4c4452;
     width: 12.625em; }
+
+.h5p-digibook-navigation-section :before {
+  padding-right: 30px; }
+
+.h5p-digibook-navigation-section :not(.h5p-digibook-navigation-section-task):before {
+  visibility: hidden; }
 
 .h5p-digibook-navigation-section :hover {
   cursor: pointer; }

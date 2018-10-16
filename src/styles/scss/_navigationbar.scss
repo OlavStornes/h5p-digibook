@@ -20,7 +20,7 @@
     background-color: #ffffff;
     background-size: cover;
     max-height: 31.250em;
-    padding-left: 1.5em;
+    // padding-left: 1.5em;
     transition: max-height 0.5s ease-in;
     width: 16.563em;
     a {
@@ -37,7 +37,17 @@
     }
 }
 
+
+
 .h5p-digibook-navigation-section {
+    :before{
+        padding-right: 30px;
+    }
+    :not(.h5p-digibook-navigation-section-task){
+        &:before{
+            visibility: hidden;
+        }
+    }
     :hover {
         cursor: pointer
     }
