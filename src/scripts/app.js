@@ -53,7 +53,8 @@ export default class DigiBook extends H5P.EventDispatcher {
         nextPage: config.nextPage,
         previousPage: config.previousPage,
         navigateToTop: config.navigateToTop
-      }
+      },
+      behaviour: config.behaviour
     });
 
     //Kickstart the statusbar
