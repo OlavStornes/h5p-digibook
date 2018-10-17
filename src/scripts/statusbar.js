@@ -29,8 +29,8 @@ class StatusBar extends H5P.EventDispatcher {
     this.topInfo.classList.add('h5p-digibook-status', 'h5p-digibook-status-header');
     
     this.topProgressBar = this.addProgressBar();
-    this.topStatus = this.addProgress();
-    this.botStatus = this.addProgress();
+    this.topStatus = this.addProgress(true);
+    this.botStatus = this.addProgress(false);
     this.topMenu = this.addMenu();
     this.buttonToTop = this.addToTop();
     
@@ -119,9 +119,9 @@ class StatusBar extends H5P.EventDispatcher {
   }
 
   updateReadMarker() {
-    if (this.parent.isCurrentChapterRead()) {
-      debugger;
-    }
+    const isDone = this.parent.isCurrentChapterRead();
+    this.checkMark.markRead.disabled = isDone;
+    this.checkMark.markRead.checked = isDone;
   }
 
   updateStatusBar() {
@@ -301,24 +301,28 @@ class StatusBar extends H5P.EventDispatcher {
     const checkText = document.createElement('p');
     checkText.innerHTML = "New text who dis";
 
-    const checkMark = document.createElement('input');
-    checkMark.setAttribute('type', 'checkbox');
-    checkMark.classList.add('h5p-digibook-status-progress-marker');
-    checkMark.onclick = () => {
+    const markRead = document.createElement('input');
+    markRead.setAttribute('type', 'checkbox');
+    markRead.classList.add('h5p-digibook-status-progress-marker');
+    markRead.onclick = () => {
       this.parent.setCurrentChapterRead();
-      checkMark.disabled = true;
+      markRead.disabled = true;
     };
 
     div.appendChild(checkText);
-    div.appendChild(checkMark);
+    div.appendChild(markRead);
 
-    return div;
+    return {
+      div,
+      markRead,
+      checkText
+    };
   }
 
   /**
    * Add a status-button which shows current and total chapters
    */
-  addProgress() {
+  addProgress(footer) {
     const div = document.createElement('div');
     const p = document.createElement('p');
     const current = document.createElement('span');
@@ -338,11 +342,13 @@ class StatusBar extends H5P.EventDispatcher {
     p.appendChild(divider);
     p.appendChild(total);
 
-    
-    if (this.params.behaviour.progressIndicators && !this.params.behaviour.progressAuto) {
-      const checkMark = this.addMarkAsReadButton();
-      div.appendChild(checkMark);
+    if (footer) {
+      if (this.params.behaviour.progressIndicators && !this.params.behaviour.progressAuto) {
+        this.checkMark = this.addMarkAsReadButton();
+        div.appendChild(this.checkMark.div);
+      }
     }
+
     
     div.appendChild(p);
     return {

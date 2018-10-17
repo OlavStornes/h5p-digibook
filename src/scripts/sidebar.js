@@ -112,6 +112,17 @@ class SideBar extends H5P.EventDispatcher {
   }
 
   /**
+   * Manually set the target chapter as complete
+   * @param {number} current - Current chapter
+   */
+  setChapterIndicatorComplete(current) {
+    let targetElem = this.chapterElems[current].getElementsByClassName('h5p-digibook-navigation-chapter-title')[0];
+    targetElem = targetElem.getElementsByClassName('h5p-digibook-navigation-chapter-progress')[0];
+    targetElem.classList.remove('icon-chapter-blank');
+    targetElem.classList.add('icon-chapter-done');
+  }
+
+  /**
    * Update the indicator on a spesific chapter.
    * 
    * @param {number} targetChapter - The chapter that should be updated
@@ -120,11 +131,11 @@ class SideBar extends H5P.EventDispatcher {
     if (!this.behaviour.progressIndicators || !this.behaviour.progressAuto) {
       return;
     }
-    const x = this.chapters[targetChapter];
+    const x = this.parent.instances[targetChapter];
     let targetElem = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-chapter-title')[0];
     targetElem = targetElem.getElementsByClassName('h5p-digibook-navigation-chapter-progress')[0];
 
-    if (x.hasTasks) {
+    if (x.maxTasks) {
       if (x.tasksLeft == x.maxTasks) {
         targetElem.classList.remove('icon-chapter-started', 'icon-chapter-done');
         targetElem.classList.add('icon-chapter-blank');
@@ -201,8 +212,6 @@ class SideBar extends H5P.EventDispatcher {
       this.toggleChapter(event);
     };
 
-    chapter.hasTasks = false;
-
     // Add sections to the chapter
     const sections = this.parent.instances[chapterIndex].childInstances;
     for (let i = 0; i < sections.length; i++) {
@@ -212,13 +221,11 @@ class SideBar extends H5P.EventDispatcher {
       const a = document.createElement('a');
       singleSection.classList.add('h5p-digibook-navigation-section');
       a.innerHTML = section.title;
-      // icon.classList.add('h5p-digibook-navigation-section-taskicon');
       a.classList.add('icon-chapter-blank');
       
       if (section.isTask) {
         a.classList.add('h5p-digibook-navigation-section-task');
       }
-      // singleSection.appendChild(icon);
       
       singleSection.appendChild(a);
       

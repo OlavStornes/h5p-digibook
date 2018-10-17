@@ -57,7 +57,7 @@ export default class DigiBook extends H5P.EventDispatcher {
           }
         });
       }
-      newInstance.hasTasks = newInstance.tasksLeft > 0;
+      newInstance.maxTasks = newInstance.tasksLeft;
         
 
       //First chapter should be visible.
@@ -140,9 +140,7 @@ export default class DigiBook extends H5P.EventDispatcher {
   
     this.setCurrentChapterRead = () => {
       this.instances[this.activeChapter].completed = true;
-      //TODO: Update all the bars
-      this.sideBar.updateChapterTitleIndicator(this.activeChapter);
-      
+      this.sideBar.setChapterIndicatorComplete(this.activeChapter);      
     };
     
 
@@ -151,11 +149,13 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {div} targetChapter 
      */
     this.shouldFooterBeVisible = (targetChapter) => {
-      if (targetChapter.clientHeight <= window.outerHeight) {
-        this.statusBar.bot.hidden = true;
-      }
-      else {
-        this.statusBar.bot.hidden = false;
+      if (this.behaviour.progressAuto) {
+        if (targetChapter.clientHeight <= window.outerHeight) {
+          this.statusBar.bot.hidden = true;
+        }
+        else {
+          this.statusBar.bot.hidden = false;
+        }
       }
     }; 
 
@@ -184,8 +184,8 @@ export default class DigiBook extends H5P.EventDispatcher {
         self.trigger('resize');
         this.statusBar.updateStatusBar();
         this.sideBar.redirectHandler(targetPage.chapter);
-        
-        if (!redirectOnLoad || !this.behaviour.progressAuto) {
+        // debugger
+        if (!redirectOnLoad) {
           this.sideBar.updateChapterTitleIndicator(oldChapter);
         }
 
@@ -366,7 +366,7 @@ export default class DigiBook extends H5P.EventDispatcher {
           
           this.instances[targetChapter].tasksLeft -= 1;
           if (this.behaviour.progressAuto) {
-            this.updateChapterTitleIndicator(targetChapter);
+            this.sideBar.updateChapterTitleIndicator(targetChapter);
           }
         }
       }
