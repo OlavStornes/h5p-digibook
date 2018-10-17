@@ -11,14 +11,14 @@ class SideBar extends H5P.EventDispatcher {
     this.content = document.createElement('div');
     this.div = this.addSideBar();
 
-    
-    this.titleElem = this.addMainTitle(config.title);
     this.chapters = this.findAllChapters(parent.instances, config.chapters);
     this.chapterElems = this.getChapterElements();
-
-
-    //Appending phase
-    this.div.appendChild(this.titleElem.div);
+    
+    
+    if (config.title) {
+      this.titleElem = this.addMainTitle(config.title);
+      this.div.appendChild(this.titleElem.div);
+    }
 
     this.chapterElems.forEach(element => {
       this.content.appendChild(element);
