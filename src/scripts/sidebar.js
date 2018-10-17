@@ -7,9 +7,10 @@ class SideBar extends H5P.EventDispatcher {
     super();
     this.id = contentId;
     this.parent = parent;
-    this.div = document.createElement('div');
+    this.behaviour = config.behaviour;
     this.content = document.createElement('div');
-    this.div.classList.add('h5p-digibook-navigation');
+    this.div = this.addSideBar();
+
     
     this.titleElem = this.addMainTitle(config.title);
     this.chapters = this.findAllChapters(parent.instances, config.chapters);
@@ -26,6 +27,18 @@ class SideBar extends H5P.EventDispatcher {
     this.div.appendChild(this.content);
 
 
+  }
+
+
+  addSideBar() {
+    const main = document.createElement('div');
+
+    main.classList.add('h5p-digibook-navigation');
+    if (!this.behaviour.defaultTableOfContents) {
+      main.classList.add('h5p-digibook-hide');
+    }
+
+    return main;
   }
 
   addMainTitle(title) {
@@ -98,11 +111,20 @@ class SideBar extends H5P.EventDispatcher {
     this.editChapterStatus(targetElem, false);
   }
 
-  updateChapterTitle(targetChapter) {
+  /**
+   * Update the indicator on a spesific chapter.
+   * 
+   * @param {number} targetChapter - The chapter that should be updated
+   */
+  updateChapterTitleIndicator(targetChapter) {
+    if (!this.behaviour.progressIndicators) {
+      return;
+    }
     const x = this.chapters[targetChapter];
     let targetElem = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-chapter-title')[0];
     targetElem = targetElem.getElementsByClassName('h5p-digibook-navigation-chapter-progress')[0];
-    if (x.hasTasks) {
+
+    if (x.hasTasks && this.behaviour.progressAuto) {
       if (x.tasksLeft == x.maxTasks) {
         targetElem.classList.remove('icon-chapter-started', 'icon-chapter-done');
         targetElem.classList.add('icon-chapter-blank');
@@ -134,7 +156,7 @@ class SideBar extends H5P.EventDispatcher {
       if (element.subContentId === targetId) {
         element.taskDone = true;
         const tmp = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-section')[i];
-        const icon = tmp.getElementsByTagName('span')[0];
+        const icon = tmp.getElementsByTagName('a')[0];
         if (icon) {
           icon.classList.remove('icon-chapter-blank');
           icon.classList.add('icon-chapter-done');
@@ -142,7 +164,9 @@ class SideBar extends H5P.EventDispatcher {
 
         
         this.chapters[targetChapter].tasksLeft -= 1;
-        this.updateChapterTitle(targetChapter);
+        if (this.behaviour.progressAuto) {
+          this.updateChapterTitleIndicator(targetChapter);
+        }
       }
     }
   }
@@ -172,7 +196,10 @@ class SideBar extends H5P.EventDispatcher {
 
     //Add classes
     titleDiv.classList.add('h5p-digibook-navigation-chapter-title');
-    chapterDiv.classList.add('h5p-digibook-navigation-chapter', 'h5p-digibook-navigation-closed');
+
+    chapterDiv.classList.add('h5p-digibook-navigation-chapter');
+
+
     sectionsDiv.classList.add('h5p-digibook-navigation-sectionlist');
 
     
@@ -183,7 +210,9 @@ class SideBar extends H5P.EventDispatcher {
     const circleIcon = document.createElement('span');
 
     arrowIcon.classList.add('icon-collapsed');
-    circleIcon.classList.add('icon-chapter-blank', 'h5p-digibook-navigation-chapter-progress');
+    if (this.behaviour.progressIndicators) {
+      circleIcon.classList.add('icon-chapter-blank', 'h5p-digibook-navigation-chapter-progress');
+    }
 
 
 
@@ -206,13 +235,12 @@ class SideBar extends H5P.EventDispatcher {
       
       const singleSection = document.createElement('div');
       const a = document.createElement('a');
-      const icon = document.createElement('span');
       singleSection.classList.add('h5p-digibook-navigation-section');
       a.innerHTML = section.title;
-
-      icon.classList.add('h5p-digibook-navigation-section-taskicon');
+      // icon.classList.add('h5p-digibook-navigation-section-taskicon');
+      a.classList.add('icon-chapter-blank');
       
-      if (this.isH5PTask(section)) {
+      if (this.behaviour.progressIndicators && this.isH5PTask(section)) {
         sections[i].taskDone = false;
         if (chapter.tasksLeft) {
           chapter.tasksLeft += 1;
@@ -221,9 +249,9 @@ class SideBar extends H5P.EventDispatcher {
           chapter.tasksLeft = 1;
         }
         chapter.hasTasks = true;
-        icon.classList.add('icon-chapter-blank');
+        a.classList.add('h5p-digibook-navigation-section-task');
       }
-      singleSection.appendChild(icon);
+      // singleSection.appendChild(icon);
       
       singleSection.appendChild(a);
       

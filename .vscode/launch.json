@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch embedded ",
-            "url": "http://localhost/test.html",
+            "url": "http://localhost/",
             "webRoot": "${workspaceFolder}"
         },
         {

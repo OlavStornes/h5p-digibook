@@ -212,8 +212,14 @@ class StatusBar extends H5P.EventDispatcher {
     const that = this;
     const row = document.createElement('div');
     const item = document.createElement('a');
-    // icon.innerHTML = "Toggle menu";
-    item.classList.add('icon-menu');
+
+    let iconType = 'icon-menu';
+    if (this.params.behaviour.defaultTableOfContents) {
+      iconType = 'icon-close';
+      row.classList.add('h5p-digibook-status-menu-active');
+    }
+    item.classList.add(iconType);
+
     row.classList.add('h5p-digibook-status-menu', 'h5p-digibook-status-button');
     row.onclick = function () {
       that.parent.trigger('toggleMenu');
@@ -280,6 +286,15 @@ class StatusBar extends H5P.EventDispatcher {
     };
   }
 
+  addMarkAsReadButton() {
+    const checkMark = document.createElement('span');
+    checkMark.classList.add('icon-chapter-done', 'h5p-digibook-status-progress-marker');
+    checkMark.onclick = () => {
+      this.parent.sideBar.updateChapterTitle(this.parent.activeChapter);
+    };
+    return checkMark;
+  }
+
   /**
    * Add a status-button which shows current and total chapters
    */
@@ -303,6 +318,12 @@ class StatusBar extends H5P.EventDispatcher {
     p.appendChild(divider);
     p.appendChild(total);
 
+    
+    if (this.params.behaviour.progressIndicators && !this.params.behaviour.progressAuto) {
+      const checkMark = this.addMarkAsReadButton();
+      div.appendChild(checkMark);
+    }
+    
     div.appendChild(p);
     return {
       div,
