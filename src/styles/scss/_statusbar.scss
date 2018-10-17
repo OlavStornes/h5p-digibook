@@ -4,7 +4,7 @@
     border-left-width: 1px;
     border-style: solid;
     border-color: $base-color;
-    background-color: #ffffff;
+    background-color: $background-color;
     background-size: cover;
     box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
     z-index: 1;
@@ -21,9 +21,9 @@
     height: 2.750em;
     width: 2.750em;
     flex-shrink: 0;
-    border: 2px solid #ffffff;
+    border: 2px solid $background-color;
     border-radius: 2px;
-    background-color: #ffffff;
+    background-color: $background-color;
     background-size: cover;
   }
 
@@ -60,7 +60,7 @@
         color: $base-color;
       }
       &.icon-close {
-        color: #ffffff;
+        color: $background-color;
         font-size: 1.500em;
       }
     }
@@ -121,9 +121,9 @@
     width: 2.750em;
     height: 2.750em;
     flex-shrink: 0;
-    border: 0.125em solid #ffffff;
+    border: 0.125em solid $background-color;
     border-radius: 0.125em;
-    background-color: #ffffff;
+    background-color: $background-color;
     background-size: cover;
     a {
       margin: auto;

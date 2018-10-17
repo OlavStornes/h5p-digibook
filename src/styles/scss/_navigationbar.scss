@@ -1,5 +1,5 @@
 .h5p-digibook-navigation {
-    background-color: #ffffff;
+    background-color: $background-color;
     background-size: cover;
     box-shadow: 0.625em 0.625em 1.875em rgba(166, 166, 166, 0.2);
     flex: 0 0 16em;
@@ -21,7 +21,7 @@
 }
 
 .h5p-digibook-navigation-sectionlist {
-    background-color: #ffffff;
+    background-color: $background-color;
     background-size: cover;
     max-height: 31.250em;
     // padding-left: 1.5em;
@@ -120,7 +120,7 @@
     background-size: cover;
     p {
         align-self: center;
-        color: #ffffff;
+        color: $background-color;
         font-family: Arial;
         font-size: 1em;
         font-weight: 400;
