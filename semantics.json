@@ -9,17 +9,28 @@
     "description": "The title you'd like to show on the book, including on the cover"
   },
   {
+    "name": "showCoverPage",
+    "type": "boolean",
+    "label": "Enable book cover",
+    "description": "A cover that shows info regarding the book before access",
+    "importance": "low",
+    "default": true
+  },
+  {
     "name": "bookCover",
     "type": "group",
     "label": "Cover Page",
     "importance": "medium",
+    "widget": "showWhen",
+    "showWhen": {
+      "rules": [
+        {
+          "field": "showCoverPage",
+          "equals": true
+        }
+      ]
+    },
     "fields": [
-      {
-        "name": "showCoverPage",
-        "type": "boolean",
-        "label": "Show the cover page",
-        "importance": "low"
-      },
       {
         "name": "coverDescription",
         "type": "text",
