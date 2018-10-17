@@ -29,6 +29,7 @@
 
   .h5p-digibook-status-button {
     &:hover {
+      cursor: pointer;
       background-color: rgba($base-color, 0.05);
       background-size: cover;
     }
@@ -43,6 +44,7 @@
       background-color: $base-color;
       opacity: 20;
       &:hover {
+        cursor: pointer;
         background-color: rgba($base-color, 0.9);
         background-size: cover;
       }

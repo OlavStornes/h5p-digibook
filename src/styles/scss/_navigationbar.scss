@@ -49,7 +49,7 @@
         }
     }
     :hover {
-        cursor: pointer
+        cursor: pointer;
     }
 }
 
@@ -107,6 +107,7 @@
     }
     &:hover {
         background-color: rgba($base-color, 0.05);
+        cursor: pointer;
     }
 }
 

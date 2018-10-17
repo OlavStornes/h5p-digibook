@@ -39,6 +39,7 @@
   background-size: cover; }
 
 .h5p-digibook-status-button:hover {
+  cursor: pointer;
   background-color: rgba(134, 96, 171, 0.05);
   background-size: cover; }
 
@@ -50,6 +51,7 @@
   background-color: #8660ab;
   opacity: 20; }
   .h5p-digibook-status-menu.h5p-digibook-status-menu-active:hover {
+    cursor: pointer;
     background-color: rgba(134, 96, 171, 0.9);
     background-size: cover; }
   .h5p-digibook-status-menu.h5p-digibook-status-menu-active:active {
@@ -226,7 +228,8 @@
   .h5p-digibook-navigation-chapter-title:active {
     background-color: rgba(134, 96, 171, 0.1); }
   .h5p-digibook-navigation-chapter-title:hover {
-    background-color: rgba(134, 96, 171, 0.05); }
+    background-color: rgba(134, 96, 171, 0.05);
+    cursor: pointer; }
 
 .h5p-digibook-navigation-maintitle {
   background-color: #8660ab;
