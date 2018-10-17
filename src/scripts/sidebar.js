@@ -8,9 +8,9 @@ class SideBar extends H5P.EventDispatcher {
     this.id = contentId;
     this.parent = parent;
     this.behaviour = config.behaviour;
-    this.div = document.createElement('div');
     this.content = document.createElement('div');
-    this.div.classList.add('h5p-digibook-navigation');
+    this.div = this.addSideBar();
+
     
     this.titleElem = this.addMainTitle(config.title);
     this.chapters = this.findAllChapters(parent.instances, config.chapters);
@@ -27,6 +27,18 @@ class SideBar extends H5P.EventDispatcher {
     this.div.appendChild(this.content);
 
 
+  }
+
+
+  addSideBar() {
+    const main = document.createElement('div');
+
+    main.classList.add('h5p-digibook-navigation');
+    if (!this.behaviour.defaultTableOfContents) {
+      main.classList.add('h5p-digibook-hide');
+    }
+
+    return main;
   }
 
   addMainTitle(title) {
@@ -99,7 +111,15 @@ class SideBar extends H5P.EventDispatcher {
     this.editChapterStatus(targetElem, false);
   }
 
-  updateChapterTitle(targetChapter) {
+  /**
+   * Update the indicator on a spesific chapter.
+   * 
+   * @param {number} targetChapter - The chapter that should be updated
+   */
+  updateChapterTitleIndicator(targetChapter) {
+    if (!this.behaviour.progressIndicators) {
+      return;
+    }
     const x = this.chapters[targetChapter];
     let targetElem = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-chapter-title')[0];
     targetElem = targetElem.getElementsByClassName('h5p-digibook-navigation-chapter-progress')[0];
@@ -178,9 +198,6 @@ class SideBar extends H5P.EventDispatcher {
     titleDiv.classList.add('h5p-digibook-navigation-chapter-title');
 
     chapterDiv.classList.add('h5p-digibook-navigation-chapter');
-    if (this.behaviour.tableOfContents) {
-      chapterDiv.classList.add('h5p-digibook-navigation-closed');
-    } 
 
 
     sectionsDiv.classList.add('h5p-digibook-navigation-sectionlist');
