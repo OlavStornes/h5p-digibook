@@ -14,6 +14,10 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+    &.h5p-digibook-hide {
+        flex: 0 0 0em;
+        width: 0px;
+    }
 }
 
 .h5p-digibook-navigation-sectionlist {

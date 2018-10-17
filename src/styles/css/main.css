@@ -8,9 +8,8 @@
   display: flex;
   flex: 1; }
 
-.h5p-digibook-hide {
-  flex: 0 0 0em;
-  transform: translate(-100%); }
+#h5p-digibook.h5p-fullscreen {
+  background-color: white; }
 
 .h5p-digibook-status {
   padding: 1.25em;
@@ -154,6 +153,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
+  .h5p-digibook-navigation.h5p-digibook-hide {
+    flex: 0 0 0em;
+    width: 0px; }
 
 .h5p-digibook-navigation-sectionlist {
   background-color: #ffffff;

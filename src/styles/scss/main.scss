@@ -16,9 +16,8 @@ $base-color: #8660ab;
   flex: 1;
 }
 
-.h5p-digibook-hide {
-  flex: 0 0 0em;
-  transform: translate(-100%);
+#h5p-digibook.h5p-fullscreen {
+  background-color: rgb(255, 255, 255);
 }
 
 @import 'statusbar';
