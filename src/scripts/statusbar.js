@@ -290,7 +290,7 @@ class StatusBar extends H5P.EventDispatcher {
     const checkMark = document.createElement('span');
     checkMark.classList.add('icon-chapter-done', 'h5p-digibook-status-progress-marker');
     checkMark.onclick = () => {
-      console.log("OH BOI CLICK");
+      this.parent.sideBar.updateChapterTitle(this.parent.activeChapter);
     };
     return checkMark;
   }
