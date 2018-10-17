@@ -118,6 +118,12 @@ class StatusBar extends H5P.EventDispatcher {
     this.topProgressBar.progress.style.width = barWidth;
   }
 
+  updateReadMarker() {
+    if (this.parent.isChapterRead(this.activeChapter)) {
+      debugger;
+    }
+  }
+
   updateStatusBar() {
     const currChapter = (this.parent.activeChapter+1) ;
     
@@ -134,6 +140,10 @@ class StatusBar extends H5P.EventDispatcher {
     
     this.topChapterTitle.p.setAttribute("title", chapterTitle);
     this.botChapterTitle.p.setAttribute("title", chapterTitle);
+
+    if (this.params.behaviour.progressIndicators && !this.params.behaviour.progressAuto) {
+      this.updateReadMarker();
+    }
 
     //assure that the buttons are valid in terms of chapter edges
     if (this.parent.activeChapter <= 0) {
@@ -287,12 +297,22 @@ class StatusBar extends H5P.EventDispatcher {
   }
 
   addMarkAsReadButton() {
-    const checkMark = document.createElement('span');
-    checkMark.classList.add('icon-chapter-done', 'h5p-digibook-status-progress-marker');
+    const div = document.createElement('div');
+    const checkText = document.createElement('p');
+    checkText.innerHTML = "New text who dis";
+
+    const checkMark = document.createElement('input');
+    checkMark.setAttribute('type', 'checkbox');
+    checkMark.classList.add('h5p-digibook-status-progress-marker');
     checkMark.onclick = () => {
       this.parent.sideBar.updateChapterTitleIndicator(this.parent.activeChapter);
+      checkMark.disabled = true;
     };
-    return checkMark;
+
+    div.appendChild(checkText);
+    div.appendChild(checkMark);
+
+    return div;
   }
 
   /**

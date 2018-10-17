@@ -310,6 +310,14 @@ export default class DigiBook extends H5P.EventDispatcher {
       });
     }
   }
+
+  isChapterRead(chapter) {
+    return this.instances[chapter].completed;
+  }
+
+  setChapterRead(chapter) {
+    this.instances[chapter].completed = true;
+  }
 }
 
 
