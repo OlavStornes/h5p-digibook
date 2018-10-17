@@ -47,7 +47,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       
 
       //Find sections with tasks and tracks them
-      let totalTasks = 0;
+      newInstance.tasksLeft = 0;
       if (this.behaviour.progressIndicators) {
         newInstance.childInstances.forEach(x => {
           if (this.isH5PTask(x)) {
@@ -57,7 +57,7 @@ export default class DigiBook extends H5P.EventDispatcher {
           }
         });
       }
-      newInstance.hasTasks = totalTasks > 0;
+      newInstance.hasTasks = newInstance.tasksLeft > 0;
         
 
       //First chapter should be visible.
@@ -138,9 +138,11 @@ export default class DigiBook extends H5P.EventDispatcher {
       return this.instances[this.activeChapter].completed;
     };
   
-    this.setChapterRead = (chapter) => {
-      this.instances[chapter].completed = true;
+    this.setCurrentChapterRead = () => {
+      this.instances[this.activeChapter].completed = true;
       //TODO: Update all the bars
+      this.sideBar.updateChapterTitleIndicator(this.activeChapter);
+      
     };
     
 
@@ -183,7 +185,7 @@ export default class DigiBook extends H5P.EventDispatcher {
         this.statusBar.updateStatusBar();
         this.sideBar.redirectHandler(targetPage.chapter);
         
-        if (!redirectOnLoad) {
+        if (!redirectOnLoad || !this.behaviour.progressAuto) {
           this.sideBar.updateChapterTitleIndicator(oldChapter);
         }
 
