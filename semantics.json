@@ -6,7 +6,46 @@
     "type": "text",
     "optional": true,
     "placeholder": "Here you can add an optional title.",
-    "description": "The title you'd like to show above the image"
+    "description": "The title you'd like to show on the book, including on the cover"
+  },
+  {
+    "name": "bookCover",
+    "type": "group",
+    "label": "Cover Page",
+    "importance": "medium",
+    "fields": [
+      {
+        "name": "showCoverPage",
+        "type": "boolean",
+        "label": "Show the cover page",
+        "importance": "low"
+      },
+      {
+        "name": "coverDescription",
+        "type": "text",
+        "widget": "html",
+        "label": "Cover description",
+        "importance": "medium",
+        "optional": true,
+        "description": "This text will be the description of your book.",
+        "enterMode": "p",
+        "tags": [
+          "sub",
+          "sup",
+          "strong",
+          "em",
+          "p"
+        ]
+      },
+      {
+        "name": "coverImage",
+        "type": "image",
+        "label": "Cover image",
+        "importance": "low",
+        "optional": true,
+        "description": "An optional background image for the introduction."
+      }
+    ]
   },
   {
     "name": "chapters",
