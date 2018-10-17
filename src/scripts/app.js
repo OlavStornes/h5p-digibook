@@ -1,5 +1,6 @@
 import SideBar from './sidebar';
 import StatusBar from './statusbar';
+import Cover from './cover';
 
 export default class DigiBook extends H5P.EventDispatcher {
   /**
@@ -71,6 +72,10 @@ export default class DigiBook extends H5P.EventDispatcher {
     }
 
     //Initialize the support components
+    if (config.showCoverPage) {
+      this.cover = new Cover(config.bookCover, config.title, contentId, contentData, this);
+    }
+
     this.sideBar = new SideBar(config, contentId, this);
     this.statusBar = new StatusBar(contentId, config.chapters.length, this, {
       l10n: {
@@ -205,7 +210,7 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {jQuery} $wrapper
      */
     this.attach = function ($wrapper) {
-
+      
       $wrapper[0].classList.add('h5p-scrollable-fullscreen');
       // Needed to enable scrolling in fullscreen
       $wrapper[0].id = "h5p-digibook";
