@@ -119,7 +119,7 @@ class StatusBar extends H5P.EventDispatcher {
   }
 
   updateReadMarker() {
-    if (this.parent.isChapterRead(this.activeChapter)) {
+    if (this.parent.isCurrentChapterRead()) {
       debugger;
     }
   }

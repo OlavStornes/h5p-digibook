@@ -29,6 +29,12 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.internal = false;
     }
 
+    this.isH5PTask = (H5PObject) => {
+      if (typeof H5PObject.getMaxScore === 'function') {
+        return H5PObject.getMaxScore() > 0;
+      }
+      return false;
+    };
 
     //Go through all columns and initialise them
     for (let i = 0; i < config.chapters.length; i++) {
@@ -37,6 +43,23 @@ export default class DigiBook extends H5P.EventDispatcher {
       newInstance.childInstances = newInstance.getInstances();
       newColumn.classList.add('h5p-digibook-chapter');
       newInstance.title = config.chapters[i].chapter_title;
+      newInstance.completed = false;
+      
+
+      //Find sections with tasks and tracks them
+      let totalTasks = 0;
+      if (this.behaviour.progressIndicators) {
+        newInstance.childInstances.forEach(x => {
+          if (this.isH5PTask(x)) {
+            x.isTask = true;
+            x.taskDone = false;
+            newInstance.tasksLeft += 1;
+          }
+        });
+      }
+      newInstance.hasTasks = totalTasks > 0;
+        
+
       //First chapter should be visible.
       //TODO: Make it user spesific?
       if (i != 0) {
@@ -58,8 +81,6 @@ export default class DigiBook extends H5P.EventDispatcher {
       behaviour: this.behaviour
     });
 
-    //Kickstart the statusbar
-    this.statusBar.updateStatusBar();
 
     /**
      * Establish all triggers
@@ -106,10 +127,22 @@ export default class DigiBook extends H5P.EventDispatcher {
     H5P.externalDispatcher.on('xAPI', function (event) {
       if (event.getVerb() === 'answered') {
         if (self.behaviour.progressIndicators) {
-          self.sideBar.setSectionStatusByID(this.contentData.subContentId, self.activeChapter);
+          self.setSectionStatusByID(this.contentData.subContentId, self.activeChapter);
         }
       }
     });
+
+
+
+    this.isCurrentChapterRead = () => {
+      return this.instances[this.activeChapter].completed;
+    };
+  
+    this.setChapterRead = (chapter) => {
+      this.instances[chapter].completed = true;
+      //TODO: Update all the bars
+    };
+    
 
     /**
      * If the content is short, hide the footer
@@ -309,15 +342,35 @@ export default class DigiBook extends H5P.EventDispatcher {
         }
       });
     }
+    //Kickstart the statusbar
+    this.statusBar.updateStatusBar();
+
+
+    /**
+     * Set a section progress indicator
+     * 
+     * @param {string} targetId 
+     * @param {string} targetChapter 
+     */
+    this.setSectionStatusByID = function (targetId, targetChapter) {
+      for (let i = 0; i < this.instances[targetChapter].childInstances.length; i++) {
+        const element = this.instances[targetChapter].childInstances[i];
+        if (element.subContentId === targetId) {
+          element.taskDone = true;
+
+          this.sideBar.setSectionMarker(targetChapter, i);
+
+  
+          
+          this.instances[targetChapter].tasksLeft -= 1;
+          if (this.behaviour.progressAuto) {
+            this.updateChapterTitleIndicator(targetChapter);
+          }
+        }
+      }
+    };
   }
 
-  isChapterRead(chapter) {
-    return this.instances[chapter].completed;
-  }
-
-  setChapterRead(chapter) {
-    this.instances[chapter].completed = true;
-  }
 }
 
 

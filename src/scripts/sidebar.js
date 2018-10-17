@@ -144,30 +144,12 @@ class SideBar extends H5P.EventDispatcher {
     }
   }
 
-  /**
-   * Set a section progress indicator
-   * 
-   * @param {string} targetId 
-   * @param {string} targetChapter 
-   */
-  setSectionStatusByID(targetId, targetChapter) {
-    for (let i = 0; i < this.chapters[targetChapter].sections.length; i++) {
-      const element = this.chapters[targetChapter].sections[i];
-      if (element.subContentId === targetId) {
-        element.taskDone = true;
-        const tmp = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-section')[i];
-        const icon = tmp.getElementsByTagName('a')[0];
-        if (icon) {
-          icon.classList.remove('icon-chapter-blank');
-          icon.classList.add('icon-chapter-done');
-        }
-
-        
-        this.chapters[targetChapter].tasksLeft -= 1;
-        if (this.behaviour.progressAuto) {
-          this.updateChapterTitleIndicator(targetChapter);
-        }
-      }
+  setSectionMarker(targetChapter, targetSection) {
+    const tmp = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-section')[targetSection];
+    const icon = tmp.getElementsByTagName('a')[0];
+    if (icon) {
+      icon.classList.remove('icon-chapter-blank');
+      icon.classList.add('icon-chapter-done');
     }
   }
 
@@ -177,13 +159,6 @@ class SideBar extends H5P.EventDispatcher {
     this.editChapterStatus(x, bool);
   }
 
-  isH5PTask(H5PObject) {
-
-    if (typeof H5PObject.getMaxScore === 'function') {
-      return H5PObject.getMaxScore() > 0;
-    }
-    return false;
-  }
 
   createElemFromChapter(chapter, chapterIndex) {
     const that = this;
@@ -240,15 +215,7 @@ class SideBar extends H5P.EventDispatcher {
       // icon.classList.add('h5p-digibook-navigation-section-taskicon');
       a.classList.add('icon-chapter-blank');
       
-      if (this.behaviour.progressIndicators && this.isH5PTask(section)) {
-        sections[i].taskDone = false;
-        if (chapter.tasksLeft) {
-          chapter.tasksLeft += 1;
-        }
-        else {
-          chapter.tasksLeft = 1;
-        }
-        chapter.hasTasks = true;
+      if (section.isTask) {
         a.classList.add('h5p-digibook-navigation-section-task');
       }
       // singleSection.appendChild(icon);
