@@ -55,7 +55,7 @@
     "label": "Behavioural settings",
     "fields": [
       {
-        "name": "tableOfContents",
+        "name": "defaultTableOfContents",
         "type": "boolean",
         "label": "Display table of contents as default",
         "description": "When enabled the table of contents is showed when opening the book",
@@ -69,7 +69,7 @@
         "default": true
       },
       {
-        "name": "progressType",
+        "name": "progressAuto",
         "type": "boolean",
         "label": "Enable automatic progress",
         "description": "If enabled a page without tasks is considered done when viewed. A page with tasks when all tasks are done. If disabled there will be a button at the bottom of every page for the user to click when done with the page.",

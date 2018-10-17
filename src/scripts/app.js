@@ -151,7 +151,7 @@ export default class DigiBook extends H5P.EventDispatcher {
         this.sideBar.redirectHandler(targetPage.chapter);
         
         if (!redirectOnLoad) {
-          this.sideBar.updateChapterTitle(oldChapter);
+          this.sideBar.updateChapterTitleIndicator(oldChapter);
         }
 
         //Avoid accidentaly referring to a section that does not exist

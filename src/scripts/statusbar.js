@@ -214,7 +214,7 @@ class StatusBar extends H5P.EventDispatcher {
     const item = document.createElement('a');
 
     let iconType = 'icon-menu';
-    if (this.params.behaviour.tableOfContents) {
+    if (this.params.behaviour.defaultTableOfContents) {
       iconType = 'icon-close';
       row.classList.add('h5p-digibook-status-menu-active');
     }
@@ -319,7 +319,7 @@ class StatusBar extends H5P.EventDispatcher {
     p.appendChild(total);
 
     
-    if (this.params.behaviour.progressIndicators && !this.params.behaviour.autoProgressType) {
+    if (this.params.behaviour.progressIndicators && !this.params.behaviour.progressAuto) {
       const checkMark = this.addMarkAsReadButton();
       div.appendChild(checkMark);
     }
