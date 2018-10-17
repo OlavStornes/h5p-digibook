@@ -305,7 +305,7 @@ class StatusBar extends H5P.EventDispatcher {
     checkMark.setAttribute('type', 'checkbox');
     checkMark.classList.add('h5p-digibook-status-progress-marker');
     checkMark.onclick = () => {
-      this.parent.sideBar.updateChapterTitleIndicator(this.parent.activeChapter);
+      this.parent.setCurrentChapterRead();
       checkMark.disabled = true;
     };
 
