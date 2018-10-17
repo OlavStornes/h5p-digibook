@@ -12,7 +12,8 @@ class StatusBar extends H5P.EventDispatcher {
         l10n: {
           nextPage: 'Next page',
           previousPage: 'Previous page',
-          navigateToTop: 'Navigate to the top'
+          navigateToTop: 'Navigate to the top',
+          markAsFinished: 'I have finished this page'
         }
       },
       params || {}
@@ -29,8 +30,8 @@ class StatusBar extends H5P.EventDispatcher {
     this.topInfo.classList.add('h5p-digibook-status', 'h5p-digibook-status-header');
     
     this.topProgressBar = this.addProgressBar();
-    this.topStatus = this.addProgress(true);
-    this.botStatus = this.addProgress(false);
+    this.topStatus = this.addProgress(false);
+    this.botStatus = this.addProgress(true);
     this.topMenu = this.addMenu();
     this.buttonToTop = this.addToTop();
     
@@ -299,7 +300,7 @@ class StatusBar extends H5P.EventDispatcher {
   addMarkAsReadButton() {
     const div = document.createElement('div');
     const checkText = document.createElement('p');
-    checkText.innerHTML = "New text who dis";
+    checkText.innerHTML = this.params.l10n.markAsFinished + " :";
 
     const markRead = document.createElement('input');
     markRead.setAttribute('type', 'checkbox');

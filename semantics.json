@@ -175,5 +175,14 @@
     "default": "Navigate to the top",
     "common": true,
     "optional": true
+  },
+  {
+    "name": "markAsFinished",
+    "type": "text",
+    "importance": "low",
+    "label": "Translation for \"I have finished this page\"",
+    "default": "I have finished this page",
+    "common": true,
+    "optional": true
   }
 ]

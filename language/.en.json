@@ -83,6 +83,10 @@
     {
       "label": "Translation for \"Navigate to the top\"",
       "default": "Navigate to the top"
+    },
+    {
+      "label": "Translation for \"I have finished this page\"",
+      "default": "I have finished this page"
     }
   ]
 }
