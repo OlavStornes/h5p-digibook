@@ -3,7 +3,7 @@
  * Constructor function.
  */
 class Cover extends H5P.EventDispatcher {
-  constructor(coverParam, title, contentId, contentData, parent) {
+  constructor(coverParam, titleText, readText, contentId, contentData, parent) {
     super();
 
     this.parent = parent;
@@ -11,11 +11,11 @@ class Cover extends H5P.EventDispatcher {
     this.div = this.createParentElement();
 
     this.visuals = this.createVisualsElement(coverParam.coverImage, contentId);
-    this.title = this.parseTitle(title);
+    this.title = this.parseTitle(titleText);
     this.description = this.parseDescription(coverParam.coverDescription);
     this.author = 'temp';
 
-    this.button = this.createReadButton();
+    this.button = this.createReadButton(readText);
 
     this.div.appendChild(this.visuals);
     this.div.appendChild(this.title);
@@ -50,11 +50,11 @@ class Cover extends H5P.EventDispatcher {
     return div;
   }
 
-  createReadButton() {
+  createReadButton(input) {
     const buttonElem = document.createElement('div');
     buttonElem.classList.add('h5p-digibook-cover-readbutton');
     const button = document.createElement('button');
-    button.innerHTML = "Oh boi";
+    button.innerHTML = input;
 
     button.onclick = () => {
       this.removeCover();
