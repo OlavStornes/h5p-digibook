@@ -260,15 +260,15 @@
   .h5p-digibook-cover-graphics {
     align-items: center;
     display: flex;
+    height: 15em;
     margin: 4.375em 0;
     position: relative;
-    width: 100%;
-    height: 15em; }
+    width: 100%; }
   .h5p-digibook-cover-bar {
-    height: 70%;
-    width: inherit;
     background-color: #f9f8fa;
-    background-size: cover; }
+    background-size: cover;
+    height: 70%;
+    width: inherit; }
   .h5p-digibook-cover-image {
     height: 100%;
     left: 50%;
@@ -301,13 +301,13 @@
     text-decoration: none solid #757575;
     text-align: center; }
   .h5p-digibook-cover-readbutton button {
-    border-radius: 3px;
-    padding: 10px 40px;
     background-color: #8660ab;
     background-size: cover;
+    border-radius: 3px;
+    color: #ffffff;
+    padding: 10px 40px;
     font-family: Arial;
     font-size: 20px;
-    color: #ffffff;
     font-weight: 400;
     text-decoration: none solid white;
     text-align: center; }
