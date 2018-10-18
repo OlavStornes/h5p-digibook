@@ -8,7 +8,7 @@ class Cover extends H5P.EventDispatcher {
 
     this.parent = parent;
 
-    this.div = document.createElement('div');
+    this.div = this.createParentElement();
 
     this.image = this.parseImage(coverParam.coverImage, contentId);
     this.title = this.parseTitle(title);
@@ -22,6 +22,12 @@ class Cover extends H5P.EventDispatcher {
     this.div.appendChild(this.description);
     this.div.appendChild(this.button);
   } 
+
+  createParentElement() {
+    const div = document.createElement('div');
+    div.classList.add('h5p-digibook-cover');
+    return div;
+  }
 
   createReadButton() {
     const buttonElem = document.createElement('div');
@@ -38,18 +44,15 @@ class Cover extends H5P.EventDispatcher {
   }
 
   parseImage(options, id) {
-    const imageElem = document.createElement('div');
+    // const imageElem = document.createElement('div');
     const img = document.createElement('img');
     img.classList.add('h5p-digibook-cover-image');
     img.src = H5P.getPath(options.path, id);
     img.setAttribute('draggable', 'false');
-    // img.setAttribute('alt', images[0].alt);
-    // img.setAttribute('title', images[0].title);
-    // img.setAttribute('aria-live', 'polite');
     img.setAttribute('tabindex', 0);
 
-    imageElem.appendChild(img);
-    return imageElem;
+    // imageElem.appendChild(img);
+    return img;
   }
 
   removeCover() {
