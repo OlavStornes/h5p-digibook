@@ -1,14 +1,5 @@
 [
   {
-    "name": "title",
-    "label": "Title",
-    "importance": "high",
-    "type": "text",
-    "optional": true,
-    "placeholder": "Here you can add an optional title.",
-    "description": "The title you'd like to show on the book, including on the cover"
-  },
-  {
     "name": "showCoverPage",
     "type": "boolean",
     "label": "Enable book cover",
