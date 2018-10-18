@@ -3,7 +3,7 @@
  * Constructor function.
  */
 class Cover extends H5P.EventDispatcher {
-  constructor(coverParam, titleText, readText, contentId, contentData, parent) {
+  constructor(coverParam, titleText, readText, contentId, parent) {
     super();
 
     this.parent = parent;
