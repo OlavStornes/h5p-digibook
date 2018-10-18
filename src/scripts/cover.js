@@ -23,6 +23,12 @@ class Cover extends H5P.EventDispatcher {
     this.div.appendChild(this.button);
   } 
 
+  /**
+   * Create an element which contains both the cover image and a background bar
+   * 
+   * @param {string} coverImage - A relative path to an image 
+   * @param {number} contentId
+   */
   createVisualsElement(coverImage, contentId) {
 
     const div = document.createElement('div');
@@ -36,6 +42,9 @@ class Cover extends H5P.EventDispatcher {
     return div;
   }
 
+  /**
+   * Create an element responsible for the bar behind an image
+   */
   createBackBorder() {
     const div = document.createElement('div');
     div.classList.add('h5p-digibook-cover-bar');
@@ -44,12 +53,20 @@ class Cover extends H5P.EventDispatcher {
 
   }
 
+  /**
+   * Create the top level element
+   */
   createParentElement() {
     const div = document.createElement('div');
     div.classList.add('h5p-digibook-cover');
     return div;
   }
 
+  /**
+   * Create a button-element
+   * 
+   * @param {string} input - Button-text  
+   */
   createReadButton(input) {
     const buttonElem = document.createElement('div');
     buttonElem.classList.add('h5p-digibook-cover-readbutton');
@@ -83,7 +100,9 @@ class Cover extends H5P.EventDispatcher {
   removeCover() {
     this.div.remove();
   }
-
+  /** 
+   * @param {String} input - Text that will go inside the title-element
+   */
   parseTitle(input) {
     const titleElem = document.createElement('div');
     titleElem.classList.add('h5p-digibook-cover-title');
@@ -95,6 +114,10 @@ class Cover extends H5P.EventDispatcher {
     return titleElem;
   }
 
+  /**
+   * 
+   * @param {String} input - Text that will go inside the description-element 
+   */
   parseDescription(input) {
     const descElem = document.createElement('div');
     descElem.classList.add('h5p-digibook-cover-description');
