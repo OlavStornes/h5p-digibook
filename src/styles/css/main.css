@@ -293,14 +293,16 @@
     margin-bottom: 2.250em;
     text-decoration: none solid #363636;
     text-align: center; }
-  .h5p-digibook-cover-readbutton button {
-    background-color: #8660ab;
-    background-size: cover;
-    border-radius: 3px;
-    color: #ffffff;
-    padding: 10px 40px;
-    font-family: Arial;
-    font-size: 20px;
-    font-weight: 400;
-    text-decoration: none solid white;
-    text-align: center; }
+  .h5p-digibook-cover-readbutton {
+    margin-top: 2.250em; }
+    .h5p-digibook-cover-readbutton button {
+      background-color: #8660ab;
+      background-size: cover;
+      border-radius: 3px;
+      color: #ffffff;
+      font-family: Arial;
+      font-size: 20px;
+      font-weight: 400;
+      padding: 10px 40px;
+      text-decoration: none solid white;
+      text-align: center; }

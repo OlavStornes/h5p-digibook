@@ -56,16 +56,19 @@
         text-align: center;
     }
 
-    &-readbutton button{
-        background-color: $base-color;
-        background-size: cover;
-        border-radius: 3px;
-        color: $background-color;
-        padding: 10px 40px;
-        font-family: Arial;
-        font-size: 20px;
-        font-weight: 400;
-        text-decoration: none solid rgb(255, 255, 255);
-        text-align: center;
-    }
+    &-readbutton {
+        margin-top: 2.250em;
+        button {
+            background-color: $base-color;
+            background-size: cover;
+            border-radius: 3px;
+            color: $background-color;
+            font-family: Arial;
+            font-size: 20px;
+            font-weight: 400;
+            padding: 10px 40px;
+            text-decoration: none solid rgb(255, 255, 255);
+            text-align: center;
+        }
+    } 
 }

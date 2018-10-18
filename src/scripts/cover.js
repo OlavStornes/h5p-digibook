@@ -23,8 +23,12 @@ class Cover extends H5P.EventDispatcher {
     else {
       this.div.classList.add('h5p-cover-nographics');
     }
+
     this.div.appendChild(this.title);
-    this.div.appendChild(this.description);
+    
+    if (this.description) {
+      this.div.appendChild(this.description);
+    }
     this.div.appendChild(this.button);
   } 
 
@@ -129,14 +133,20 @@ class Cover extends H5P.EventDispatcher {
    * @param {String} input - Text that will go inside the description-element 
    */
   parseDescription(input) {
-    const descElem = document.createElement('div');
-    descElem.classList.add('h5p-digibook-cover-description');
-    const desc = document.createElement('p');
-    desc.innerHTML = input;
+    if (input) {
 
-    descElem.appendChild(desc);
-
-    return descElem;
+      const descElem = document.createElement('div');
+      descElem.classList.add('h5p-digibook-cover-description');
+      const desc = document.createElement('p');
+      desc.innerHTML = input;
+      
+      descElem.appendChild(desc);
+      
+      return descElem;
+    }
+    else {
+      return null;
+    }
   }
 }
 
