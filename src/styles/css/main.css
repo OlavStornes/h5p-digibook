@@ -244,3 +244,16 @@
     font-weight: 400;
     padding-left: 1.938em;
     text-decoration: none solid white; }
+
+.h5p-digibook-cover {
+  align-items: center;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  z-index: 2; }
+  .h5p-digibook-cover-image {
+    width: 50%; }
