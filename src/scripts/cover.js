@@ -76,7 +76,6 @@ class Cover extends H5P.EventDispatcher {
   }
 
   removeCover() {
-    console.log(this);
     this.div.remove();
   }
 
