@@ -257,6 +257,8 @@
   top: 0px;
   width: 100%;
   z-index: 2; }
+  .h5p-digibook-cover.h5p-cover-nographics {
+    padding-top: 120px; }
   .h5p-digibook-cover-graphics {
     align-items: center;
     display: flex;
@@ -288,17 +290,8 @@
     color: #363636;
     font-size: 1.250em;
     font-weight: 400;
-    margin-bottom: 1.313em;
-    text-decoration: none solid #363636;
-    text-align: center; }
-  .h5p-digibook-cover-author {
-    color: #757575;
-    font-family: Arial;
-    font-size: 0.938em;
-    font-weight: 400;
-    font-style: italic;
     margin-bottom: 2.250em;
-    text-decoration: none solid #757575;
+    text-decoration: none solid #363636;
     text-align: center; }
   .h5p-digibook-cover-readbutton button {
     background-color: #8660ab;

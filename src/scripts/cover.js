@@ -11,13 +11,18 @@ class Cover extends H5P.EventDispatcher {
     this.div = this.createParentElement();
 
     this.visuals = this.createVisualsElement(coverParam.coverImage, contentId);
+
     this.title = this.parseTitle(titleText);
     this.description = this.parseDescription(coverParam.coverDescription);
-    this.author = 'temp';
 
     this.button = this.createReadButton(readText);
 
-    this.div.appendChild(this.visuals);
+    if (this.visuals) {
+      this.div.appendChild(this.visuals);
+    }
+    else {
+      this.div.classList.add('h5p-cover-nographics');
+    }
     this.div.appendChild(this.title);
     this.div.appendChild(this.description);
     this.div.appendChild(this.button);
@@ -30,16 +35,21 @@ class Cover extends H5P.EventDispatcher {
    * @param {number} contentId
    */
   createVisualsElement(coverImage, contentId) {
+    if (coverImage) {
 
-    const div = document.createElement('div');
-    div.classList.add('h5p-digibook-cover-graphics');
-    const visuals = this.parseImage(coverImage.path, contentId);
-    const backBorder = this.createBackBorder();
-
-    div.appendChild(visuals);
-    div.appendChild(backBorder);
-
-    return div;
+      const div = document.createElement('div');
+      div.classList.add('h5p-digibook-cover-graphics');
+      const visuals = this.parseImage(coverImage.path, contentId);
+      const backBorder = this.createBackBorder();
+      
+      div.appendChild(visuals);
+      div.appendChild(backBorder);
+      
+      return div;
+    }
+    else {
+      return null;
+    }
   }
 
   /**

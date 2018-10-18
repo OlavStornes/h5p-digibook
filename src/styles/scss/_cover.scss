@@ -11,6 +11,10 @@
     width:100%;
     z-index: 2;
 
+    &.h5p-cover-nographics {
+        padding-top: 120px;
+    }
+
     &-graphics{
         align-items: center;
         display:flex;
@@ -47,20 +51,11 @@
         color: #363636;
         font-size: 1.250em;
         font-weight: 400;
-        margin-bottom: 1.313em;
+        margin-bottom: 2.250em;
         text-decoration: none solid rgb(54, 54, 54);
         text-align: center;
     }
-    &-author{
-        color: #757575;
-        font-family: Arial;
-        font-size: 0.938em;
-        font-weight: 400;
-        font-style: italic;
-        margin-bottom: 2.250em;
-        text-decoration: none solid rgb(117, 117, 117);
-        text-align: center;
-    }
+
     &-readbutton button{
         background-color: $base-color;
         background-size: cover;
