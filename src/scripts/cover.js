@@ -31,6 +31,7 @@ class Cover extends H5P.EventDispatcher {
 
   createReadButton() {
     const buttonElem = document.createElement('div');
+    buttonElem.classList.add('h5p-digibook-cover-readbutton');
     const button = document.createElement('button');
     button.innerHTML = "Oh boi";
 
@@ -62,6 +63,7 @@ class Cover extends H5P.EventDispatcher {
 
   parseTitle(input) {
     const titleElem = document.createElement('div');
+    titleElem.classList.add('h5p-digibook-cover-title');
     const title = document.createElement('p');
     title.innerHTML = input;
 
@@ -72,6 +74,7 @@ class Cover extends H5P.EventDispatcher {
 
   parseDescription(input) {
     const descElem = document.createElement('div');
+    descElem.classList.add('h5p-digibook-cover-description');
     const desc = document.createElement('p');
     desc.innerHTML = input;
 
