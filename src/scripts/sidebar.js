@@ -266,22 +266,5 @@ class SideBar extends H5P.EventDispatcher {
     return tmp;
   }
 
-
-  /**
-   * Parses the library which is used
-   * TODO: Implement a more flexible system for library/title detection
-   * @param {string} input 
-   */
-  parseLibrary(section) {
-    // case "H5P.AdvancedText":
-    //   // Finds the first H2-element inside a text-document
-    //   tmp = input.params.text.match(/<h2>(.+)<\/h2>/);
-    //   if (tmp)
-    //     tmp = tmp[1];
-    //   else
-    //     tmp = "Unnamed paragraph";
-    //   break
-    return "tmp";
-  }
 }
 export default SideBar;
