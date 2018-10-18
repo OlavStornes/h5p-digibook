@@ -73,7 +73,7 @@ export default class DigiBook extends H5P.EventDispatcher {
 
     //Initialize the support components
     if (config.showCoverPage) {
-      this.cover = new Cover(config.bookCover, config.title, config.read, contentId, this);
+      this.cover = new Cover(config.bookCover, contentData.metadata.title, config.read, contentId, this);
     }
 
     this.sideBar = new SideBar(config, contentId, this);
