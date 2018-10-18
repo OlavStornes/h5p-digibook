@@ -11,7 +11,7 @@ class SideBar extends H5P.EventDispatcher {
     this.content = document.createElement('div');
     this.div = this.addSideBar();
 
-    this.chapters = this.findAllChapters(parent.instances, config.chapters);
+    this.chapters = this.findAllChapters(config.chapters);
     this.chapterElems = this.getChapterElements();
     
     
@@ -56,21 +56,27 @@ class SideBar extends H5P.EventDispatcher {
   }
 
 
-  findSectionsInChapter(chapter, config) {
+  findSectionsInChapter(input) {
     const tmp = [];
-    for (let j = 0; j < chapter.childInstances.length; j++) {
-      const section = chapter.childInstances[j];
-      section.title = this.parseLibrary(config[j].content);
-      tmp.push(section);
+    const sections = input.params.content;
+    for (let j = 0; j < sections.length; j++) {
+      const section = sections[j];
+      const title = section.content.metadata.title;
+      const id = section.content.subContentId;
+
+      tmp.push({
+        title,
+        id
+      });
     }
     return tmp;
   }
 
-  findAllChapters(instances, config) {
+  findAllChapters(input) {
     const chapters = [];
-    for (let i = 0; i < instances.length; i++) {
-      const sections = this.findSectionsInChapter(instances[i], config[i].chapter.params.content);
-      const chapterTitle = config[i].chapter_title;
+    for (let i = 0; i < input.length; i++) {
+      const sections = this.findSectionsInChapter(input[i].chapter);
+      const chapterTitle = input[i].chapter_title;
       chapters.push({
         sections,
         title:chapterTitle
@@ -213,9 +219,8 @@ class SideBar extends H5P.EventDispatcher {
     };
 
     // Add sections to the chapter
-    const sections = this.parent.instances[chapterIndex].childInstances;
-    for (let i = 0; i < sections.length; i++) {
-      const section = sections[i];
+    for (let i = 0; i < this.chapters[chapterIndex].sections.length; i++) {
+      const section = this.chapters[chapterIndex].sections[i];
       
       const singleSection = document.createElement('div');
       const a = document.createElement('a');
@@ -247,8 +252,7 @@ class SideBar extends H5P.EventDispatcher {
     
     return {
       chapterDiv,
-      sectionsDiv,
-      sections
+      sectionsDiv
     };
   }
 
@@ -268,28 +272,16 @@ class SideBar extends H5P.EventDispatcher {
    * TODO: Implement a more flexible system for library/title detection
    * @param {string} input 
    */
-  parseLibrary(input) {
-    let tmp;
-
-    switch (input.library.split(" ")[0]) {
-
-      case "H5P.AdvancedText":
-        // Finds the first H2-element inside a text-document
-        tmp = input.params.text.match(/<h2>(.+)<\/h2>/);
-        if (tmp)
-          tmp = tmp[1];
-        else
-          tmp = "Unnamed paragraph";
-        break;
-
-      case "H5P.Image":
-        tmp = input.params.alt;
-        break;
-      default:
-        tmp = input.library;
-        break;
-    }
-    return tmp;
+  parseLibrary(section) {
+    // case "H5P.AdvancedText":
+    //   // Finds the first H2-element inside a text-document
+    //   tmp = input.params.text.match(/<h2>(.+)<\/h2>/);
+    //   if (tmp)
+    //     tmp = tmp[1];
+    //   else
+    //     tmp = "Unnamed paragraph";
+    //   break
+    return "tmp";
   }
 }
 export default SideBar;
