@@ -10,18 +10,39 @@ class Cover extends H5P.EventDispatcher {
 
     this.div = this.createParentElement();
 
-    this.image = this.parseImage(coverParam.coverImage, contentId);
+    this.visuals = this.createVisualsElement(coverParam.coverImage, contentId);
     this.title = this.parseTitle(title);
     this.description = this.parseDescription(coverParam.coverDescription);
     this.author = 'temp';
 
     this.button = this.createReadButton();
 
-    this.div.appendChild(this.image);
+    this.div.appendChild(this.visuals);
     this.div.appendChild(this.title);
     this.div.appendChild(this.description);
     this.div.appendChild(this.button);
   } 
+
+  createVisualsElement(coverImage, contentId) {
+
+    const div = document.createElement('div');
+    div.classList.add('h5p-digibook-cover-graphics');
+    const visuals = this.parseImage(coverImage, contentId);
+    const backBorder = this.createBackBorder();
+
+    div.appendChild(visuals);
+    div.appendChild(backBorder);
+
+    return div;
+  }
+
+  createBackBorder() {
+    const div = document.createElement('div');
+    div.classList.add('h5p-digibook-cover-bar');
+
+    return div;
+
+  }
 
   createParentElement() {
     const div = document.createElement('div');
@@ -41,18 +62,16 @@ class Cover extends H5P.EventDispatcher {
 
 
     buttonElem.appendChild(button);
-    return button;
+    return buttonElem;
   }
 
   parseImage(options, id) {
-    // const imageElem = document.createElement('div');
     const img = document.createElement('img');
     img.classList.add('h5p-digibook-cover-image');
     img.src = H5P.getPath(options.path, id);
     img.setAttribute('draggable', 'false');
     img.setAttribute('tabindex', 0);
 
-    // imageElem.appendChild(img);
     return img;
   }
 
