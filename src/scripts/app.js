@@ -64,7 +64,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       //First chapter should be visible.
       //TODO: Make it user spesific?
       if (i != 0) {
-        newColumn.style.display = 'none';
+        newColumn.classList.add('h5p-content-hidden');
       }
       //Register both the HTML-element and the H5P-element
       this.instances.push(newInstance);
@@ -172,9 +172,15 @@ export default class DigiBook extends H5P.EventDispatcher {
         const targetChapter = self.columnElements[targetPage.chapter];
         const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
 
-        if (targetChapter.style.display === 'none') {
-          self.columnElements[self.activeChapter].style.display = 'none';
-          targetChapter.style.display = 'block';
+
+
+        if (targetChapter.classList.contains('h5p-content-hidden')) {
+          oldChapter.classList.add('h5p-digibook-animate');
+          targetChapter.classList.add('h5p-digibook-animate');
+
+
+          self.columnElements[self.activeChapter].classList.add('h5p-content-hidden');
+          targetChapter.classList.remove('h5p-content-hidden');
 
           //If the content is short, hide the footer
           this.statusBar.editFooterVisibillity(this.shouldFooterBeVisible(targetChapter.clientHeight));
