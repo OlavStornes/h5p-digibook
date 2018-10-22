@@ -100,7 +100,7 @@ class StatusBar extends H5P.EventDispatcher {
       }
       
       if (event.data.direction === 'next') {
-        if (this.parent.activeChapter <= this.parent.columnElements.length) {
+        if (this.parent.activeChapter+1 < this.parent.columnElements.length) {
           eventInput.chapter = (this.parent.activeChapter+1);
         }
       }
@@ -109,7 +109,9 @@ class StatusBar extends H5P.EventDispatcher {
           eventInput.chapter = (this.parent.activeChapter-1);
         }
       }
-      this.parent.trigger('newChapter', eventInput);
+      if (isNaN(eventInput.chapter) === false) {
+        this.parent.trigger('newChapter', eventInput);
+      }
     });
   }
 
@@ -166,22 +168,20 @@ class StatusBar extends H5P.EventDispatcher {
    * Add traversal buttons for sequential travel (next and previous chapter)
    */
   addArrows() {
-    const that = this;
-    
     const acm = {};
     
     acm.topPrev = document.createElement('a');
     acm.topNext = document.createElement('a');
     acm.topPrev.classList.add('icon-previous');
     acm.topNext.classList.add('icon-next');
-    acm.topPrev.onclick = function () {
-      that.trigger('seqChapter', {
+    acm.topPrev.onclick = () => {
+      this.trigger('seqChapter', {
         direction:'prev',
         toTop: false
       });
     };
-    acm.topNext.onclick = function () {
-      that.trigger('seqChapter', {
+    acm.topNext.onclick = () => {
+      this.trigger('seqChapter', {
         direction:'next',
         toTop: false
       });
@@ -194,14 +194,14 @@ class StatusBar extends H5P.EventDispatcher {
     acm.botPrev.classList.add('h5p-digibook-status-button','icon-previous');
     acm.botNext.classList.add('h5p-digibook-status-button','icon-next');
     
-    acm.botPrev.onclick = function () {
-      that.trigger('seqChapter', {
+    acm.botPrev.onclick = () => {
+      this.trigger('seqChapter', {
         direction:'prev',
         toTop: true
       });
     };
-    acm.botNext.onclick = function () {
-      that.trigger('seqChapter', {
+    acm.botNext.onclick = () => {
+      this.trigger('seqChapter', {
         direction:'next',
         toTop: true
       });
