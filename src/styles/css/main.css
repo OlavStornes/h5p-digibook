@@ -1,6 +1,9 @@
 #h5p-digibook.h5p-scrollable-fullscreen {
   overflow-y: auto; }
 
+#h5p-digibook.h5p-fullscreen {
+  background-color: white; }
+
 .h5p-digibook-chapter {
   max-width: 1000px; }
 
@@ -8,8 +11,8 @@
   display: flex;
   flex: 1; }
 
-#h5p-digibook.h5p-fullscreen {
-  background-color: white; }
+.h5p-content-hidden {
+  display: none; }
 
 .h5p-digibook-status {
   padding: 1.25em;

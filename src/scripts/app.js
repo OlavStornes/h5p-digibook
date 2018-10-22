@@ -166,9 +166,10 @@ export default class DigiBook extends H5P.EventDispatcher {
      */
     this.changeChapter = function (redirectOnLoad) {
       const targetPage = this.newHandler;
-      const oldChapter = this.activeChapter;
+      const oldChapterNum = this.activeChapter;
 
       if (targetPage.chapter < self.columnElements.length) {
+        const oldChapter = self.columnElements[oldChapterNum];
         const targetChapter = self.columnElements[targetPage.chapter];
         const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
 
@@ -185,6 +186,13 @@ export default class DigiBook extends H5P.EventDispatcher {
           //If the content is short, hide the footer
           this.statusBar.editFooterVisibillity(this.shouldFooterBeVisible(targetChapter.clientHeight));
         }
+
+
+        setTimeout(()=> {
+          oldChapter.classList.remove('h5p-digibook-animate');
+          targetChapter.classList.remove('h5p-digibook-animate');
+        }, 1000);
+
         self.activeChapter = parseInt(targetPage.chapter);
         
         self.trigger('resize');
@@ -192,7 +200,7 @@ export default class DigiBook extends H5P.EventDispatcher {
         this.sideBar.redirectHandler(targetPage.chapter);
         // debugger
         if (!redirectOnLoad) {
-          this.sideBar.updateChapterTitleIndicator(oldChapter);
+          this.sideBar.updateChapterTitleIndicator(oldChapterNum);
         }
 
         //Avoid accidentaly referring to a section that does not exist
