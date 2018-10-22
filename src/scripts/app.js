@@ -16,6 +16,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.activeChapter = 0;
     this.newHandler = {};
     this.behaviour = config.behaviour;
+    this.animationInProgress = false;
 
     // H5P-instances (columns)
     this.instances = [];
@@ -64,7 +65,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       //First chapter should be visible.
       //TODO: Make it user spesific?
       if (i != 0) {
-        newColumn.style.display = 'none';
+        newColumn.classList.add('h5p-content-hidden');
       }
       //Register both the HTML-element and the H5P-element
       this.instances.push(newInstance);
@@ -107,6 +108,10 @@ export default class DigiBook extends H5P.EventDispatcher {
      * 
      */
     this.on('newChapter', (event) => {
+      if (this.animationInProgress) {
+        return;
+      }
+
       this.newHandler = event.data;
 
       //Assert that the module itself is asking for a redirect
@@ -150,17 +155,12 @@ export default class DigiBook extends H5P.EventDispatcher {
     
 
     /**
-     * If the content is short, hide the footer
-     * @param {div} targetChapter 
+     * Check if the content height exceeds the window
+     * @param {div} chapterHeight 
      */
-    this.shouldFooterBeVisible = (targetChapter) => {
+    this.shouldFooterBeVisible = (chapterHeight) => {
       if (this.behaviour.progressAuto) {
-        if (targetChapter.clientHeight <= window.outerHeight) {
-          this.statusBar.bot.hidden = true;
-        }
-        else {
-          this.statusBar.bot.hidden = false;
-        }
+        return chapterHeight <= window.outerHeight;
       }
     }; 
 
@@ -169,39 +169,76 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {int} chapter - The given chapter that should be opened
      * @param {int} section - The given section to redirect
      */
-    this.changeChapter = function (redirectOnLoad) {
-      const targetPage = this.newHandler;
-      const oldChapter = this.activeChapter;
+    this.changeChapter = (redirectOnLoad) => {
+      if (this.animationInProgress) {
+        return;
+      }
 
-      if (targetPage.chapter < self.columnElements.length) {
-        const targetChapter = self.columnElements[targetPage.chapter];
+      const targetPage = this.newHandler;
+      const oldChapterNum = this.activeChapter;
+
+
+
+      if (targetPage.chapter < this.columnElements.length) {
+        const oldChapter = this.columnElements[oldChapterNum];
+        const targetChapter = this.columnElements[targetPage.chapter];
         const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
 
-        if (targetChapter.style.display === 'none') {
-          self.columnElements[self.activeChapter].style.display = 'none';
-          targetChapter.style.display = 'block';
-
-          //If the content is short, hide the footer
-          this.shouldFooterBeVisible(targetChapter);
-        }
-        self.activeChapter = parseInt(targetPage.chapter);
-        
-        self.trigger('resize');
+        this.activeChapter = parseInt(targetPage.chapter);
         this.statusBar.updateStatusBar();
-        this.sideBar.redirectHandler(targetPage.chapter);
-        // debugger
-        if (!redirectOnLoad) {
-          this.sideBar.updateChapterTitleIndicator(oldChapter);
+
+
+        if (oldChapterNum !== this.activeChapter) {
+          this.animationInProgress = true;
+
+
+          var newPageProgress = '';
+          var oldPageProgrss = '';
+          // The pages will progress from right to left
+          if (oldChapterNum < targetPage.chapter) {
+            newPageProgress = 'right';
+            oldPageProgrss = 'left';
+          }
+          else {
+            newPageProgress = 'left';
+            oldPageProgrss = 'right';
+          }
+          
+          // Set up the slides
+          targetChapter.classList.add('h5p-digibook-animate-new', 'h5p-digibook-offset-' + newPageProgress);
+          targetChapter.classList.remove('h5p-content-hidden');
+          
+          self.animationInProgress = false;
+          targetChapter.addEventListener('transitionend', function _animationCallBack(event) {
+            if (event.propertyName === 'transform') {
+              // Remove all animation-related classes
+              targetChapter.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
+              oldChapter.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left');
+              oldChapter.classList.add('h5p-content-hidden');
+            
+              self.trigger('resize');
+              //Focus on section only after the page scrolling is finished
+              if (targetPage.section < sectionsInChapter.length) {
+                sectionsInChapter[targetPage.section].scrollIntoView(true);
+                targetPage.redirectFromComponent = false;
+              }
+            }
+            //Avoid duplicate event listeners
+            targetChapter.removeEventListener('transitionend', _animationCallBack);
+          });
+          
+          // Play the animation
+          setTimeout(() => {
+            oldChapter.classList.add('h5p-digibook-offset-' + oldPageProgrss);
+            targetChapter.classList.remove('h5p-digibook-offset-' + newPageProgress);
+          }, 20);
+          
+
         }
 
-        //Avoid accidentaly referring to a section that does not exist
-        if (targetPage.section < sectionsInChapter.length) {
-          // Workaround on focusing on new element
-          setTimeout(function () {
-            sectionsInChapter[targetPage.section].scrollIntoView(true);
-          }, 0);
-          targetPage.redirectFromComponent = false;
-
+        this.sideBar.redirectHandler(targetPage.chapter);
+        if (!redirectOnLoad) {
+          this.sideBar.updateChapterTitleIndicator(oldChapterNum);
         }
       }
     };
@@ -219,14 +256,16 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
       $wrapper.get(0).appendChild(this.statusBar.top);
 
+      const main = document.createElement('div');
       const content = document.createElement('div');
       content.classList.add('h5p-digibook-content');
-      content.appendChild(this.sideBar.div);
+      main.classList.add('h5p-digibook-main');
+      main.appendChild(this.sideBar.div);
       this.columnElements.forEach(element => {
         content.appendChild(element);
       });
-
-      $wrapper.get(0).appendChild(content);
+      main.appendChild(content);
+      $wrapper.get(0).appendChild(main);
       $wrapper.get(0).appendChild(this.statusBar.bot);
     };
 
@@ -248,13 +287,13 @@ export default class DigiBook extends H5P.EventDispatcher {
           redirObj[argPair[0]] = argPair[1];
         });
 
-        if (redirObj.h5pbookid == self.contentId && redirObj.chapter && redirObj.section) {
-          //asssert that the redirect parameters is two good bois 
-          if (isNaN(redirObj.section)) {
-            redirObj.section = 0;
-          }
-          if (isNaN(redirObj.chapter)) {
+        if (redirObj.h5pbookid == self.contentId && redirObj.chapter) {
+          //Parameter sanitization
+          if (isNaN(redirObj.chapter && redirObj.chapter > 0)) {
             return;
+          }
+          if (isNaN(redirObj.section && redirObj.section > 0)) {
+            delete redirObj.section;
           }
           this.newHandler = redirObj;
           this.changeChapter(true);

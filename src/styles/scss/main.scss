@@ -7,11 +7,7 @@ $background-color: #ffffff;
   overflow-y: auto;
 }
 
-.h5p-digibook-chapter {
-  max-width: 1000px;
-}
-
-.h5p-digibook-content {
+.h5p-digibook-main {
   display: flex;
   flex: 1;
 }
@@ -20,6 +16,7 @@ $background-color: #ffffff;
   background-color: rgb(255, 255, 255);
 }
 
+@import 'pagecontent';
 @import 'statusbar';
 @import 'navigationbar';
 @import 'cover';
