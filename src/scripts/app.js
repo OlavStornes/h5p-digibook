@@ -287,13 +287,13 @@ export default class DigiBook extends H5P.EventDispatcher {
           redirObj[argPair[0]] = argPair[1];
         });
 
-        if (redirObj.h5pbookid == self.contentId && redirObj.chapter && redirObj.section) {
-          //asssert that the redirect parameters is two good bois 
-          if (isNaN(redirObj.section)) {
-            redirObj.section = 0;
-          }
-          if (isNaN(redirObj.chapter)) {
+        if (redirObj.h5pbookid == self.contentId && redirObj.chapter) {
+          //Parameter sanitization
+          if (isNaN(redirObj.chapter && redirObj.chapter > 0)) {
             return;
+          }
+          if (isNaN(redirObj.section && redirObj.section > 0)) {
+            delete redirObj.section;
           }
           this.newHandler = redirObj;
           this.changeChapter(true);
