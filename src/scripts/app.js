@@ -188,39 +188,39 @@ export default class DigiBook extends H5P.EventDispatcher {
             newPageProgress = 'left';
             oldPageProgrss = 'right';
           }
-
+          
           // Set up the slides
           targetChapter.classList.add('h5p-digibook-animate-new', 'h5p-digibook-offset-' + newPageProgress);
           targetChapter.classList.remove('h5p-content-hidden');
-
+          
           // Play the animation
           setTimeout(() => {
             oldChapter.classList.add('h5p-digibook-offset-' + oldPageProgrss);
             targetChapter.classList.remove('h5p-digibook-offset-' + newPageProgress);
-
-          }, 10);
+          }, 20);
           
-          // Cleanup and section redirect
-          setTimeout(()=> {
-            // Remove all classes regarding animations
-            targetChapter.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
 
-            oldChapter.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left');
-            oldChapter.classList.add('h5p-content-hidden');
-
-            self.trigger('resize');
+          targetChapter.addEventListener('transitionend', function _animationCallBack(event) {
+            if (event.propertyName === 'transform') {
+              // Remove all animation-related classes
+              targetChapter.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
+              oldChapter.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left');
+              oldChapter.classList.add('h5p-content-hidden');
             
-            self.activeChapter = parseInt(targetPage.chapter);
-            this.statusBar.updateStatusBar();
-
-            //Focus on section only after the page scrolling is finished
-            if (targetPage.section < sectionsInChapter.length) {
-              setTimeout(function () {
+              self.trigger('resize');
+              
+              self.activeChapter = parseInt(targetPage.chapter);
+              self.statusBar.updateStatusBar();
+              
+              //Focus on section only after the page scrolling is finished
+              if (targetPage.section < sectionsInChapter.length) {
                 sectionsInChapter[targetPage.section].scrollIntoView(true);
-              }, 500);
-              targetPage.redirectFromComponent = false;
+                targetPage.redirectFromComponent = false;
+              }
             }
-          }, 500);
+            //Avoid duplicate event listeners
+            targetChapter.removeEventListener('transitionend', _animationCallBack);
+          });
         }
 
         this.sideBar.redirectHandler(targetPage.chapter);
