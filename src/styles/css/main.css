@@ -1,15 +1,33 @@
 #h5p-digibook.h5p-scrollable-fullscreen {
   overflow-y: auto; }
 
+.h5p-digibook-main {
+  display: flex;
+  flex: 1; }
+
 #h5p-digibook.h5p-fullscreen {
   background-color: white; }
 
 .h5p-digibook-chapter {
-  max-width: 1000px; }
+  max-width: 1000px;
+  transition: 0.5s;
+  z-index: -1; }
 
 .h5p-digibook-content {
-  display: flex;
-  flex: 1; }
+  position: relative;
+  transition: 1s;
+  z-index: -1; }
+
+.h5p-digibook-animate {
+  position: absolute;
+  top: 0;
+  transform: translate(100%); }
+
+.h5p-digibook-current {
+  transform: translate(-100%); }
+
+.h5p-digibook-new {
+  transform: translate(0); }
 
 .h5p-content-hidden {
   display: none; }

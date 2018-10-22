@@ -7,6 +7,10 @@ $background-color: #ffffff;
   overflow-y: auto;
 }
 
+.h5p-digibook-main {
+  display: flex;
+  flex: 1;
+}
 
 #h5p-digibook.h5p-fullscreen {
   background-color: rgb(255, 255, 255);

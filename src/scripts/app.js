@@ -176,26 +176,28 @@ export default class DigiBook extends H5P.EventDispatcher {
 
 
         if (targetChapter.classList.contains('h5p-content-hidden')) {
-          oldChapter.classList.add('h5p-digibook-animate');
+          // Set up the slides
           targetChapter.classList.add('h5p-digibook-animate');
-
-
-          self.columnElements[self.activeChapter].classList.add('h5p-content-hidden');
           targetChapter.classList.remove('h5p-content-hidden');
-
-          //If the content is short, hide the footer
-          this.statusBar.editFooterVisibillity(this.shouldFooterBeVisible(targetChapter.clientHeight));
+          // Play the animation
+          setTimeout(() => {
+            
+            oldChapter.classList.add('h5p-digibook-current');
+            targetChapter.classList.add('h5p-digibook-new');
+          }, 10);
+          
+          // Cleanup
+          setTimeout(()=> {
+            oldChapter.classList.remove('h5p-digibook-animate', 'h5p-digibook-current', 'h5p-digibook-new', 'h5p-content-hidden');
+            targetChapter.classList.remove('h5p-digibook-animate', 'h5p-digibook-current', 'h5p-digibook-new');
+            
+            oldChapter.classList.add('h5p-content-hidden');
+            self.trigger('resize');
+          }, 500);
         }
-
-
-        setTimeout(()=> {
-          oldChapter.classList.remove('h5p-digibook-animate');
-          targetChapter.classList.remove('h5p-digibook-animate');
-        }, 1000);
-
-        self.activeChapter = parseInt(targetPage.chapter);
+        this.statusBar.editFooterVisibillity(this.shouldFooterBeVisible(targetChapter.clientHeight));
         
-        self.trigger('resize');
+        self.activeChapter = parseInt(targetPage.chapter);
         this.statusBar.updateStatusBar();
         this.sideBar.redirectHandler(targetPage.chapter);
         // debugger
@@ -228,14 +230,16 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
       $wrapper.get(0).appendChild(this.statusBar.top);
 
+      const main = document.createElement('div');
       const content = document.createElement('div');
       content.classList.add('h5p-digibook-content');
-      content.appendChild(this.sideBar.div);
+      main.classList.add('h5p-digibook-main');
+      main.appendChild(this.sideBar.div);
       this.columnElements.forEach(element => {
         content.appendChild(element);
       });
-
-      $wrapper.get(0).appendChild(content);
+      main.appendChild(content);
+      $wrapper.get(0).appendChild(main);
       $wrapper.get(0).appendChild(this.statusBar.bot);
     };
 
