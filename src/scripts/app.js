@@ -187,7 +187,6 @@ export default class DigiBook extends H5P.EventDispatcher {
         this.activeChapter = parseInt(targetPage.chapter);
         this.statusBar.updateStatusBar();
 
-
         if (oldChapterNum !== this.activeChapter) {
           this.animationInProgress = true;
 
@@ -217,6 +216,10 @@ export default class DigiBook extends H5P.EventDispatcher {
               oldChapter.classList.add('h5p-content-hidden');
             
               self.trigger('resize');
+
+              let footerStatus = self.shouldFooterBeVisible(targetChapter.clientHeight);
+              self.statusBar.editFooterVisibillity(footerStatus);
+
               //Focus on section only after the page scrolling is finished
               if (targetPage.section < sectionsInChapter.length) {
                 sectionsInChapter[targetPage.section].scrollIntoView(true);
