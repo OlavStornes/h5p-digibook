@@ -176,6 +176,8 @@ export default class DigiBook extends H5P.EventDispatcher {
 
 
         if (targetChapter.classList.contains('h5p-content-hidden')) {
+          self.activeChapter = parseInt(targetPage.chapter);
+          self.statusBar.updateStatusBar();
 
           var newPageProgress = '';
           var oldPageProgrss = '';
@@ -208,9 +210,6 @@ export default class DigiBook extends H5P.EventDispatcher {
               oldChapter.classList.add('h5p-content-hidden');
             
               self.trigger('resize');
-              
-              self.activeChapter = parseInt(targetPage.chapter);
-              self.statusBar.updateStatusBar();
               
               //Focus on section only after the page scrolling is finished
               if (targetPage.section < sectionsInChapter.length) {
