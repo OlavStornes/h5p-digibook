@@ -16,6 +16,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.activeChapter = 0;
     this.newHandler = {};
     this.behaviour = config.behaviour;
+    this.animationInProgress = false;
 
     // H5P-instances (columns)
     this.instances = [];
@@ -107,6 +108,10 @@ export default class DigiBook extends H5P.EventDispatcher {
      * 
      */
     this.on('newChapter', (event) => {
+      if (this.animationInProgress) {
+        return;
+      }
+
       this.newHandler = event.data;
 
       //Assert that the module itself is asking for a redirect
@@ -164,20 +169,28 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {int} chapter - The given chapter that should be opened
      * @param {int} section - The given section to redirect
      */
-    this.changeChapter = function (redirectOnLoad) {
+    this.changeChapter = (redirectOnLoad) => {
+      if (this.animationInProgress) {
+        return;
+      }
+
       const targetPage = this.newHandler;
       const oldChapterNum = this.activeChapter;
 
-      if (targetPage.chapter < self.columnElements.length) {
-        const oldChapter = self.columnElements[oldChapterNum];
-        const targetChapter = self.columnElements[targetPage.chapter];
+
+
+      if (targetPage.chapter < this.columnElements.length) {
+        const oldChapter = this.columnElements[oldChapterNum];
+        const targetChapter = this.columnElements[targetPage.chapter];
         const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
 
+        this.activeChapter = parseInt(targetPage.chapter);
+        this.statusBar.updateStatusBar();
 
 
-        if (targetChapter.classList.contains('h5p-content-hidden')) {
-          self.activeChapter = parseInt(targetPage.chapter);
-          self.statusBar.updateStatusBar();
+        if (oldChapterNum !== this.activeChapter) {
+          this.animationInProgress = true;
+
 
           var newPageProgress = '';
           var oldPageProgrss = '';
@@ -195,13 +208,7 @@ export default class DigiBook extends H5P.EventDispatcher {
           targetChapter.classList.add('h5p-digibook-animate-new', 'h5p-digibook-offset-' + newPageProgress);
           targetChapter.classList.remove('h5p-content-hidden');
           
-          // Play the animation
-          setTimeout(() => {
-            oldChapter.classList.add('h5p-digibook-offset-' + oldPageProgrss);
-            targetChapter.classList.remove('h5p-digibook-offset-' + newPageProgress);
-          }, 20);
-          
-
+          self.animationInProgress = false;
           targetChapter.addEventListener('transitionend', function _animationCallBack(event) {
             if (event.propertyName === 'transform') {
               // Remove all animation-related classes
@@ -210,7 +217,6 @@ export default class DigiBook extends H5P.EventDispatcher {
               oldChapter.classList.add('h5p-content-hidden');
             
               self.trigger('resize');
-              
               //Focus on section only after the page scrolling is finished
               if (targetPage.section < sectionsInChapter.length) {
                 sectionsInChapter[targetPage.section].scrollIntoView(true);
@@ -220,6 +226,14 @@ export default class DigiBook extends H5P.EventDispatcher {
             //Avoid duplicate event listeners
             targetChapter.removeEventListener('transitionend', _animationCallBack);
           });
+          
+          // Play the animation
+          setTimeout(() => {
+            oldChapter.classList.add('h5p-digibook-offset-' + oldPageProgrss);
+            targetChapter.classList.remove('h5p-digibook-offset-' + newPageProgress);
+          }, 20);
+          
+
         }
 
         this.sideBar.redirectHandler(targetPage.chapter);
