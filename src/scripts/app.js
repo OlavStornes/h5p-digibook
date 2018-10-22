@@ -176,14 +176,27 @@ export default class DigiBook extends H5P.EventDispatcher {
 
 
         if (targetChapter.classList.contains('h5p-content-hidden')) {
+
+          var newPageProgress = '';
+          var oldPageProgrss = '';
+          // The pages will progress from right to left
+          if (oldChapterNum < targetPage.chapter) {
+            newPageProgress = 'right';
+            oldPageProgrss = 'left';
+          }
+          else {
+            newPageProgress = 'left';
+            oldPageProgrss = 'right';
+          }
+
           // Set up the slides
-          targetChapter.classList.add('h5p-digibook-animate-new', 'h5p-digibook-offset-right');
+          targetChapter.classList.add('h5p-digibook-animate-new', 'h5p-digibook-offset-' + newPageProgress);
           targetChapter.classList.remove('h5p-content-hidden');
 
           // Play the animation
           setTimeout(() => {
-            oldChapter.classList.add('h5p-digibook-offset-left');
-            targetChapter.classList.remove('h5p-digibook-offset-right');
+            oldChapter.classList.add('h5p-digibook-offset-' + oldPageProgrss);
+            targetChapter.classList.remove('h5p-digibook-offset-' + newPageProgress);
 
           }, 10);
           
