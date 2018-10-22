@@ -177,42 +177,42 @@ export default class DigiBook extends H5P.EventDispatcher {
 
         if (targetChapter.classList.contains('h5p-content-hidden')) {
           // Set up the slides
-          targetChapter.classList.add('h5p-digibook-animate');
+          targetChapter.classList.add('h5p-digibook-animate-new', 'h5p-digibook-offset-right');
           targetChapter.classList.remove('h5p-content-hidden');
+
           // Play the animation
           setTimeout(() => {
-            
-            oldChapter.classList.add('h5p-digibook-current');
-            targetChapter.classList.add('h5p-digibook-new');
+            oldChapter.classList.add('h5p-digibook-offset-left');
+            targetChapter.classList.remove('h5p-digibook-offset-right');
+
           }, 10);
           
-          // Cleanup
+          // Cleanup and section redirect
           setTimeout(()=> {
-            oldChapter.classList.remove('h5p-digibook-animate', 'h5p-digibook-current', 'h5p-digibook-new', 'h5p-content-hidden');
-            targetChapter.classList.remove('h5p-digibook-animate', 'h5p-digibook-current', 'h5p-digibook-new');
-            
+            // Remove all classes regarding animations
+            targetChapter.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
+
+            oldChapter.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left');
             oldChapter.classList.add('h5p-content-hidden');
+
             self.trigger('resize');
+            
+            self.activeChapter = parseInt(targetPage.chapter);
+            this.statusBar.updateStatusBar();
+
+            //Focus on section only after the page scrolling is finished
+            if (targetPage.section < sectionsInChapter.length) {
+              setTimeout(function () {
+                sectionsInChapter[targetPage.section].scrollIntoView(true);
+              }, 500);
+              targetPage.redirectFromComponent = false;
+            }
           }, 500);
         }
-        this.statusBar.editFooterVisibillity(this.shouldFooterBeVisible(targetChapter.clientHeight));
-        
-        self.activeChapter = parseInt(targetPage.chapter);
-        this.statusBar.updateStatusBar();
+
         this.sideBar.redirectHandler(targetPage.chapter);
-        // debugger
         if (!redirectOnLoad) {
           this.sideBar.updateChapterTitleIndicator(oldChapterNum);
-        }
-
-        //Avoid accidentaly referring to a section that does not exist
-        if (targetPage.section < sectionsInChapter.length) {
-          // Workaround on focusing on new element
-          setTimeout(function () {
-            sectionsInChapter[targetPage.section].scrollIntoView(true);
-          }, 0);
-          targetPage.redirectFromComponent = false;
-
         }
       }
     };

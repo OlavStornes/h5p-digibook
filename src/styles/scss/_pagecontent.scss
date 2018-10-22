@@ -13,20 +13,17 @@
 }
 
 
-.h5p-digibook-animate {
+.h5p-digibook-animate-new {
   position: absolute;
   top:0;
-  transform: translate(100%);
-
-  
 }
-.h5p-digibook-current{
+.h5p-digibook-offset-left{
   transform: translate(-100%);
 }
-.h5p-digibook-new{
-  transform: translate(0);
-
+.h5p-digibook-offset-right{
+  transform: translate(100%);
 }
+
 .h5p-content-hidden {
   display: none;
 }
