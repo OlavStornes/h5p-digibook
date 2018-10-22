@@ -150,17 +150,12 @@ export default class DigiBook extends H5P.EventDispatcher {
     
 
     /**
-     * If the content is short, hide the footer
-     * @param {div} targetChapter 
+     * Check if the content height exceeds the window
+     * @param {div} chapterHeight 
      */
-    this.shouldFooterBeVisible = (targetChapter) => {
+    this.shouldFooterBeVisible = (chapterHeight) => {
       if (this.behaviour.progressAuto) {
-        if (targetChapter.clientHeight <= window.outerHeight) {
-          this.statusBar.bot.hidden = true;
-        }
-        else {
-          this.statusBar.bot.hidden = false;
-        }
+        return chapterHeight <= window.outerHeight;
       }
     }; 
 
@@ -182,7 +177,7 @@ export default class DigiBook extends H5P.EventDispatcher {
           targetChapter.style.display = 'block';
 
           //If the content is short, hide the footer
-          this.shouldFooterBeVisible(targetChapter);
+          this.statusBar.editFooterVisibillity(this.shouldFooterBeVisible(targetChapter.clientHeight));
         }
         self.activeChapter = parseInt(targetPage.chapter);
         

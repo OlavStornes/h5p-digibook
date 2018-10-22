@@ -297,6 +297,15 @@ class StatusBar extends H5P.EventDispatcher {
     };
   }
 
+  /**
+   * Edits the footer visibillity
+   * 
+   * @param {Boolean} input 
+   */
+  editFooterVisibillity(input) {
+    this.bot.hidden = input;
+  }
+
   addMarkAsReadButton() {
     const div = document.createElement('div');
     const checkText = document.createElement('p');
