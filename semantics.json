@@ -71,15 +71,6 @@
       "expanded": true,
       "fields": [
         {
-          "name": "chapter_title",
-          "label": "Chapter title",
-          "importance": "high",
-          "type": "text",
-          "optional": true,
-          "placeholder": "Insert chapter here",
-          "description": "The name of the chapter"
-        },
-        {
           "label": "Chapter",
           "name": "chapter",
           "type": "library",
