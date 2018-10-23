@@ -6,7 +6,7 @@ class PageContent extends H5P.EventDispatcher {
    * @param {string} contentId
    * @param {object} contentData
    */
-  constructor(config, contentId, contentData = {}) {
+  constructor(config, contentId, contentData, parent) {
     super();
     this.parent = parent;
     this.behaviour = config.behaviour;
@@ -17,6 +17,7 @@ class PageContent extends H5P.EventDispatcher {
     this.columnElements = [];
 
     this.createColumns(config, contentId, contentData);
+    this.parent.instances = this.instances;
 
     this.div = this.createPageContent();
   }
@@ -100,7 +101,7 @@ class PageContent extends H5P.EventDispatcher {
     const oldChapterNum = this.parent.activeChapter;
 
 
-
+    
     if (targetPage.chapter < this.columnElements.length) {
       const oldChapter = this.columnElements[oldChapterNum];
       const targetChapter = this.columnElements[targetPage.chapter];
