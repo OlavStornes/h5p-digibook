@@ -199,24 +199,14 @@ export default class DigiBook extends H5P.EventDispatcher {
     /**
      * Triggers whenever the hash changes, indicating that a chapter redirect is happening
      */
-    if (this.internal) {
-
-      parent.onhashchange = (event) => {
-        if (event.newURL.indexOf('h5pbookid' !== -1)) {
-          const payload = {
-            newHash: new URL(event.newURL).hash,
-            context: 'h5p'};
-          this.redirectChapter(payload);
-        }
-      };
-
-    }
-    
-    else {
-      H5P.on(this, 'newHash',(event) => {
-        this.redirectChapter(event);
-      });
-    }
+    parent.onhashchange = (event) => {
+      if (event.newURL.indexOf('h5pbookid' !== -1)) {
+        const payload = {
+          newHash: new URL(event.newURL).hash,
+          context: 'h5p'};
+        this.redirectChapter(payload);
+      }
+    };
 
     this.redirectChapter = function (event) {
       /**
@@ -225,12 +215,8 @@ export default class DigiBook extends H5P.EventDispatcher {
        */
       if (!this.newHandler.redirectFromComponent) {
         let tmpEvent;
-        if (this.internal) {
-          tmpEvent = event;
-        }
-        else {
-          tmpEvent = event.data;
-        }
+        tmpEvent = event;
+
 
         
         //Only attempt converting if there is actually a hash present
