@@ -134,7 +134,6 @@ class PageContent extends H5P.EventDispatcher {
         setTimeout(() => {
           oldChapter.classList.add('h5p-digibook-offset-' + oldPageProgrss);
           targetChapter.classList.remove('h5p-digibook-offset-' + newPageProgress);
-          this.parent.animationInProgress = false;
         }, 50);
       }
 
@@ -168,6 +167,7 @@ class PageContent extends H5P.EventDispatcher {
         self.parent.statusBar.editFooterVisibillity(footerStatus);
         
         //Focus on section only after the page scrolling is finished
+        self.parent.animationInProgress = false;
         self.redirectSection(activeElem);
       }
     });
