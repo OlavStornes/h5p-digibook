@@ -164,6 +164,13 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     }; 
 
+    this.redirectSection = (targetPage, sectionsInChapter) => {
+      if (targetPage.section < sectionsInChapter.length) {
+        sectionsInChapter[targetPage.section].scrollIntoView(true);
+        targetPage.redirectFromComponent = false;
+      }
+    };
+
     /**
      * Input in targetPage should be: 
      * @param {int} chapter - The given chapter that should be opened
@@ -221,10 +228,7 @@ export default class DigiBook extends H5P.EventDispatcher {
               self.statusBar.editFooterVisibillity(footerStatus);
 
               //Focus on section only after the page scrolling is finished
-              if (targetPage.section < sectionsInChapter.length) {
-                sectionsInChapter[targetPage.section].scrollIntoView(true);
-                targetPage.redirectFromComponent = false;
-              }
+              self.redirectSection(targetPage, sectionsInChapter);
             }
             //Avoid duplicate event listeners
             targetChapter.removeEventListener('transitionend', _animationCallBack);
@@ -237,6 +241,10 @@ export default class DigiBook extends H5P.EventDispatcher {
           }, 20);
           
 
+        }
+
+        else {
+          this.redirectSection(targetPage, sectionsInChapter);
         }
 
         this.sideBar.redirectHandler(targetPage.chapter);
