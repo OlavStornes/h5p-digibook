@@ -19,7 +19,14 @@ class PageContent extends H5P.EventDispatcher {
     this.createColumns(config, contentId, contentData);
     this.parent.instances = this.instances;
 
-    this.div = this.createPageContent();
+    this.div = document.createElement('div');
+    this.div.classList.add('h5p-digibook-main');
+
+    this.content = this.createPageContent();
+    this.addcontentListener();
+
+
+    this.div.appendChild(this.content);
   }
 
   createPageContent() {
