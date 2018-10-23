@@ -86,10 +86,11 @@ class PageContent extends H5P.EventDispatcher {
   }
 
 
-  redirectSection(targetPage, sectionsInChapter) {
-    if (targetPage.section < sectionsInChapter.length) {
-      sectionsInChapter[targetPage.section].scrollIntoView(true);
-      targetPage.redirectFromComponent = false;
+  redirectSection(chapterElement) {
+    const sectionsInChapter = chapterElement.getElementsByClassName('h5p-column-content');
+    if (this.targetPage.section < sectionsInChapter.length) {
+      sectionsInChapter[this.targetPage.section].scrollIntoView(true);
+      this.targetPage.redirectFromComponent = false;
     }
   }
 
@@ -145,7 +146,7 @@ class PageContent extends H5P.EventDispatcher {
       }
 
       else {
-        this.redirectSection(targetPage, sectionsInChapter);
+        this.redirectSection(targetChapter);
       }
 
       this.parent.sideBar.redirectHandler(targetPage.chapter);
