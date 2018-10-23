@@ -90,13 +90,14 @@ class PageContent extends H5P.EventDispatcher {
    * @param {int} chapter - The given chapter that should be opened
    * @param {int} section - The given section to redirect
    */
-  changeChapter(redirectOnLoad) {
-    if (this.animationInProgress) {
+  changeChapter(redirectOnLoad, newHandler) {
+    const self = this;
+    if (this.parent.animationInProgress) {
       return;
     }
 
-    const targetPage = this.newHandler;
-    const oldChapterNum = this.activeChapter;
+    const targetPage = newHandler;
+    const oldChapterNum = this.parent.activeChapter;
 
 
 
@@ -105,11 +106,10 @@ class PageContent extends H5P.EventDispatcher {
       const targetChapter = this.columnElements[targetPage.chapter];
       const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
 
-      this.activeChapter = parseInt(targetPage.chapter);
-      this.statusBar.updateStatusBar();
+      this.parent.activeChapter = parseInt(targetPage.chapter);
 
       if (oldChapterNum !== this.activeChapter) {
-        this.animationInProgress = true;
+        this.parent.animationInProgress = true;
 
 
         var newPageProgress = '';
@@ -128,7 +128,7 @@ class PageContent extends H5P.EventDispatcher {
         targetChapter.classList.add('h5p-digibook-animate-new', 'h5p-digibook-offset-' + newPageProgress);
         targetChapter.classList.remove('h5p-content-hidden');
         
-        self.animationInProgress = false;
+        this.parent.animationInProgress = false;
         targetChapter.addEventListener('transitionend', function _animationCallBack(event) {
           if (event.propertyName === 'transform') {
             // Remove all animation-related classes
@@ -138,8 +138,8 @@ class PageContent extends H5P.EventDispatcher {
           
             self.trigger('resize');
 
-            let footerStatus = self.shouldFooterBeVisible(targetChapter.clientHeight);
-            self.statusBar.editFooterVisibillity(footerStatus);
+            let footerStatus = self.parent.shouldFooterBeVisible(targetChapter.clientHeight);
+            self.parent.statusBar.editFooterVisibillity(footerStatus);
 
             //Focus on section only after the page scrolling is finished
             self.redirectSection(targetPage, sectionsInChapter);
@@ -161,9 +161,9 @@ class PageContent extends H5P.EventDispatcher {
         this.redirectSection(targetPage, sectionsInChapter);
       }
 
-      this.sideBar.redirectHandler(targetPage.chapter);
+      this.parent.sideBar.redirectHandler(targetPage.chapter);
       if (!redirectOnLoad) {
-        this.sideBar.updateChapterTitleIndicator(oldChapterNum);
+        this.parent.sideBar.updateChapterTitleIndicator(oldChapterNum);
       }
     }
   }
