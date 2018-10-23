@@ -30,15 +30,12 @@ class PageContent extends H5P.EventDispatcher {
   }
 
   createPageContent() {
-    const main = document.createElement('div');
     const content = document.createElement('div');
     content.classList.add('h5p-digibook-content');
-    main.classList.add('h5p-digibook-main');
     this.columnElements.forEach(element => {
       content.appendChild(element);
     });
-    main.appendChild(content);
-    return main;
+    return content;
   }
 
   createColumns(config, contentId, contentData) {
