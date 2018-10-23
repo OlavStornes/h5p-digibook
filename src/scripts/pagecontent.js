@@ -124,30 +124,9 @@ class PageContent extends H5P.EventDispatcher {
           newPageProgress = 'left';
           oldPageProgrss = 'right';
         }
-        
         // Set up the slides
         targetChapter.classList.add('h5p-digibook-animate-new', 'h5p-digibook-offset-' + newPageProgress);
         targetChapter.classList.remove('h5p-content-hidden');
-        
-        this.parent.animationInProgress = false;
-        targetChapter.addEventListener('transitionend', function _animationCallBack(event) {
-          if (event.propertyName === 'transform') {
-            // Remove all animation-related classes
-            targetChapter.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
-            oldChapter.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left');
-            oldChapter.classList.add('h5p-content-hidden');
-          
-            self.trigger('resize');
-
-            let footerStatus = self.parent.shouldFooterBeVisible(targetChapter.clientHeight);
-            self.parent.statusBar.editFooterVisibillity(footerStatus);
-
-            //Focus on section only after the page scrolling is finished
-            self.redirectSection(targetPage, sectionsInChapter);
-          }
-          //Avoid duplicate event listeners
-          targetChapter.removeEventListener('transitionend', _animationCallBack);
-        });
         
         // Play the animation
         setTimeout(() => {
@@ -168,8 +147,30 @@ class PageContent extends H5P.EventDispatcher {
       }
     }
   }
+  addcontentListener() {
+    const self = this;
+    this.content.addEventListener('transitionend', function _animationCallBack(event) {
+      const activeChapter = self.parent.getActiveChapter();
+      if (event.propertyName === 'transform' && event.target === self.columnElements[activeChapter]) {
+        // Remove all animation-related classes
+        const inactiveElems = self.columnElements.filter(x => x !== self.columnElements[activeChapter]);
+        inactiveElems.map(x => x.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left'));
+        inactiveElems.map(x => x.classList.add('h5p-content-hidden'));
 
+        const activeElem = self.columnElements[activeChapter];
 
+        activeElem.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
+        
+        self.trigger('resize');
+        
+        let footerStatus = self.parent.shouldFooterBeVisible(activeElem.clientHeight);
+        self.parent.statusBar.editFooterVisibillity(footerStatus);
+        
+        //Focus on section only after the page scrolling is finished
+        self.redirectSection(activeElem);
+      }
+    });
+  }
 }
 
 export default PageContent;
