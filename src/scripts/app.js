@@ -97,7 +97,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       event.data.newHash = "#" + idString + chapterString + sectionString;
 
       if (this.internal) {
-        parent.H5P.communicator.send("changeHash", event.data);
+        H5P.trigger(this, "changeHash", event.data);
       }
       else {
         H5P.communicator.send('changeHash', event.data);
@@ -199,15 +199,28 @@ export default class DigiBook extends H5P.EventDispatcher {
     /**
      * Triggers whenever the hash changes, indicating that a chapter redirect is happening
      */
-    parent.onhashchange = (event) => {
-      if (event.newURL.indexOf('h5pbookid' !== -1)) {
-        const payload = {
-          newHash: new URL(event.newURL).hash,
-          context: 'h5p'};
-        this.redirectChapter(payload);
-      }
-    };
-
+    if (this.internal) {
+      H5P.on(this, 'respondChangeHash', function (event) {
+        if (event.newURL.indexOf('h5pbookid' !== -1)) {
+          const payload = {
+            newHash: new URL(event.newURL).hash,
+            context: 'h5p'};
+          this.redirectChapter(payload);
+        }
+      });
+    }
+    
+    else {
+      H5P.communicator.on('respondChangeHash', event => {
+        if (event.newURL.indexOf('h5pbookid' !== -1)) {
+          const payload = {
+            newHash: new URL(event.newURL).hash,
+            context: 'h5p'};
+          this.redirectChapter(payload);
+        }
+      });
+    }
+        
     this.redirectChapter = function (event) {
       /**
        * If true, we already have information regarding redirect in newHandler
@@ -263,9 +276,9 @@ export default class DigiBook extends H5P.EventDispatcher {
     if (this.internal) {
 
       // Assign the function changeHash to the parent communicator
-      parent.H5P.communicator.on('changeHash', (event) => {
-        if (event.context === 'h5p') {
-          parent.location.hash = event.newHash;
+      H5P.on(this, 'changeHash', function (event) {
+        if (event.data.h5pbookid === this.contentId) {
+          top.location.hash = event.data.newHash;
         }
       });
     }
