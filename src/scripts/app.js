@@ -22,6 +22,16 @@ export default class DigiBook extends H5P.EventDispatcher {
     // H5P-instances (columns)
     this.instances = [];
 
+    this.getActiveChapter = () => {
+      return this.activeChapter;
+    };
+
+    this.setActiveChapter = (input) => {
+      const number = parseInt(input);
+      if (!isNaN(number)) {
+        this.activeChapter = parseInt(input);
+      }
+    };
 
 
     if (H5P.externalEmbed === false) {
