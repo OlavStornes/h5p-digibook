@@ -100,7 +100,7 @@ class StatusBar extends H5P.EventDispatcher {
       }
       
       if (event.data.direction === 'next') {
-        if (this.parent.activeChapter+1 < this.parent.columnElements.length) {
+        if (this.parent.activeChapter+1 < this.parent.instances.length) {
           eventInput.chapter = (this.parent.activeChapter+1);
         }
       }
