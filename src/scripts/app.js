@@ -311,9 +311,11 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     };
 
-    top.onhashchange = (event) => {
-      H5P.trigger(this, 'respondChangeHash', event);
-    };
+    if (this.internal) {
+      top.onhashchange = function (event) {
+        this.H5P.trigger(this.H5P, 'respondChangeHash', event);
+      };
+    }
   }
 
 }
