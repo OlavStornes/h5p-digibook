@@ -98,7 +98,8 @@ class PageContent extends H5P.EventDispatcher {
     }
 
     const targetPage = newHandler;
-    const oldChapterNum = this.parent.activeChapter;
+    const oldChapterNum = this.parent.getActiveChapter();
+    const newChapterNum = parseInt(targetPage.chapter);
 
 
     
@@ -107,10 +108,9 @@ class PageContent extends H5P.EventDispatcher {
       const targetChapter = this.columnElements[targetPage.chapter];
       const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
 
-      this.parent.activeChapter = parseInt(targetPage.chapter);
-
-      if (oldChapterNum !== this.activeChapter) {
+      if (oldChapterNum !== newChapterNum) {
         this.parent.animationInProgress = true;
+        this.parent.setActiveChapter(newChapterNum);
 
 
         var newPageProgress = '';
