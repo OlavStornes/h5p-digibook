@@ -85,14 +85,14 @@ class StatusBar extends H5P.EventDispatcher {
 
 
     
-    this.on('updateStatusBar', (this.updateStatusBar));
+    this.on('updateStatusBar', this.updateStatusBar);
 
     /**
      * Sequential traversal of chapters
      * Event should be either 'next' or 'prev'
      */
     this.on('seqChapter', (event) => {
-      let eventInput = {
+      const eventInput = {
         h5pbookid: this.parent.contentId
       };
       if (event.data.toTop) {

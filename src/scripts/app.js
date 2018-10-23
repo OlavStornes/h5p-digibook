@@ -47,7 +47,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     }
 
     this.pageContent = new PageContent(config, contentId, contentData, this);
-    this.sideBar = new SideBar(config, contentId, this);
+    this.sideBar = new SideBar(config, contentId, contentData.metadata.title, this);
     this.statusBar = new StatusBar(contentId, config.chapters.length, this, {
       l10n: {
         nextPage: config.nextPage,
@@ -65,8 +65,8 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.sideBar.div.classList.toggle('h5p-digibook-hide');
 
       //The transition time is set in CSS at 0.5 seconds
-      setTimeout(function () {
-        self.trigger('resize');
+      setTimeout(() => {
+        this.trigger('resize');
       }, 500);
     });
 
@@ -246,7 +246,7 @@ export default class DigiBook extends H5P.EventDispatcher {
               tempHandler[key] = value;
             });
             
-            //assert that the handler actually is from this content type. 
+            // Assert that the handler actually is from this content type. 
             if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter) {
               //Fix off by one
               tempHandler.chapter = parseInt(tempHandler.chapter)-1;
