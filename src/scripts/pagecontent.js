@@ -42,10 +42,10 @@ class PageContent extends H5P.EventDispatcher {
     //Go through all columns and initialise them
     for (let i = 0; i < config.chapters.length; i++) {
       const newColumn = document.createElement('div');
-      const newInstance = H5P.newRunnable(config.chapters[i].chapter, contentId, H5P.jQuery(newColumn), contentData);
+      const newInstance = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(newColumn), contentData);
       newInstance.childInstances = newInstance.getInstances();
       newColumn.classList.add('h5p-digibook-chapter');
-      newInstance.title = config.chapters[i].chapter_title;
+      newInstance.title = config.chapters[i].metadata.title;
       newInstance.completed = false;
       
 

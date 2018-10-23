@@ -3,7 +3,7 @@
  * Constructor function.
  */
 class SideBar extends H5P.EventDispatcher {
-  constructor(config, contentId, parent) {
+  constructor(config, contentId, mainTitle, parent) {
     super();
     this.id = contentId;
     this.parent = parent;
@@ -15,8 +15,8 @@ class SideBar extends H5P.EventDispatcher {
     this.chapterElems = this.getChapterElements();
     
     
-    if (config.title) {
-      this.titleElem = this.addMainTitle(config.title);
+    if (mainTitle) {
+      this.titleElem = this.addMainTitle(mainTitle);
       this.div.appendChild(this.titleElem.div);
     }
 
@@ -75,8 +75,8 @@ class SideBar extends H5P.EventDispatcher {
   findAllChapters(input) {
     const chapters = [];
     for (let i = 0; i < input.length; i++) {
-      const sections = this.findSectionsInChapter(input[i].chapter);
-      const chapterTitle = input[i].chapter_title;
+      const sections = this.findSectionsInChapter(input[i]);
+      const chapterTitle = input[i].metadata.title;
       chapters.push({
         sections,
         title:chapterTitle
