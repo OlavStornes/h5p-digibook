@@ -2,6 +2,7 @@
   overflow-y: auto; }
 
 .h5p-digibook-main {
+  overflow: hidden;
   display: flex;
   flex: 1; }
 
@@ -10,7 +11,7 @@
 
 .h5p-digibook-chapter {
   max-width: 1000px;
-  transition: 0.5s;
+  transition: 0.25s;
   z-index: -1; }
 
 .h5p-digibook-content {
