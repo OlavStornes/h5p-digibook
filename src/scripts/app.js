@@ -201,9 +201,9 @@ export default class DigiBook extends H5P.EventDispatcher {
      */
     if (this.internal) {
       H5P.on(this, 'respondChangeHash', function (event) {
-        if (event.newURL.indexOf('h5pbookid' !== -1)) {
+        if (event.data.newURL.indexOf('h5pbookid' !== -1)) {
           const payload = {
-            newHash: new URL(event.newURL).hash,
+            newHash: new URL(event.data.newURL).hash,
             context: 'h5p'};
           this.redirectChapter(payload);
         }
@@ -221,6 +221,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       });
     }
         
+    
     this.redirectChapter = function (event) {
       /**
        * If true, we already have information regarding redirect in newHandler
@@ -308,6 +309,10 @@ export default class DigiBook extends H5P.EventDispatcher {
           }
         }
       }
+    };
+
+    top.onhashchange = (event) => {
+      H5P.trigger(this, 'respondChangeHash', event);
     };
   }
 
