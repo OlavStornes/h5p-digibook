@@ -89,7 +89,7 @@ export default class DigiBook extends H5P.EventDispatcher {
 
       // Create the new hash
       const idString = 'h5pbookid=' + this.newHandler.h5pbookid;
-      const chapterString = '&chapter=' + this.newHandler.chapter;
+      const chapterString = '&chapter=' + (this.newHandler.chapter+1);
       let sectionString = "";
       if (this.newHandler.section !== undefined) {
         sectionString = '&section=' + this.newHandler.section;
@@ -134,16 +134,10 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     }; 
 
-    this.redirectSection = (targetPage, sectionsInChapter) => {
-      if (targetPage.section < sectionsInChapter.length) {
-        sectionsInChapter[targetPage.section].scrollIntoView(true);
-        targetPage.redirectFromComponent = false;
-      }
-    };
-
     this.changeChapter = (redirectOnLoad) => {
       this.pageContent.changeChapter(redirectOnLoad, this.newHandler);
       this.statusBar.updateStatusBar();
+      this.newHandler.redirectFromComponent = false;
     };
 
     /**
@@ -186,8 +180,12 @@ export default class DigiBook extends H5P.EventDispatcher {
 
         if (redirObj.h5pbookid == self.contentId && redirObj.chapter) {
           //Parameter sanitization
-          if (isNaN(redirObj.chapter && redirObj.chapter > 0)) {
+          if (isNaN(redirObj.chapter &&  parseInt(redirObj.chapter) > 0)) {
             return;
+          }
+          else {
+            // Fix off by one to support native arrays
+            redirObj.chapter = parseInt(redirObj.chapter)-1;
           }
           if (isNaN(redirObj.section && redirObj.section > 0)) {
             delete redirObj.section;
@@ -225,7 +223,7 @@ export default class DigiBook extends H5P.EventDispatcher {
        * If true, we already have information regarding redirect in newHandler
        * When using browser history, a convert is neccecary
        */
-      if (!self.newHandler.redirectFromComponent) {
+      if (!this.newHandler.redirectFromComponent) {
         let tmpEvent;
         if (this.internal) {
           tmpEvent = event;
@@ -250,6 +248,8 @@ export default class DigiBook extends H5P.EventDispatcher {
             
             //assert that the handler actually is from this content type. 
             if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter) {
+              //Fix off by one
+              tempHandler.chapter = parseInt(tempHandler.chapter)-1;
               self.newHandler = tempHandler;
             }
           }
