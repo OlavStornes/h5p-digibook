@@ -100,31 +100,28 @@ class PageContent extends H5P.EventDispatcher {
    * @param {int} section - The given section to redirect
    */
   changeChapter(redirectOnLoad, newHandler) {
-    const self = this;
     if (this.parent.animationInProgress) {
       return;
     }
 
-    const targetPage = newHandler;
+    this.targetPage = newHandler;
     const oldChapterNum = this.parent.getActiveChapter();
-    const newChapterNum = parseInt(targetPage.chapter);
+    const newChapterNum = parseInt(this.targetPage.chapter);
 
 
-    
-    if (targetPage.chapter < this.columnElements.length) {
+    if (this.targetPage.chapter < this.columnElements.length) {
       const oldChapter = this.columnElements[oldChapterNum];
-      const targetChapter = this.columnElements[targetPage.chapter];
-      const sectionsInChapter = targetChapter.getElementsByClassName('h5p-column-content');
-
+      const targetChapter = this.columnElements[this.targetPage.chapter];
+      
       if (oldChapterNum !== newChapterNum) {
         this.parent.animationInProgress = true;
         this.parent.setActiveChapter(newChapterNum);
-
-
+        
+        
         var newPageProgress = '';
         var oldPageProgrss = '';
         // The pages will progress from right to left
-        if (oldChapterNum < targetPage.chapter) {
+        if (oldChapterNum < this.targetPage.chapter) {
           newPageProgress = 'right';
           oldPageProgrss = 'left';
         }
@@ -140,16 +137,15 @@ class PageContent extends H5P.EventDispatcher {
         setTimeout(() => {
           oldChapter.classList.add('h5p-digibook-offset-' + oldPageProgrss);
           targetChapter.classList.remove('h5p-digibook-offset-' + newPageProgress);
-        }, 20);
-        
-
+          this.parent.animationInProgress = false;
+        }, 50);
       }
 
       else {
         this.redirectSection(targetChapter);
       }
 
-      this.parent.sideBar.redirectHandler(targetPage.chapter);
+      this.parent.sideBar.redirectHandler(this.targetPage.chapter);
       if (!redirectOnLoad) {
         this.parent.sideBar.updateChapterTitleIndicator(oldChapterNum);
       }
