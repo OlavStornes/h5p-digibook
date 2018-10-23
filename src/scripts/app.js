@@ -268,17 +268,10 @@ export default class DigiBook extends H5P.EventDispatcher {
         $wrapper.get(0).appendChild(this.cover.div);
       }
       $wrapper.get(0).appendChild(this.statusBar.top);
+      this.pageContent.div.prepend(this.sideBar.div);
 
-      const main = document.createElement('div');
-      const content = document.createElement('div');
-      content.classList.add('h5p-digibook-content');
-      main.classList.add('h5p-digibook-main');
-      main.appendChild(this.sideBar.div);
-      this.columnElements.forEach(element => {
-        content.appendChild(element);
-      });
-      main.appendChild(content);
-      $wrapper.get(0).appendChild(main);
+
+      $wrapper.get(0).appendChild(this.pageContent.div);
       $wrapper.get(0).appendChild(this.statusBar.bot);
     };
 
