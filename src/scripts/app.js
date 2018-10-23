@@ -280,6 +280,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       H5P.on(this, 'changeHash', function (event) {
         if (event.data.h5pbookid === this.contentId) {
           top.location.hash = event.data.newHash;
+          location.hash = event.data.newHash;
         }
       });
     }
@@ -312,9 +313,9 @@ export default class DigiBook extends H5P.EventDispatcher {
     };
 
     if (this.internal) {
-      top.onhashchange = function (event) {
-        this.H5P.trigger(this.H5P, 'respondChangeHash', event);
-      };
+      window.addEventListener('hashchange', (event) => {
+        H5P.trigger(this, 'respondChangeHash', event);
+      });
     }
   }
 
