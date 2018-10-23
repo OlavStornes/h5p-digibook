@@ -1,6 +1,7 @@
 import SideBar from './sidebar';
 import StatusBar from './statusbar';
 import Cover from './cover';
+import PageContent from './pagecontent';
 
 export default class DigiBook extends H5P.EventDispatcher {
   /**
@@ -77,6 +78,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.cover = new Cover(config.bookCover, contentData.metadata.title, config.read, contentId, this);
     }
 
+    this.pageContent = new PageContent(config, contentId, this);
     this.sideBar = new SideBar(config, contentId, this);
     this.statusBar = new StatusBar(contentId, config.chapters.length, this, {
       l10n: {
