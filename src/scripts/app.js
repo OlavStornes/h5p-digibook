@@ -63,7 +63,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
 
     this.on('scrollToTop', () => {
-      this.statusBar.top.scrollIntoView(true);
+      this.statusBar.header.scrollIntoView(true);
     });
 
     /**
@@ -140,12 +140,12 @@ export default class DigiBook extends H5P.EventDispatcher {
       if (this.cover) {
         $wrapper.get(0).appendChild(this.cover.div);
       }
-      $wrapper.get(0).appendChild(this.statusBar.top);
+      $wrapper.get(0).appendChild(this.statusBar.header);
       this.pageContent.div.prepend(this.sideBar.div);
 
 
       $wrapper.get(0).appendChild(this.pageContent.div);
-      $wrapper.get(0).appendChild(this.statusBar.bot);
+      $wrapper.get(0).appendChild(this.statusBar.footer);
     };
 
     /**
