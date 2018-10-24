@@ -261,6 +261,33 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.statusBar.updateStatusBar();
 
 
+
+    this.updateChapterProgress = function (targetChapter) {
+      if (!this.behaviour.progressIndicators || !this.behaviour.progressAuto) {
+        return;
+      }
+
+      const chapter = this.instances[targetChapter];
+
+      if (chapter.maxTasks) {
+        if (chapter.tasksLeft === chapter.maxTasks) {
+          this.sideBar.updateChapterProgressIndicator(targetChapter, 'BLANK');
+        }
+        else if (chapter.tasksLeft === 0) {
+          this.sideBar.updateChapterProgressIndicator(targetChapter, 'DONE');
+
+        }
+        else {
+          this.sideBar.updateChapterProgressIndicator(targetChapter, 'STARTED');
+
+        }
+      }
+      else {
+        this.sideBar.updateChapterProgressIndicator(targetChapter, 'DONE');
+
+      }
+    };
+
     /**
      * Set a section progress indicator
      * 
@@ -279,7 +306,7 @@ export default class DigiBook extends H5P.EventDispatcher {
           
           this.instances[targetChapter].tasksLeft -= 1;
           if (this.behaviour.progressAuto) {
-            this.sideBar.updateChapterTitleIndicator(targetChapter);
+            this.updateChapterProgress(targetChapter);
           }
         }
       }

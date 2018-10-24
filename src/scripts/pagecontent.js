@@ -143,7 +143,7 @@ class PageContent extends H5P.EventDispatcher {
 
       this.parent.sideBar.redirectHandler(this.targetPage.chapter);
       if (!redirectOnLoad) {
-        this.parent.sideBar.updateChapterTitleIndicator(oldChapterNum);
+        this.parent.updateChapterProgress(oldChapterNum);
       }
     }
   }

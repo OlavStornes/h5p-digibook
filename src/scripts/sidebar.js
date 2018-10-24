@@ -107,7 +107,12 @@ class SideBar extends H5P.EventDispatcher {
   }
   
 
-  //Fires whenever a redirect is happening in parent
+  /**
+   * Fires whenever a redirect is happening in parent
+   * All chapters will be collapsed except for the active
+   * 
+   * @param {number} newChapter - The chapter that should stay open in the menu 
+   */
   redirectHandler(newChapter) {
     this.chapterElems.filter(x => 
       this.chapterElems.indexOf(x) != newChapter).forEach(x => this.editChapterStatus(x, true));
@@ -133,31 +138,22 @@ class SideBar extends H5P.EventDispatcher {
    * 
    * @param {number} targetChapter - The chapter that should be updated
    */
-  updateChapterTitleIndicator(targetChapter) {
-    if (!this.behaviour.progressIndicators || !this.behaviour.progressAuto) {
-      return;
-    }
-    const x = this.parent.instances[targetChapter];
+  updateChapterProgressIndicator(targetChapter, status) {
+
     let targetElem = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-chapter-title')[0];
     targetElem = targetElem.getElementsByClassName('h5p-digibook-navigation-chapter-progress')[0];
 
-    if (x.maxTasks) {
-      if (x.tasksLeft == x.maxTasks) {
-        targetElem.classList.remove('icon-chapter-started', 'icon-chapter-done');
-        targetElem.classList.add('icon-chapter-blank');
-      }
-      else if (x.tasksLeft === 0) {
-        targetElem.classList.remove('icon-chapter-blank', 'icon-chapter-started');
-        targetElem.classList.add('icon-chapter-done');
-      }
-      else {
-        targetElem.classList.remove('icon-chapter-blank', 'icon-chapter-done');
-        targetElem.classList.add('icon-chapter-started');
-      }
+    if (status === 'BLANK') {
+      targetElem.classList.remove('icon-chapter-started', 'icon-chapter-done');
+      targetElem.classList.add('icon-chapter-blank');
     }
-    else {
-      targetElem.classList.remove('icon-chapter-blank');
+    else if (status === 'DONE') {
+      targetElem.classList.remove('icon-chapter-blank', 'icon-chapter-started');
       targetElem.classList.add('icon-chapter-done');
+    }
+    else if (status === 'STARTED') {
+      targetElem.classList.remove('icon-chapter-blank', 'icon-chapter-done');
+      targetElem.classList.add('icon-chapter-started');
     }
   }
 
