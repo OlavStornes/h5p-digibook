@@ -39,6 +39,8 @@ class PageContent extends H5P.EventDispatcher {
   }
 
   createColumns(config, contentId, contentData) {
+    const redirObject = this.parent.retrieveHashFromUrl();
+
     //Go through all columns and initialise them
     for (let i = 0; i < config.chapters.length; i++) {
       const newColumn = document.createElement('div');
@@ -100,7 +102,7 @@ class PageContent extends H5P.EventDispatcher {
    * @param {int} section - The given section to redirect
    */
   changeChapter(redirectOnLoad, newHandler) {
-    if (this.parent.animationInProgress) {
+    if (this.parent.animationInProgress || redirectOnLoad) {
       return;
     }
 
@@ -164,7 +166,7 @@ class PageContent extends H5P.EventDispatcher {
 
         activeElem.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
         
-        self.trigger('resize');
+
         
         let footerStatus = self.parent.shouldFooterBeVisible(activeElem.clientHeight);
         self.parent.statusBar.editFooterVisibillity(footerStatus);
