@@ -63,7 +63,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
 
     this.on('scrollToTop', () => {
-      this.sideBar.div.scrollIntoView(true);
+      this.statusBar.top.scrollIntoView(true);
     });
 
     /**
