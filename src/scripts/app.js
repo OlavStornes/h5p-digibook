@@ -26,6 +26,32 @@ export default class DigiBook extends H5P.EventDispatcher {
       return this.activeChapter;
     };
 
+    this.retrieveHashFromUrl = () => {
+      const rawparams = top.location.hash.replace('#', "").split('&').map(el => el.split("="));
+      const redirObj = {};
+
+
+      //Split up the hash parametres and assign to an object
+      rawparams.forEach(argPair => {
+        redirObj[argPair[0]] = argPair[1];
+      });
+
+      if (redirObj.h5pbookid == self.contentId && redirObj.chapter) {
+        //Parameter sanitization
+        if (isNaN(redirObj.chapter &&  parseInt(redirObj.chapter) > 0)) {
+          return;
+        }
+        else {
+          // Fix off by one to support native arrays
+          redirObj.chapter = parseInt(redirObj.chapter)-1;
+        }
+        if (isNaN(redirObj.section && redirObj.section > 0)) {
+          delete redirObj.section;
+        }
+      }
+      return redirObj;
+    };
+
     this.setActiveChapter = (input) => {
       const number = parseInt(input);
       if (!isNaN(number)) {
@@ -157,30 +183,8 @@ export default class DigiBook extends H5P.EventDispatcher {
      */
     document.addEventListener('readystatechange', event => {
       if (event.target.readyState === "complete") {
-        const rawparams = top.location.hash.replace('#', "").split('&').map(el => el.split("="));
-        const redirObj = {};
-
-
-        //Split up the hash parametres and assign to an object
-        rawparams.forEach(argPair => {
-          redirObj[argPair[0]] = argPair[1];
-        });
-
-        if (redirObj.h5pbookid == self.contentId && redirObj.chapter) {
-          //Parameter sanitization
-          if (isNaN(redirObj.chapter &&  parseInt(redirObj.chapter) > 0)) {
-            return;
-          }
-          else {
-            // Fix off by one to support native arrays
-            redirObj.chapter = parseInt(redirObj.chapter)-1;
-          }
-          if (isNaN(redirObj.section && redirObj.section > 0)) {
-            delete redirObj.section;
-          }
-          this.newHandler = redirObj;
-          this.changeChapter(true);
-        }
+        this.newHandler = this.retrieveHashFromUrl();
+        this.changeChapter(true);
       }
     });
 
@@ -321,5 +325,3 @@ export default class DigiBook extends H5P.EventDispatcher {
   }
 
 }
-
-
