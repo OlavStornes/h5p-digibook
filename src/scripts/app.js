@@ -285,6 +285,8 @@ export default class DigiBook extends H5P.EventDispatcher {
         status = 'DONE';
       }
 
+      if (status === 'DONE') {
+        chapter.triggerXAPIScored(chapter.getScore(), chapter.getMaxScore(), 'completed');
       }
       this.sideBar.updateChapterProgressIndicator(targetChapter, status);
     };
