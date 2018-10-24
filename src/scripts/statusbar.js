@@ -27,7 +27,8 @@ class StatusBar extends H5P.EventDispatcher {
      */
     this.header = document.createElement('div');
     this.headerInfo = document.createElement('div');
-    this.headerInfo.classList.add('h5p-digibook-status', 'h5p-digibook-status-header');
+    this.header.classList.add('h5p-digibook-status-header');
+    this.headerInfo.classList.add('h5p-digibook-status');
     
     this.headerProgressBar = this.addProgressBar();
     this.headerStatus = this.addProgress(false);
