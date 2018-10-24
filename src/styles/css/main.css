@@ -164,6 +164,7 @@
   background-size: cover;
   box-shadow: 0.625em 0.625em 1.875em rgba(166, 166, 166, 0.2);
   flex: 0 0 16em;
+  min-height: 19em;
   order: -1;
   transition: all .5s ease-in-out;
   width: 16.563em;

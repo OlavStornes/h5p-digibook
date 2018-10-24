@@ -166,7 +166,6 @@ class PageContent extends H5P.EventDispatcher {
 
         activeElem.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
         
-
         
         let footerStatus = self.parent.shouldFooterBeVisible(activeElem.clientHeight);
         self.parent.statusBar.editFooterVisibillity(footerStatus);
@@ -174,6 +173,7 @@ class PageContent extends H5P.EventDispatcher {
         //Focus on section only after the page scrolling is finished
         self.parent.animationInProgress = false;
         self.redirectSection(activeElem);
+        self.parent.trigger('resize');
       }
     });
   }
