@@ -62,17 +62,20 @@ class PageContent extends H5P.EventDispatcher {
       }
       newInstance.maxTasks = newInstance.tasksLeft;
       
-      
-      //First chapter should be visible.
-      //TODO: Make it user spesific?
-      if (i != 0) {
-        newColumn.classList.add('h5p-content-hidden');
-      }
       //Register both the HTML-element and the H5P-element
       this.instances.push(newInstance);
       this.columnElements.push(newColumn);
     }
     
+    //First chapter should be visible, except if the url says otherwise.
+    let chosenChapter = (redirObject.chapter-1) || 0;
+
+    if (redirObject.chapter) {
+      this.parent.setActiveChapter(redirObject.chapter-1);
+    }
+
+    this.columnElements.filter(x => this.columnElements.indexOf(x) !== chosenChapter)
+      .map(x => x.classList.add('h5p-content-hidden'));
   }
 
   isH5PTask(H5PObject) {
