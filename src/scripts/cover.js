@@ -113,6 +113,7 @@ class Cover extends H5P.EventDispatcher {
 
   removeCover() {
     this.div.remove();
+    this.parent.trigger('coverRemoved');
   }
   /** 
    * @param {String} input - Text that will go inside the title-element

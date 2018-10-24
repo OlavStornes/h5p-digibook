@@ -102,7 +102,7 @@ class PageContent extends H5P.EventDispatcher {
    * @param {int} section - The given section to redirect
    */
   changeChapter(redirectOnLoad, newHandler) {
-    if (this.parent.animationInProgress || redirectOnLoad) {
+    if (this.parent.animationInProgress) {
       return;
     }
 
@@ -115,7 +115,7 @@ class PageContent extends H5P.EventDispatcher {
       const oldChapter = this.columnElements[oldChapterNum];
       const targetChapter = this.columnElements[this.targetPage.chapter];
       
-      if (oldChapterNum !== newChapterNum) {
+      if (oldChapterNum !== newChapterNum && !redirectOnLoad) {
         this.parent.animationInProgress = true;
         this.parent.setActiveChapter(newChapterNum);
         
@@ -143,7 +143,14 @@ class PageContent extends H5P.EventDispatcher {
       }
 
       else {
-        this.redirectSection(targetChapter);
+        if (this.parent.cover.div) {
+          this.parent.on('coverRemoved', () => {
+            this.redirectSection(targetChapter);
+          });
+        }
+        else {
+          this.redirectSection(targetChapter);
+        }
       }
 
       this.parent.sideBar.redirectHandler(this.targetPage.chapter);
