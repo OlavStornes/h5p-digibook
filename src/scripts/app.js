@@ -266,26 +266,27 @@ export default class DigiBook extends H5P.EventDispatcher {
       if (!this.behaviour.progressIndicators || !this.behaviour.progressAuto) {
         return;
       }
-
       const chapter = this.instances[targetChapter];
+      let status;
 
       if (chapter.maxTasks) {
         if (chapter.tasksLeft === chapter.maxTasks) {
-          this.sideBar.updateChapterProgressIndicator(targetChapter, 'BLANK');
+          status = 'BLANK';
         }
         else if (chapter.tasksLeft === 0) {
-          this.sideBar.updateChapterProgressIndicator(targetChapter, 'DONE');
-
+          status = 'DONE';
         }
         else {
-          this.sideBar.updateChapterProgressIndicator(targetChapter, 'STARTED');
-
+          status = 'STARTED';
         }
       }
+
       else {
-        this.sideBar.updateChapterProgressIndicator(targetChapter, 'DONE');
+        status = 'DONE';
+      }
 
       }
+      this.sideBar.updateChapterProgressIndicator(targetChapter, status);
     };
 
     /**
