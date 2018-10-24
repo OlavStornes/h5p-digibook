@@ -33,14 +33,6 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     };
 
-
-    if (H5P.externalEmbed === false) {
-      this.internal = true;
-    }
-    else if (H5P.communicator) {
-      this.internal = false;
-    }
-
     //Initialize the support components
     if (config.showCoverPage) {
       this.cover = new Cover(config.bookCover, contentData.metadata.title, config.read, contentId, this);
@@ -96,12 +88,8 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
       event.data.newHash = "#" + idString + chapterString + sectionString;
 
-      if (this.internal) {
-        H5P.trigger(this, "changeHash", event.data);
-      }
-      else {
-        H5P.communicator.send('changeHash', event.data);
-      }
+      H5P.trigger(this, "changeHash", event.data);
+
     });
 
     H5P.externalDispatcher.on('xAPI', function (event) {
@@ -199,27 +187,15 @@ export default class DigiBook extends H5P.EventDispatcher {
     /**
      * Triggers whenever the hash changes, indicating that a chapter redirect is happening
      */
-    if (this.internal) {
-      H5P.on(this, 'respondChangeHash', function (event) {
-        if (event.data.newURL.indexOf('h5pbookid' !== -1)) {
-          const payload = {
-            newHash: new URL(event.data.newURL).hash,
-            context: 'h5p'};
-          this.redirectChapter(payload);
-        }
-      });
-    }
-    
-    else {
-      H5P.communicator.on('respondChangeHash', event => {
-        if (event.newURL.indexOf('h5pbookid' !== -1)) {
-          const payload = {
-            newHash: new URL(event.newURL).hash,
-            context: 'h5p'};
-          this.redirectChapter(payload);
-        }
-      });
-    }
+    H5P.on(this, 'respondChangeHash', function (event) {
+      if (event.data.newURL.indexOf('h5pbookid' !== -1)) {
+        const payload = {
+          newHash: new URL(event.data.newURL).hash,
+          context: 'h5p'};
+        this.redirectChapter(payload);
+      }
+    });
+
         
     
     this.redirectChapter = function (event) {
@@ -274,16 +250,13 @@ export default class DigiBook extends H5P.EventDispatcher {
     };
 
     
-    if (this.internal) {
 
-      // Assign the function changeHash to the parent communicator
-      H5P.on(this, 'changeHash', function (event) {
-        if (event.data.h5pbookid === this.contentId) {
-          top.location.hash = event.data.newHash;
-          location.hash = event.data.newHash;
-        }
-      });
-    }
+    H5P.on(this, 'changeHash', function (event) {
+      if (event.data.h5pbookid === this.contentId) {
+        top.location.hash = event.data.newHash;
+        location.hash = event.data.newHash;
+      }
+    });
     //Kickstart the statusbar
     this.statusBar.updateStatusBar();
 
@@ -312,11 +285,9 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     };
 
-    if (this.internal) {
-      window.addEventListener('hashchange', (event) => {
-        H5P.trigger(this, 'respondChangeHash', event);
-      });
-    }
+    window.addEventListener('hashchange', (event) => {
+      H5P.trigger(this, 'respondChangeHash', event);
+    });
   }
 
 }
