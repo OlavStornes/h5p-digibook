@@ -20,6 +20,9 @@
 }
 .h5p-digibook-offset-right{
   transform: translate(100%);
+  opacity: 0;
+  transition: visibility 0s, opacity 0,5s linear;
+
 }
 
 .h5p-content-hidden {
