@@ -30,7 +30,6 @@ export default class DigiBook extends H5P.EventDispatcher {
       const rawparams = top.location.hash.replace('#', "").split('&').map(el => el.split("="));
       const redirObj = {};
 
-
       //Split up the hash parametres and assign to an object
       rawparams.forEach(argPair => {
         redirObj[argPair[0]] = argPair[1];
@@ -38,12 +37,12 @@ export default class DigiBook extends H5P.EventDispatcher {
 
       if (redirObj.h5pbookid == self.contentId && redirObj.chapter) {
         //Parameter sanitization
-        if (isNaN(redirObj.chapter &&  parseInt(redirObj.chapter) > 0)) {
+        if (isNaN(redirObj.chapter && parseInt(redirObj.chapter) > 0)) {
           return;
         }
         else {
           // Fix off by one to support native arrays
-          redirObj.chapter = parseInt(redirObj.chapter)-1;
+          redirObj.chapter = parseInt(redirObj.chapter) - 1;
         }
         if (isNaN(redirObj.section && redirObj.section > 0)) {
           delete redirObj.section;
@@ -74,7 +73,6 @@ export default class DigiBook extends H5P.EventDispatcher {
       },
       behaviour: this.behaviour
     });
-
 
     /**
      * Establish all triggers
@@ -111,7 +109,7 @@ export default class DigiBook extends H5P.EventDispatcher {
           if (element !== hashObj[key]) {
             return false;
           }
-          
+
         }
       }
       return true;
@@ -133,13 +131,13 @@ export default class DigiBook extends H5P.EventDispatcher {
 
       // Create the new hash
       const idString = 'h5pbookid=' + this.newHandler.h5pbookid;
-      const chapterString = '&chapter=' + (this.newHandler.chapter+1);
+      const chapterString = '&chapter=' + (this.newHandler.chapter + 1);
       let sectionString = "";
       if (this.newHandler.section !== undefined) {
         sectionString = '&section=' + this.newHandler.section;
       }
       event.data.newHash = "#" + idString + chapterString + sectionString;
-      
+
       if (event.data.chapter === this.activeChapter) {
 
         if (this.isCurrentHashSameAsRedirect(event.data)) {
@@ -168,15 +166,15 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.isCurrentChapterRead = () => {
       return this.instances[this.activeChapter].completed;
     };
-  
+
     /**
      * Set the current chapter as completed
      */
     this.setCurrentChapterRead = () => {
       this.instances[this.activeChapter].completed = true;
-      this.sideBar.setChapterIndicatorComplete(this.activeChapter);      
+      this.sideBar.setChapterIndicatorComplete(this.activeChapter);
     };
-    
+
 
     /**
      * Check if the content height exceeds the window
@@ -186,7 +184,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       if (this.behaviour.progressAuto) {
         return chapterHeight <= window.outerHeight;
       }
-    }; 
+    };
 
     /**
      * Change the current active chapter
@@ -203,7 +201,7 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {jQuery} $wrapper
      */
     this.attach = function ($wrapper) {
-      
+
       $wrapper[0].classList.add('h5p-scrollable-fullscreen');
       // Needed to enable scrolling in fullscreen
       $wrapper[0].id = "h5p-digibook";
@@ -239,13 +237,13 @@ export default class DigiBook extends H5P.EventDispatcher {
       if (event.data.newURL.indexOf('h5pbookid' !== -1)) {
         const payload = {
           newHash: new URL(event.data.newURL).hash,
-          context: 'h5p'};
+          context: 'h5p'
+        };
         this.redirectChapter(payload);
       }
     });
 
-        
-    
+
     this.redirectChapter = function (event) {
       /**
        * If true, we already have information regarding redirect in newHandler
@@ -255,12 +253,9 @@ export default class DigiBook extends H5P.EventDispatcher {
         let tmpEvent;
         tmpEvent = event;
 
-
-        
         //Only attempt converting if there is actually a hash present
         if (tmpEvent.context === 'h5p') {
           const hash = tmpEvent.newHash;
-
           if (hash) {
             const hashArray = hash.replace("#", "").split("&").map(el => el.split("="));
             const tempHandler = {};
@@ -269,11 +264,11 @@ export default class DigiBook extends H5P.EventDispatcher {
               const value = el[1];
               tempHandler[key] = value;
             });
-            
+
             // Assert that the handler actually is from this content type. 
             if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter) {
               //Fix off by one-errors
-              tempHandler.chapter = parseInt(tempHandler.chapter)-1;
+              tempHandler.chapter = parseInt(tempHandler.chapter) - 1;
               self.newHandler = tempHandler;
             }
           }
@@ -287,17 +282,15 @@ export default class DigiBook extends H5P.EventDispatcher {
               h5pbookid: self.h5pbookid
             };
           }
-
         }
         else {
           return;
         }
       }
-
       self.changeChapter(false);
     };
 
-    
+
 
     H5P.on(this, 'changeHash', function (event) {
       if (event.data.h5pbookid === this.contentId) {
@@ -357,8 +350,8 @@ export default class DigiBook extends H5P.EventDispatcher {
 
           this.sideBar.setSectionMarker(targetChapter, i);
 
-  
-          
+
+
           this.instances[targetChapter].tasksLeft -= 1;
           if (this.behaviour.progressAuto) {
             this.updateChapterProgress(targetChapter);
