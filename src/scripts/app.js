@@ -304,7 +304,7 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.setSectionStatusByID = function (targetId, targetChapter) {
       for (let i = 0; i < this.instances[targetChapter].childInstances.length; i++) {
         const element = this.instances[targetChapter].childInstances[i];
-        if (element.subContentId === targetId) {
+        if (element.subContentId === targetId && !element.taskDone) {
           element.taskDone = true;
 
           this.sideBar.setSectionMarker(targetChapter, i);
