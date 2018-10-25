@@ -160,11 +160,18 @@ export default class DigiBook extends H5P.EventDispatcher {
     });
 
 
-
+    /**
+     * Check if the current chapter is read
+     * 
+     * @returns {boolean}
+     */
     this.isCurrentChapterRead = () => {
       return this.instances[this.activeChapter].completed;
     };
   
+    /**
+     * Set the current chapter as completed
+     */
     this.setCurrentChapterRead = () => {
       this.instances[this.activeChapter].completed = true;
       this.sideBar.setChapterIndicatorComplete(this.activeChapter);      
@@ -181,6 +188,10 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     }; 
 
+    /**
+     * Change the current active chapter
+     * @param {boolean} redirectOnLoad - Is this a redirect which happens immediately?
+     */
     this.changeChapter = (redirectOnLoad) => {
       this.pageContent.changeChapter(redirectOnLoad, this.newHandler);
       this.statusBar.updateStatusBar();
@@ -261,7 +272,7 @@ export default class DigiBook extends H5P.EventDispatcher {
             
             // Assert that the handler actually is from this content type. 
             if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter) {
-              //Fix off by one
+              //Fix off by one-errors
               tempHandler.chapter = parseInt(tempHandler.chapter)-1;
               self.newHandler = tempHandler;
             }
@@ -298,7 +309,11 @@ export default class DigiBook extends H5P.EventDispatcher {
     this.statusBar.updateStatusBar();
 
 
-
+    /**
+     * Update statistics on the main chapter
+     * 
+     * @param {number} targetChapter 
+     */
     this.updateChapterProgress = function (targetChapter) {
       if (!this.behaviour.progressIndicators || !this.behaviour.progressAuto) {
         return;
