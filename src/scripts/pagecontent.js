@@ -143,7 +143,7 @@ class PageContent extends H5P.EventDispatcher {
       }
 
       else {
-        if (this.parent.cover.div) {
+        if (this.parent.cover && this.parent.cover.div) {
           this.parent.on('coverRemoved', () => {
             this.redirectSection(targetChapter);
           });
