@@ -92,6 +92,32 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.statusBar.header.scrollIntoView(true);
     });
 
+
+    /**
+     * Compare the current hash with the currently redirected hash.
+     * 
+     * Used for checking if the user attempts to redirect to the same section twice
+     * @param {object} hashObj - the object that should be compared to the hash
+     * @param {number} hashObj.chapter
+     * @param {number} hashObj.section
+     * @param {number} hashObj.h5pbookid
+     */
+    this.isCurrentHashSameAsRedirect = (hashObj) => {
+      const temp = this.retrieveHashFromUrl();
+
+      for (const key in temp) {
+        if (temp.hasOwnProperty(key)) {
+          const element = parseInt(temp[key]);
+          if (element !== hashObj[key]) {
+            return false;
+          }
+          
+        }
+      }
+      return true;
+    };
+
+
     /**
      * 
      */
@@ -113,9 +139,16 @@ export default class DigiBook extends H5P.EventDispatcher {
         sectionString = '&section=' + this.newHandler.section;
       }
       event.data.newHash = "#" + idString + chapterString + sectionString;
+      
+      if (event.data.chapter === this.activeChapter) {
 
+        if (this.isCurrentHashSameAsRedirect(event.data)) {
+          //only trigger section redirect without changing hash
+          this.pageContent.changeChapter(false, event.data);
+          return;
+        }
+      }
       H5P.trigger(this, "changeHash", event.data);
-
     });
 
     H5P.externalDispatcher.on('xAPI', function (event) {
