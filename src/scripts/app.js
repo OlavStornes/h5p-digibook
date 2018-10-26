@@ -185,6 +185,19 @@ export default class DigiBook extends H5P.EventDispatcher {
     };
 
     /**
+     * Resize all child instances. 
+     */
+    this.resizeChildInstances = function () {
+      this.instances[this.activeChapter].childInstances.map(x => {
+        x.trigger('resize');
+      });
+
+      setTimeout(() => {
+        this.trigger('resize');
+      }, 1000);
+    };
+
+    /**
      * Change the current active chapter
      * @param {boolean} redirectOnLoad - Is this a redirect which happens immediately?
      */

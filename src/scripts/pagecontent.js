@@ -180,7 +180,7 @@ class PageContent extends H5P.EventDispatcher {
         //Focus on section only after the page scrolling is finished
         self.parent.animationInProgress = false;
         self.redirectSection(activeElem);
-        self.parent.trigger('resize');
+        self.parent.resizeChildInstances();  
       }
     });
   }
