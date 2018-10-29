@@ -61,14 +61,18 @@ class SideBar extends H5P.EventDispatcher {
     const tmp = [];
     const sections = input.params.content;
     for (let j = 0; j < sections.length; j++) {
-      const section = sections[j];
-      const title = section.content.metadata.title;
-      const id = section.content.subContentId;
-
-      tmp.push({
-        title,
-        id
-      });
+      try {
+        const content = sections[j].content;
+        const title = content.metadata.title;
+        const id = content.subContentId;
+        tmp.push({
+          title,
+          id
+        });
+      }
+      catch (err) {
+        continue;
+      }
     }
     return tmp;
   }
