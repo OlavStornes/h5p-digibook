@@ -6,10 +6,12 @@ class PageContent extends H5P.EventDispatcher {
    * @param {string} contentId
    * @param {object} contentData
    */
-  constructor(config, contentId, contentData, parent) {
+  constructor(config, contentId, contentData, parent, params) {
     super();
     this.parent = parent;
     this.behaviour = config.behaviour;
+
+    this.params = params;
 
     // H5P-instances (columns)
     this.instances = [];
@@ -38,6 +40,29 @@ class PageContent extends H5P.EventDispatcher {
     return content;
   }
 
+  createPageReadMark() {
+    const div = document.createElement('div');
+    const checkText = document.createElement('p');
+    checkText.innerHTML = this.params.l10n.markAsFinished;
+
+    const markRead = document.createElement('input');
+    markRead.setAttribute('type', 'checkbox');
+    div.classList.add('h5p-digibook-status-progress-marker');
+    markRead.onclick = () => {
+      this.parent.setCurrentChapterRead();
+      markRead.disabled = true;
+    };
+
+    div.appendChild(markRead);
+    div.appendChild(checkText);
+
+    return {
+      div,
+      markRead,
+      checkText
+    };
+  }
+
   createColumns(config, contentId, contentData) {
     const redirObject = this.parent.retrieveHashFromUrl();
 
@@ -49,6 +74,11 @@ class PageContent extends H5P.EventDispatcher {
       newColumn.classList.add('h5p-digibook-chapter');
       newInstance.title = config.chapters[i].metadata.title;
       newInstance.completed = false;
+      
+      if (this.behaviour.progressIndicators && !this.behaviour.progressAuto) {
+        const checkPage = this.createPageReadMark();
+        newColumn.appendChild(checkPage.div);
+      }
       
 
       //Find sections with tasks and tracks them

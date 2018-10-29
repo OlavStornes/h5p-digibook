@@ -13,7 +13,6 @@ class StatusBar extends H5P.EventDispatcher {
           nextPage: 'Next page',
           previousPage: 'Previous page',
           navigateToTop: 'Navigate to the top',
-          markAsFinished: 'I have finished this page'
         }
       },
       params || {}
@@ -31,8 +30,8 @@ class StatusBar extends H5P.EventDispatcher {
     this.headerInfo.classList.add('h5p-digibook-status');
     
     this.headerProgressBar = this.addProgressBar();
-    this.headerStatus = this.addProgress(false);
-    this.footerStatus = this.addProgress(true);
+    this.headerStatus = this.addProgress();
+    this.footerStatus = this.addProgress();
     this.headerMenu = this.addMenu();
     this.buttonToTop = this.addToTop();
     
@@ -122,11 +121,6 @@ class StatusBar extends H5P.EventDispatcher {
     this.headerProgressBar.progress.style.width = barWidth;
   }
 
-  updateReadMarker() {
-    const isDone = this.parent.isCurrentChapterRead();
-    this.checkMark.markRead.disabled = isDone;
-    this.checkMark.markRead.checked = isDone;
-  }
 
   updateStatusBar() {
     const currChapter = (this.parent.activeChapter+1) ;
@@ -144,10 +138,6 @@ class StatusBar extends H5P.EventDispatcher {
     
     this.headerChapterTitle.p.setAttribute("title", chapterTitle);
     this.footerChapterTitle.p.setAttribute("title", chapterTitle);
-
-    if (this.params.behaviour.progressIndicators && !this.params.behaviour.progressAuto) {
-      this.updateReadMarker();
-    }
 
     //assure that the buttons are valid in terms of chapter edges
     if (this.parent.activeChapter <= 0) {
@@ -303,33 +293,10 @@ class StatusBar extends H5P.EventDispatcher {
     this.footer.hidden = input;
   }
 
-  addMarkAsReadButton() {
-    const div = document.createElement('div');
-    const checkText = document.createElement('p');
-    checkText.innerHTML = this.params.l10n.markAsFinished + " :";
-
-    const markRead = document.createElement('input');
-    markRead.setAttribute('type', 'checkbox');
-    markRead.classList.add('h5p-digibook-status-progress-marker');
-    markRead.onclick = () => {
-      this.parent.setCurrentChapterRead();
-      markRead.disabled = true;
-    };
-
-    div.appendChild(checkText);
-    div.appendChild(markRead);
-
-    return {
-      div,
-      markRead,
-      checkText
-    };
-  }
-
   /**
    * Add a status-button which shows current and total chapters
    */
-  addProgress(footer) {
+  addProgress() {
     const div = document.createElement('div');
     const p = document.createElement('p');
     const current = document.createElement('span');
@@ -348,13 +315,6 @@ class StatusBar extends H5P.EventDispatcher {
     p.appendChild(current);
     p.appendChild(divider);
     p.appendChild(total);
-
-    if (footer) {
-      if (this.params.behaviour.progressIndicators && !this.params.behaviour.progressAuto) {
-        this.checkMark = this.addMarkAsReadButton();
-        div.appendChild(this.checkMark.div);
-      }
-    }
 
     
     div.appendChild(p);

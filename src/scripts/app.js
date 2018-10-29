@@ -344,8 +344,15 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.cover = new Cover(config.bookCover, contentData.metadata.title, config.read, contentId, this);
     }
 
-    this.pageContent = new PageContent(config, contentId, contentData, this);
+    this.pageContent = new PageContent(config, contentId, contentData, this, {
+      l10n: {
+        markAsFinished: config.markAsFinished
+      },
+      behaviour: this.behaviour
+    });
+
     this.sideBar = new SideBar(config, contentId, contentData.metadata.title, this);
+
     this.statusBar = new StatusBar(contentId, config.chapters.length, this, {
       l10n: {
         nextPage: config.nextPage,
