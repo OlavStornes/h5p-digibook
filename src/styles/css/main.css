@@ -40,6 +40,8 @@
   border-top: 1px solid #bebebe; }
   .h5p-digibook-status-progress-marker input[type=checkbox] {
     transform: scale(1.5); }
+  .h5p-digibook-status-progress-marker p {
+    padding-left: 1em; }
 
 .h5p-content-hidden {
   display: none; }
@@ -156,6 +158,7 @@
       opacity: 0.5; }
 
 .h5p-digibook-status-header {
+  background: #ffffff;
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
