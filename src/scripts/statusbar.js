@@ -227,7 +227,6 @@ class StatusBar extends H5P.EventDispatcher {
 
     let iconType = 'icon-menu';
     if (this.params.behaviour.defaultTableOfContents) {
-      iconType = 'icon-close';
       row.classList.add('h5p-digibook-status-menu-active');
     }
     item.classList.add(iconType);
@@ -236,9 +235,6 @@ class StatusBar extends H5P.EventDispatcher {
     row.onclick = function () {
       that.parent.trigger('toggleMenu');
       this.classList.toggle('h5p-digibook-status-menu-active');
-      item.classList.toggle('icon-menu');
-      item.classList.toggle('icon-close');
-      
     };
     
     row.appendChild(item);
