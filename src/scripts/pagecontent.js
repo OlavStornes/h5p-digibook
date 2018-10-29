@@ -70,10 +70,11 @@ class PageContent extends H5P.EventDispatcher {
     }
     
     //First chapter should be visible, except if the url says otherwise.
-    let chosenChapter = (redirObject.chapter-1) || 0;
+    let chosenChapter = 0;
 
-    if (redirObject.chapter) {
+    if (redirObject.chapter && redirObject.h5pbookid === this.parent.contentId) {
       this.parent.setActiveChapter(redirObject.chapter-1);
+      chosenChapter = redirObject.chapter-1;
     }
 
     this.columnElements.filter(x => this.columnElements.indexOf(x) !== chosenChapter)

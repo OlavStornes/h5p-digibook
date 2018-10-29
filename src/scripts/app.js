@@ -14,6 +14,7 @@ export default class DigiBook extends H5P.EventDispatcher {
   constructor(config, contentId, contentData = {}) {
     super();
     const self = this;
+    this.contentId = contentId;
     this.activeChapter = 0;
     this.newHandler = {};
     this.behaviour = config.behaviour;
