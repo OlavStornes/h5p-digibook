@@ -48,6 +48,7 @@ class SideBar extends H5P.EventDispatcher {
     div.classList.add('h5p-digibook-navigation-maintitle');
 
     p.innerHTML = title;
+    p.setAttribute('title', title);
     div.appendChild(p);
     return {
       div,
@@ -159,10 +160,10 @@ class SideBar extends H5P.EventDispatcher {
 
   setSectionMarker(targetChapter, targetSection) {
     const tmp = this.chapterElems[targetChapter].getElementsByClassName('h5p-digibook-navigation-section')[targetSection];
-    const icon = tmp.getElementsByTagName('a')[0];
+    const icon = tmp.getElementsByTagName('span')[0];
     if (icon) {
       icon.classList.remove('icon-chapter-blank');
-      icon.classList.add('icon-chapter-done');
+      icon.classList.add('icon-question-answered');
     }
   }
 
@@ -197,7 +198,7 @@ class SideBar extends H5P.EventDispatcher {
     const arrowIcon = document.createElement('span');
     const circleIcon = document.createElement('span');
 
-    arrowIcon.classList.add('icon-collapsed');
+    arrowIcon.classList.add('icon-collapsed', 'h5p-digibook-navigation-chapter-accordion');
     if (this.behaviour.progressIndicators) {
       circleIcon.classList.add('icon-chapter-blank', 'h5p-digibook-navigation-chapter-progress');
     }
@@ -220,14 +221,20 @@ class SideBar extends H5P.EventDispatcher {
       
       const singleSection = document.createElement('div');
       const a = document.createElement('a');
+      const span = document.createElement('span');
+      const icon = document.createElement('span');
       singleSection.classList.add('h5p-digibook-navigation-section');
-      a.innerHTML = section.title;
-      a.classList.add('icon-chapter-blank');
+      span.innerHTML = section.title;
+      span.setAttribute('title', section.title);
+      span.classList.add('digibook-sectiontitle');
+      icon.classList.add('icon-chapter-blank');
       
       if (this.parent.instances[chapterIndex].childInstances[i].isTask) {
-        a.classList.add('h5p-digibook-navigation-section-task');
+        icon.classList.add('h5p-digibook-navigation-section-task');
       }
-      
+      a.appendChild(icon);
+
+      a.appendChild(span);
       singleSection.appendChild(a);
       
       sectionsDiv.appendChild(singleSection);
