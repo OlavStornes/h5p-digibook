@@ -196,19 +196,6 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.newHandler.redirectFromComponent = false;
     };
 
-    /**
-     * Allow for external redirects via hash parameters
-     * @param {int} h5pbookid identifier of which book in question
-     * @param {int} chapter Chapter which should be redirected to
-     * @param {int} section Which section in the abovementioned chapter
-     * @example exampleurl/#h5pbookid=X&chapter=Y&section=Z
-     */
-    document.addEventListener('readystatechange', event => {
-      if (event.target.readyState === "complete") {
-        this.newHandler = this.retrieveHashFromUrl();
-        this.changeChapter(true);
-      }
-    });
 
     /**
      * Triggers whenever the hash changes, indicating that a chapter redirect is happening
@@ -261,8 +248,6 @@ export default class DigiBook extends H5P.EventDispatcher {
 
             // Assert that the handler actually is from this content type. 
             if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter) {
-              //Fix off by one-errors
-              tempHandler.chapter = parseInt(tempHandler.chapter) - 1;
               self.newHandler = tempHandler;
             }
           }
