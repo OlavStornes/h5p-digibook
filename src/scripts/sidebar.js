@@ -26,7 +26,7 @@ class SideBar extends H5P.EventDispatcher {
     
     this.div.appendChild(this.content);
 
-
+    this.addTransformListener();
   }
 
 
@@ -272,6 +272,15 @@ class SideBar extends H5P.EventDispatcher {
     }
     return tmp;
   }
+
+  addTransformListener() {
+    this.div.addEventListener('transitionend', (event) => {
+      if (event.propertyName === "flex-basis") {
+        this.parent.resizeChildInstances();
+      }
+    });
+  }
+
 
 }
 export default SideBar;
