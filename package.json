@@ -8,7 +8,7 @@
     "webpack:w": "webpack --watch",
     "scss:w": "node-sass --watch src/styles/scss -o src/styles/css",
     "scss:b": "node-sass src/styles/scss -o src/styles/css",
-    "build": "npm run webpack:b && npm run scss:b",
+    "build": "npm run scss:b && npm run webpack:b",
     "dev-win": "start npm run webpack:w && start npm run scss:w"
   },
   "repository": {
