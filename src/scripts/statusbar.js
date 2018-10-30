@@ -112,9 +112,9 @@ class StatusBar extends H5P.EventDispatcher {
 
 
   updateStatusBar() {
-    const currChapter = (this.parent.activeChapter+1) ;
+    const currChapter = this.parent.getActiveChapter()+1;
     
-    const chapterTitle =  this.parent.instances[this.parent.activeChapter].title;
+    const chapterTitle =  this.parent.instances[this.parent.getActiveChapter()].title;
 
     this.headerStatus.current.innerHTML = currChapter;
     this.footerStatus.current.innerHTML = currChapter;

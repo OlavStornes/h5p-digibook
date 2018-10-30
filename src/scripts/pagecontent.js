@@ -12,6 +12,8 @@ class PageContent extends H5P.EventDispatcher {
     this.behaviour = config.behaviour;
 
     this.params = params;
+    this.targetPage = {};
+    this.targetPage.redirectFromComponent = false;
 
     // H5P-instances (columns)
     this.instances = [];
@@ -111,14 +113,20 @@ class PageContent extends H5P.EventDispatcher {
     }
     
     //First chapter should be visible, except if the url says otherwise.
-    let chosenChapter = 0;
+    let chosenChapter = this.columnElements[0].id;
+    if (redirObject.chapter && redirObject.h5pbookid == this.parent.contentId) {
+      const chapterIndex = this.findChapterIndex(redirObject.chapter);
+      this.parent.setActiveChapter(chapterIndex);
+      chosenChapter = redirObject.chapter;
 
-    if (redirObject.chapter && redirObject.h5pbookid === this.parent.contentId) {
-      this.parent.setActiveChapter(redirObject.chapter-1);
-      chosenChapter = redirObject.chapter-1;
+      if (redirObject.section) {
+        setTimeout(() => {
+          this.redirectSection(redirObject.section);
+        }, 1000);
+      }
     }
 
-    this.columnElements.filter(x => this.columnElements.indexOf(x) !== chosenChapter)
+    this.columnElements.filter(x => x.id !== chosenChapter)
       .map(x => x.classList.add('h5p-content-hidden'));
   }
 
@@ -130,12 +138,12 @@ class PageContent extends H5P.EventDispatcher {
   }
 
 
-  redirectSection() {
-    if (this.targetPage.section === 'top') {
+  redirectSection(sectionId) {
+    if (sectionId === 'top') {
       this.parent.trigger('scrollToTop');
     }
     else {
-      const section = document.getElementById(this.targetPage.section);
+      const section = document.getElementById(sectionId);
       if (section) {
         section.scrollIntoView(true);
         this.targetPage.redirectFromComponent = false;
@@ -156,7 +164,7 @@ class PageContent extends H5P.EventDispatcher {
     if (this.parent.animationInProgress) {
       return;
     }
-
+    
     this.targetPage = newHandler;
     const oldChapterNum = this.parent.getActiveChapter();
     const newChapterNum = this.findChapterIndex(this.targetPage.chapter);
@@ -195,11 +203,11 @@ class PageContent extends H5P.EventDispatcher {
       else {
         if (this.parent.cover && !this.parent.cover.div.hidden) {
           this.parent.on('coverRemoved', () => {
-            this.redirectSection();
+            this.redirectSection(this.targetPage.section);
           });
         }
         else {
-          this.redirectSection();
+          this.redirectSection(this.targetPage.section);
         }
       }
 
@@ -228,7 +236,7 @@ class PageContent extends H5P.EventDispatcher {
         
         //Focus on section only after the page scrolling is finished
         this.parent.animationInProgress = false;
-        this.redirectSection();
+        this.redirectSection(this.targetPage.section);
         this.parent.resizeChildInstances();  
       }
     });
