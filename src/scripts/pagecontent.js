@@ -130,16 +130,15 @@ class PageContent extends H5P.EventDispatcher {
 
 
   redirectSection() {
-    let section;
     if (this.targetPage.section === 'top') {
-      section = document.getElementsByClassName('h5p-digibook-status-header')[0];
+      this.parent.trigger('scrollToTop');
     }
     else {
-      section = document.getElementById(this.targetPage.section);
-    }
-    if (section) {
-      section.scrollIntoView(true);
-      this.targetPage.redirectFromComponent = false;
+      const section = document.getElementById(this.targetPage.section);
+      if (section) {
+        section.scrollIntoView(true);
+        this.targetPage.redirectFromComponent = false;
+      }
     }
   }
 
