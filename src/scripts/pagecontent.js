@@ -191,27 +191,26 @@ class PageContent extends H5P.EventDispatcher {
     }
   }
   addcontentListener() {
-    const self = this;
-    this.content.addEventListener('transitionend', function _animationCallBack(event) {
-      const activeChapter = self.parent.getActiveChapter();
-      if (event.propertyName === 'transform' && event.target === self.columnElements[activeChapter]) {
+    this.content.addEventListener('transitionend', (event) => {
+      const activeChapter = this.parent.getActiveChapter();
+      if (event.propertyName === 'transform' && event.target === this.columnElements[activeChapter]) {
         // Remove all animation-related classes
-        const inactiveElems = self.columnElements.filter(x => x !== self.columnElements[activeChapter]);
+        const inactiveElems = this.columnElements.filter(x => x !== this.columnElements[activeChapter]);
         inactiveElems.map(x => x.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left'));
         inactiveElems.map(x => x.classList.add('h5p-content-hidden'));
 
-        const activeElem = self.columnElements[activeChapter];
+        const activeElem = this.columnElements[activeChapter];
 
         activeElem.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
         
         
-        let footerStatus = self.parent.shouldFooterBeVisible(activeElem.clientHeight);
-        self.parent.statusBar.editFooterVisibillity(footerStatus);
+        let footerStatus = this.parent.shouldFooterBeVisible(activeElem.clientHeight);
+        this.parent.statusBar.editFooterVisibillity(footerStatus);
         
         //Focus on section only after the page scrolling is finished
-        self.parent.animationInProgress = false;
-        self.redirectSection(activeElem);
-        self.parent.resizeChildInstances();  
+        this.parent.animationInProgress = false;
+        this.redirectSection(activeElem);
+        this.parent.resizeChildInstances();  
       }
     });
   }
