@@ -39,3 +39,6 @@ jspm_packages
 
 # Div
 .vscode/
+
+
+src/styles/css/main.css
