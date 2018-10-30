@@ -85,7 +85,7 @@ class StatusBar extends H5P.EventDispatcher {
         h5pbookid: this.parent.contentId
       };
       if (event.data.toTop) {
-        eventInput.section = 0;
+        eventInput.section = "top";
       }
       
       if (event.data.direction === 'next') {

@@ -63,6 +63,14 @@ class PageContent extends H5P.EventDispatcher {
     };
   }
 
+  injectSectionId(H5PInstance, columnElement) {
+    const colContent = columnElement.getElementsByClassName('h5p-column-content');
+
+    for (let i = 0; i < H5PInstance.childInstances.length; i++) {      
+      colContent[i].id = H5PInstance.childInstances[i].subContentId;
+    }
+  }
+
   createColumns(config, contentId, contentData) {
     const redirObject = this.parent.retrieveHashFromUrl();
 
@@ -93,6 +101,8 @@ class PageContent extends H5P.EventDispatcher {
         });
       }
       newInstance.maxTasks = newInstance.tasksLeft;
+
+      this.injectSectionId(newInstance, newColumn);
       
       //Register both the HTML-element and the H5P-element
       this.instances.push(newInstance);
@@ -119,10 +129,16 @@ class PageContent extends H5P.EventDispatcher {
   }
 
 
-  redirectSection(chapterElement) {
-    const sectionsInChapter = chapterElement.getElementsByClassName('h5p-column-content');
-    if (this.targetPage.section < sectionsInChapter.length) {
-      sectionsInChapter[this.targetPage.section].scrollIntoView(true);
+  redirectSection() {
+    let section;
+    if (this.targetPage.section === 'top') {
+      section = document.getElementsByClassName('h5p-digibook-status-header')[0];
+    }
+    else {
+      section = document.getElementById(this.targetPage.section);
+    }
+    if (section) {
+      section.scrollIntoView(true);
       this.targetPage.redirectFromComponent = false;
     }
   }
@@ -176,11 +192,11 @@ class PageContent extends H5P.EventDispatcher {
       else {
         if (this.parent.cover && !this.parent.cover.div.hidden) {
           this.parent.on('coverRemoved', () => {
-            this.redirectSection(targetChapter);
+            this.redirectSection();
           });
         }
         else {
-          this.redirectSection(targetChapter);
+          this.redirectSection();
         }
       }
 
@@ -209,7 +225,7 @@ class PageContent extends H5P.EventDispatcher {
         
         //Focus on section only after the page scrolling is finished
         this.parent.animationInProgress = false;
-        this.redirectSection(activeElem);
+        this.redirectSection();
         this.parent.resizeChildInstances();  
       }
     });

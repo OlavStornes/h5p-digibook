@@ -247,7 +247,7 @@ class SideBar extends H5P.EventDispatcher {
         that.parent.trigger('newChapter', {
           h5pbookid: that.parent.contentId,
           chapter: chapterIndex,
-          section: i
+          section: section.id
         });
       };
     }

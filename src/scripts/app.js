@@ -72,8 +72,8 @@ export default class DigiBook extends H5P.EventDispatcher {
       const temp = this.retrieveHashFromUrl();
       for (const key in temp) {
         if (temp.hasOwnProperty(key)) {
-          const element = parseInt(temp[key]);
-          if (element !== hashObj[key]) {
+          const element = temp[key];
+          if (element != hashObj[key]) {
             return false;
           }
         }
