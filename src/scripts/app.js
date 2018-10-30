@@ -202,10 +202,7 @@ export default class DigiBook extends H5P.EventDispatcher {
      */
     H5P.on(this, 'respondChangeHash', function (event) {
       if (event.data.newURL.indexOf('h5pbookid' !== -1)) {
-        const payload = {
-          newHash: new URL(event.data.newURL).hash,
-          context: 'h5p'
-        };
+        const payload = self.retrieveHashFromUrl(new URL(event.data.newURL).hash);
         this.redirectChapter(payload);
       }
     });
@@ -213,10 +210,9 @@ export default class DigiBook extends H5P.EventDispatcher {
     H5P.on(this, 'changeHash', function (event) {
       if (event.data.h5pbookid === this.contentId) {
         top.location.hash = event.data.newHash;
-        location.hash = event.data.newHash;
       }
     });
-
+    
     H5P.externalDispatcher.on('xAPI', function (event) {
       if (event.getVerb() === 'answered') {
         if (self.behaviour.progressIndicators) {
@@ -233,37 +229,19 @@ export default class DigiBook extends H5P.EventDispatcher {
       if (!this.newHandler.redirectFromComponent) {
         let tmpEvent;
         tmpEvent = event;
-
-        //Only attempt converting if there is actually a hash present
-        if (tmpEvent.context === 'h5p') {
-          const hash = tmpEvent.newHash;
-          if (hash) {
-            const hashArray = hash.replace("#", "").split("&").map(el => el.split("="));
-            const tempHandler = {};
-            hashArray.forEach(el => {
-              const key = el[0];
-              const value = el[1];
-              tempHandler[key] = value;
-            });
-
-            // Assert that the handler actually is from this content type. 
-            if (tempHandler.h5pbookid == self.contentId && tempHandler.chapter) {
-              self.newHandler = tempHandler;
-            }
-          }
-          /** 
-           * H5p-context switch on no newhash = history backwards
-           * Redirect to first chapter 
-           */
-          else {
-            self.newHandler = {
-              chapter: 0,
-              h5pbookid: self.h5pbookid
-            };
-          }
+        // Assert that the handler actually is from this content type. 
+        if (tmpEvent.h5pbookid && parseInt(tmpEvent.h5pbookid) === self.contentId) {
+          self.newHandler = tmpEvent;
+        /** 
+         * H5p-context switch on no newhash = history backwards
+         * Redirect to first chapter 
+         */
         }
         else {
-          return;
+          self.newHandler = {
+            chapter: self.instances[0].subContentId,
+            h5pbookid: self.h5pbookid
+          };
         }
       }
       self.changeChapter(false);
@@ -289,7 +267,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       }
     };
 
-    window.addEventListener('hashchange', (event) => {
+    top.addEventListener('hashchange', (event) => {
       H5P.trigger(this, 'respondChangeHash', event);
     });
 
