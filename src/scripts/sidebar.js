@@ -82,9 +82,11 @@ class SideBar extends H5P.EventDispatcher {
     for (let i = 0; i < input.length; i++) {
       const sections = this.findSectionsInChapter(input[i]);
       const chapterTitle = input[i].metadata.title;
+      const id = input[i].subContentId;
       chapters.push({
         sections,
-        title:chapterTitle
+        title:chapterTitle,
+        id
       });
     }
     return chapters;
@@ -189,12 +191,8 @@ class SideBar extends H5P.EventDispatcher {
 
     //Add classes
     titleDiv.classList.add('h5p-digibook-navigation-chapter-title');
-
     chapterDiv.classList.add('h5p-digibook-navigation-chapter');
-
-
     sectionsDiv.classList.add('h5p-digibook-navigation-sectionlist');
-
     
     title.innerHTML = chapter.title;
     title.setAttribute("title", chapter.title);
@@ -207,12 +205,9 @@ class SideBar extends H5P.EventDispatcher {
       circleIcon.classList.add('icon-chapter-blank', 'h5p-digibook-navigation-chapter-progress');
     }
 
-
-
     titleDiv.appendChild(arrowIcon);
     titleDiv.appendChild(title);
     titleDiv.appendChild(circleIcon);
-
     chapterDiv.appendChild(titleDiv);
 
     titleDiv.onclick = (event) => {
@@ -242,11 +237,10 @@ class SideBar extends H5P.EventDispatcher {
       singleSection.appendChild(a);
       
       sectionsDiv.appendChild(singleSection);
-      
       a.onclick = () => {
         that.parent.trigger('newChapter', {
           h5pbookid: that.parent.contentId,
-          chapter: chapterIndex,
+          chapter: this.chapters[chapterIndex].id,
           section: section.id
         });
       };

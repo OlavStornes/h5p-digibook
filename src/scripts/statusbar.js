@@ -87,18 +87,18 @@ class StatusBar extends H5P.EventDispatcher {
       if (event.data.toTop) {
         eventInput.section = "top";
       }
-      
+
       if (event.data.direction === 'next') {
         if (this.parent.activeChapter+1 < this.parent.instances.length) {
-          eventInput.chapter = (this.parent.activeChapter+1);
+          eventInput.chapter = this.parent.instances[this.parent.activeChapter+1].subContentId;
         }
       }
       else if (event.data.direction === 'prev') {
         if (this.parent.activeChapter > 0) {
-          eventInput.chapter = (this.parent.activeChapter-1);
+          eventInput.chapter = this.parent.instances[this.parent.activeChapter-1].subContentId;
         }
       }
-      if (isNaN(eventInput.chapter) === false) {
+      if (eventInput.chapter) {
         this.parent.trigger('newChapter', eventInput);
       }
     });

@@ -80,6 +80,7 @@ class PageContent extends H5P.EventDispatcher {
       const newInstance = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(newColumn), contentData);
       newInstance.childInstances = newInstance.getInstances();
       newColumn.classList.add('h5p-digibook-chapter');
+      newColumn.id = newInstance.subContentId;
       newInstance.title = config.chapters[i].metadata.title;
       newInstance.completed = false;
       
@@ -142,6 +143,10 @@ class PageContent extends H5P.EventDispatcher {
     }
   }
 
+  findChapterIndex(id) {
+    return this.columnElements.findIndex(x => x.id === id);
+  }
+
   /**
    * Input in targetPage should be: 
    * @param {int} chapter - The given chapter that should be opened
@@ -154,12 +159,11 @@ class PageContent extends H5P.EventDispatcher {
 
     this.targetPage = newHandler;
     const oldChapterNum = this.parent.getActiveChapter();
-    const newChapterNum = parseInt(this.targetPage.chapter);
+    const newChapterNum = this.findChapterIndex(this.targetPage.chapter);
 
-
-    if (this.targetPage.chapter < this.columnElements.length) {
+    if (newChapterNum < this.columnElements.length) {
       const oldChapter = this.columnElements[oldChapterNum];
-      const targetChapter = this.columnElements[this.targetPage.chapter];
+      const targetChapter = this.columnElements[newChapterNum];
       
       if (oldChapterNum !== newChapterNum && !redirectOnLoad) {
         this.parent.animationInProgress = true;
@@ -169,7 +173,7 @@ class PageContent extends H5P.EventDispatcher {
         var newPageProgress = '';
         var oldPageProgrss = '';
         // The pages will progress from right to left
-        if (oldChapterNum < this.targetPage.chapter) {
+        if (oldChapterNum < newChapterNum) {
           newPageProgress = 'right';
           oldPageProgrss = 'left';
         }
@@ -199,7 +203,7 @@ class PageContent extends H5P.EventDispatcher {
         }
       }
 
-      this.parent.sideBar.redirectHandler(this.targetPage.chapter);
+      this.parent.sideBar.redirectHandler(newChapterNum);
       if (!redirectOnLoad) {
         this.parent.updateChapterProgress(oldChapterNum);
       }

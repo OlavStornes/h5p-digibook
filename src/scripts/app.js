@@ -44,16 +44,8 @@ export default class DigiBook extends H5P.EventDispatcher {
       });
 
       if (redirObj.h5pbookid == self.contentId && redirObj.chapter) {
-        //Parameter sanitization
-        if (isNaN(redirObj.chapter && parseInt(redirObj.chapter) > 0)) {
+        if (!redirObj.chapter) {
           return;
-        }
-        else {
-          // Fix off by one to support native arrays
-          redirObj.chapter = parseInt(redirObj.chapter) - 1;
-        }
-        if (isNaN(redirObj.section && redirObj.section > 0)) {
-          delete redirObj.section;
         }
       }
       return redirObj;
@@ -64,8 +56,8 @@ export default class DigiBook extends H5P.EventDispatcher {
      * 
      * Used for checking if the user attempts to redirect to the same section twice
      * @param {object} hashObj - the object that should be compared to the hash
-     * @param {number} hashObj.chapter
-     * @param {number} hashObj.section
+     * @param {String} hashObj.chapter
+     * @param {String} hashObj.section
      * @param {number} hashObj.h5pbookid
      */
     this.isCurrentHashSameAsRedirect = (hashObj) => {
@@ -105,7 +97,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.newHandler.redirectFromComponent = true;
       // Create the new hash
       const idString = 'h5pbookid=' + this.newHandler.h5pbookid;
-      const chapterString = '&chapter=' + (this.newHandler.chapter + 1);
+      const chapterString = '&chapter=' + this.newHandler.chapter;
       let sectionString = "";
       if (this.newHandler.section !== undefined) {
         sectionString = '&section=' + this.newHandler.section;
