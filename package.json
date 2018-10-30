@@ -4,11 +4,12 @@
   "description": "Example H5P Content Type for getting started",
   "private": true,
   "scripts": {
-    "test": "ava",
-    "build": "cross-env NODE_ENV='production' webpack -p",
-    "watch": "webpack --watch",
-    "scss:watch": "node-sass --watch src/styles/scss -o src/styles/css",
-    "scss:build": "node-sass src/styles/scss -o src/styles/css"
+    "webpack:b": "cross-env NODE_ENV='production' webpack -p",
+    "webpack:w": "webpack --watch",
+    "scss:w": "node-sass --watch src/styles/scss -o src/styles/css",
+    "scss:b": "node-sass src/styles/scss -o src/styles/css",
+    "build": "npm run webpack:b && npm run scss:b",
+    "dev-win": "start npm run webpack:w && start npm run scss:w"
   },
   "repository": {
     "type": "git",
