@@ -1,13 +1,12 @@
 .h5p-digibook-status {
-    padding: 1.25em;
-    border: 0;
-    border-left-width: 1px;
-    border-style: solid;
-    border-color: $base-color;
-    background-color: $background-color;
-    background-size: cover;
-    box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
-    display: flex;
+  border: 0;
+  background-color: $background-color;
+  background-size: cover;
+  border-color: $base-color;
+  border-style: solid;
+  box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
+  display: flex;
+  padding: 0.5em;
     margin: 0;
     overflow: hidden;
     div {
@@ -16,17 +15,8 @@
     }
   }
 
-  .h5p-digibook-status-menu {
-    height: 2.750em;
-    width: 2.750em;
-    flex-shrink: 0;
-    border: 2px solid $background-color;
-    border-radius: 2px;
-    background-color: $background-color;
-    background-size: cover;
-  }
-
   .h5p-digibook-status-button {
+    border-radius: 4px;
     &:hover {
       cursor: pointer;
       background-color: rgba($base-color, 0.05);
@@ -39,9 +29,26 @@
   }
 
   .h5p-digibook-status-menu {
+    height: 2.750em;
+    width: 2.750em;
+    flex-shrink: 0;
+    border: 2px solid $background-color;
+    border-radius: 2px;
+    background-color: $background-color;
+    background-size: cover;
+    
+    a {
+      margin: auto;
+      font-size: 1.35em;
+      color: $base-color;
+      font-size: 1.25em;
+    }
     &.h5p-digibook-status-menu-active {
-      background-color: $base-color;
       opacity: 20;
+      background-color: $base-color;
+      a {
+        color: $background-color;
+      }
       &:hover {
         cursor: pointer;
         background-color: rgba($base-color, 0.9);
@@ -52,22 +59,11 @@
         background-size: cover;
       }
     }
-    a {
-      margin: auto;
-      font-size: 1.875em;
-      &.icon-menu {
-        color: $base-color;
-      }
-      &.icon-close {
-        color: $background-color;
-        font-size: 1.500em;
-      }
-    }
   }
 
   .h5p-digibook-status-progress {
     flex-shrink: 0;
-    width: 88px;
+    width: 55px;
     height: 22px;
   }
 
@@ -105,14 +101,15 @@
     overflow: hidden;
     flex-grow: 1;
     p {
+      color: #4c4452;
       font-family: Arial;
       font-size: 20px;
-      color: #4c4452;
       font-weight: 700;
-      text-decoration: none solid rgb(76, 68, 82);
+      margin: 0;
       overflow: hidden;
+      padding: 0 1rem;
+      text-decoration: none solid rgb(76, 68, 82);
       text-overflow: ellipsis;
-      padding: 0 1.250rem;
     }
   }
 
@@ -126,7 +123,7 @@
     background-size: cover;
     a {
       margin: auto;
-      font-size: 2.313em;
+      font-size: 1.25em;
       color: $base-color;
       &.disabled {
         opacity: 0.5;
@@ -135,17 +132,11 @@
   }
 
   .h5p-digibook-status-header {
+    background: #ffffff;
     position: -webkit-sticky;
     position: sticky;
     top: 0px;
     z-index: 2;
-  }
-
-  .h5p-digibook-status-progress-marker {
-    align-self: inherit;
-    font-size: 3em;
-    padding-right: 1.5em;
-    color: $base-color;
   }
 
   .h5p-digibook-status-footer {

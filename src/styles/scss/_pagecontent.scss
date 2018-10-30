@@ -2,12 +2,16 @@
   max-width: 1000px;
   transition: 0.25s;
   z-index: -1;
+  div:first-child {
+    padding-bottom: 2em;
+  }
   }
 
 .h5p-digibook-content{
+  margin: 1rem;
+  overflow: overlay;
   position: relative;
   transition: 1s;
-
 }
 
 
@@ -23,6 +27,19 @@
   opacity: 0;
   transition: visibility 0s, opacity 0,5s linear;
 
+}
+
+.h5p-digibook-status-progress-marker {
+  display:flex;
+  align-items: center;
+  padding: 2em 0;
+  border-top: 1px solid #bebebe;
+  input[type=checkbox] {
+    transform: scale(1.5);
+  }
+  p {
+    padding-left: 1em;
+  }
 }
 
 .h5p-content-hidden {

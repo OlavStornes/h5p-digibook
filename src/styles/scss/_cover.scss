@@ -51,17 +51,18 @@
         color: #363636;
         font-size: 1.250em;
         font-weight: 400;
-        margin-bottom: 2.250em;
+        margin-bottom: 0.5em;
         text-decoration: none solid rgb(54, 54, 54);
         text-align: center;
     }
 
     &-readbutton {
-        margin-top: 2.250em;
+        margin-top: 0,5em;
         button {
             background-color: $base-color;
             background-size: cover;
-            border-radius: 3px;
+            border:none;
+            cursor:pointer;
             color: $background-color;
             font-family: Arial;
             font-size: 20px;
@@ -69,6 +70,15 @@
             padding: 10px 40px;
             text-decoration: none solid rgb(255, 255, 255);
             text-align: center;
+            &:hover {
+                cursor: pointer;
+                background-color: rgba($base-color, 0.9);
+                background-size: cover;
+            }
+            &:active {
+                background-color: rgba($base-color, 0.95);
+                background-size: cover;
+            }
         }
     } 
 }

@@ -13,8 +13,12 @@
   max-width: 1000px;
   transition: 0.25s;
   z-index: -1; }
+  .h5p-digibook-chapter div:first-child {
+    padding-bottom: 2em; }
 
 .h5p-digibook-content {
+  margin: 1rem;
+  overflow: overlay;
   position: relative;
   transition: 1s; }
 
@@ -30,24 +34,43 @@
   opacity: 0;
   transition: visibility 0s, opacity 0,5s linear; }
 
+.h5p-digibook-status-progress-marker {
+  display: flex;
+  align-items: center;
+  padding: 2em 0;
+  border-top: 1px solid #bebebe; }
+  .h5p-digibook-status-progress-marker input[type=checkbox] {
+    transform: scale(1.5); }
+  .h5p-digibook-status-progress-marker p {
+    padding-left: 1em; }
+
 .h5p-content-hidden {
   display: none; }
 
 .h5p-digibook-status {
-  padding: 1.25em;
   border: 0;
-  border-left-width: 1px;
-  border-style: solid;
-  border-color: #8660ab;
   background-color: #ffffff;
   background-size: cover;
+  border-color: #8660ab;
+  border-style: solid;
   box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
   display: flex;
+  padding: 0.5em;
   margin: 0;
   overflow: hidden; }
   .h5p-digibook-status div {
     align-self: center;
     display: flex; }
+
+.h5p-digibook-status-button {
+  border-radius: 4px; }
+  .h5p-digibook-status-button:hover {
+    cursor: pointer;
+    background-color: rgba(134, 96, 171, 0.05);
+    background-size: cover; }
+  .h5p-digibook-status-button:active {
+    background-color: rgba(134, 96, 171, 0.1);
+    background-size: cover; }
 
 .h5p-digibook-status-menu {
   height: 2.750em;
@@ -57,39 +80,27 @@
   border-radius: 2px;
   background-color: #ffffff;
   background-size: cover; }
-
-.h5p-digibook-status-button:hover {
-  cursor: pointer;
-  background-color: rgba(134, 96, 171, 0.05);
-  background-size: cover; }
-
-.h5p-digibook-status-button:active {
-  background-color: rgba(134, 96, 171, 0.1);
-  background-size: cover; }
-
-.h5p-digibook-status-menu.h5p-digibook-status-menu-active {
-  background-color: #8660ab;
-  opacity: 20; }
-  .h5p-digibook-status-menu.h5p-digibook-status-menu-active:hover {
-    cursor: pointer;
-    background-color: rgba(134, 96, 171, 0.9);
-    background-size: cover; }
-  .h5p-digibook-status-menu.h5p-digibook-status-menu-active:active {
-    background-color: rgba(134, 96, 171, 0.95);
-    background-size: cover; }
-
-.h5p-digibook-status-menu a {
-  margin: auto;
-  font-size: 1.875em; }
-  .h5p-digibook-status-menu a.icon-menu {
-    color: #8660ab; }
-  .h5p-digibook-status-menu a.icon-close {
-    color: #ffffff;
-    font-size: 1.500em; }
+  .h5p-digibook-status-menu a {
+    margin: auto;
+    font-size: 1.35em;
+    color: #8660ab;
+    font-size: 1.25em; }
+  .h5p-digibook-status-menu.h5p-digibook-status-menu-active {
+    opacity: 20;
+    background-color: #8660ab; }
+    .h5p-digibook-status-menu.h5p-digibook-status-menu-active a {
+      color: #ffffff; }
+    .h5p-digibook-status-menu.h5p-digibook-status-menu-active:hover {
+      cursor: pointer;
+      background-color: rgba(134, 96, 171, 0.9);
+      background-size: cover; }
+    .h5p-digibook-status-menu.h5p-digibook-status-menu-active:active {
+      background-color: rgba(134, 96, 171, 0.95);
+      background-size: cover; }
 
 .h5p-digibook-status-progress {
   flex-shrink: 0;
-  width: 88px;
+  width: 55px;
   height: 22px; }
 
 .h5p-digibook-status-progress-number {
@@ -122,14 +133,15 @@
   overflow: hidden;
   flex-grow: 1; }
   .h5p-digibook-status-chapter p {
+    color: #4c4452;
     font-family: Arial;
     font-size: 20px;
-    color: #4c4452;
     font-weight: 700;
-    text-decoration: none solid #4c4452;
+    margin: 0;
     overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0 1.250rem; }
+    padding: 0 1rem;
+    text-decoration: none solid #4c4452;
+    text-overflow: ellipsis; }
 
 .h5p-digibook-status-arrow {
   width: 2.750em;
@@ -141,22 +153,17 @@
   background-size: cover; }
   .h5p-digibook-status-arrow a {
     margin: auto;
-    font-size: 2.313em;
+    font-size: 1.25em;
     color: #8660ab; }
     .h5p-digibook-status-arrow a.disabled {
       opacity: 0.5; }
 
 .h5p-digibook-status-header {
+  background: #ffffff;
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
   z-index: 2; }
-
-.h5p-digibook-status-progress-marker {
-  align-self: inherit;
-  font-size: 3em;
-  padding-right: 1.5em;
-  color: #8660ab; }
 
 .h5p-digibook-status-footer {
   bottom: 0; }
@@ -168,7 +175,7 @@
   flex: 0 0 16em;
   min-height: 19em;
   order: -1;
-  transition: all .5s ease-in-out;
+  transition: all .15s linear;
   width: 16.563em;
   z-index: 1; }
   .h5p-digibook-navigation > a {
@@ -184,37 +191,38 @@
 .h5p-digibook-navigation-sectionlist {
   background-color: #ffffff;
   background-size: cover;
-  max-height: 31.250em;
   transition: max-height 0.5s ease-in;
   width: 16.563em; }
-  .h5p-digibook-navigation-sectionlist a {
+  .h5p-digibook-navigation-sectionlist .h5p-digibook-navigation-section {
+    text-overflow: ellipsis;
     background: transparent;
     color: #4c4452;
-    font-family: Arial;
     font-size: 0.875em;
     font-weight: 400;
-    height: 2.500em;
-    line-height: 1.563em;
-    padding: 0 0 0 1.875em;
+    line-height: 2em;
+    padding: 0;
+    overflow: hidden;
     text-decoration: none solid #4c4452;
-    width: 12.625em; }
+    width: 100%; }
+    .h5p-digibook-navigation-sectionlist .h5p-digibook-navigation-section span:first-child {
+      font-size: 0.65em; }
+    .h5p-digibook-navigation-sectionlist .h5p-digibook-navigation-section .digibook-sectiontitle {
+      font-family: Arial; }
 
 .h5p-digibook-navigation-section :before {
-  padding-right: 30px; }
+  padding: 0 1.484em 0 1.484em; }
 
 .h5p-digibook-navigation-section :not(.h5p-digibook-navigation-section-task):before {
   visibility: hidden; }
 
 .h5p-digibook-navigation-section :hover {
+  color: #8660ab;
   cursor: pointer; }
-
-.h5p-digibook-navigation-section-taskicon {
-  font-size: 0.5em; }
 
 .h5p-digibook-navigation-closed .h5p-digibook-navigation-chapter-title {
   background-color: white; }
   .h5p-digibook-navigation-closed .h5p-digibook-navigation-chapter-title p {
-    color: black; }
+    color: #4c4452; }
 
 .h5p-digibook-navigation-closed .h5p-digibook-navigation-sectionlist {
   max-height: 0;
@@ -227,30 +235,35 @@
 .h5p-digibook-navigation-chapter-title {
   background-color: rgba(134, 96, 171, 0.1);
   background-size: cover;
+  border-bottom: solid 1px #e9e4ed;
   color: #4c4452;
   display: flex;
   font-family: Arial;
   font-size: 0.750em;
   font-weight: 700;
-  height: 2.688em;
-  padding: 0 1.125em 0 1.875em;
+  height: 3.438em;
+  padding: 0 1.125em 0 1.125em;
   text-decoration: none solid #4c4452; }
   .h5p-digibook-navigation-chapter-title p {
     color: #8660ab;
     background-color: transparent;
     font-family: Arial;
-    font-size: 0.875em;
+    font-size: 1em;
     font-weight: 700;
     flex-grow: 1;
-    line-height: 100%;
-    margin-left: 2em;
+    line-height: 1.5em;
+    margin-left: 1em;
     margin-right: 2em;
     overflow: hidden;
     text-decoration: none solid #8660ab;
     text-overflow: ellipsis;
     width: 13.125em; }
-  .h5p-digibook-navigation-chapter-title span {
-    align-self: center; }
+  .h5p-digibook-navigation-chapter-title .h5p-digibook-navigation-chapter-accordion {
+    align-self: center;
+    font-size: 0.65em; }
+  .h5p-digibook-navigation-chapter-title .h5p-digibook-navigation-chapter-progress {
+    align-self: center;
+    font-size: 1em; }
   .h5p-digibook-navigation-chapter-title:active {
     background-color: rgba(134, 96, 171, 0.1); }
   .h5p-digibook-navigation-chapter-title:hover {
@@ -266,8 +279,10 @@
     font-family: Arial;
     font-size: 1em;
     font-weight: 400;
-    padding-left: 1.938em;
-    text-decoration: none solid white; }
+    overflow: hidden;
+    padding-left: 1.25em;
+    text-decoration: none solid white;
+    text-overflow: ellipsis; }
 
 .h5p-digibook-cover {
   align-items: center;
@@ -314,15 +329,16 @@
     color: #363636;
     font-size: 1.250em;
     font-weight: 400;
-    margin-bottom: 2.250em;
+    margin-bottom: 0.5em;
     text-decoration: none solid #363636;
     text-align: center; }
   .h5p-digibook-cover-readbutton {
-    margin-top: 2.250em; }
+    margin-top: 0,5em; }
     .h5p-digibook-cover-readbutton button {
       background-color: #8660ab;
       background-size: cover;
-      border-radius: 3px;
+      border: none;
+      cursor: pointer;
       color: #ffffff;
       font-family: Arial;
       font-size: 20px;
@@ -330,3 +346,10 @@
       padding: 10px 40px;
       text-decoration: none solid white;
       text-align: center; }
+      .h5p-digibook-cover-readbutton button:hover {
+        cursor: pointer;
+        background-color: rgba(134, 96, 171, 0.9);
+        background-size: cover; }
+      .h5p-digibook-cover-readbutton button:active {
+        background-color: rgba(134, 96, 171, 0.95);
+        background-size: cover; }

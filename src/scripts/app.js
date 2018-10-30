@@ -14,6 +14,7 @@ export default class DigiBook extends H5P.EventDispatcher {
   constructor(config, contentId, contentData = {}) {
     super();
     const self = this;
+    this.contentId = contentId;
     this.activeChapter = 0;
     this.newHandler = {};
     this.behaviour = config.behaviour;
@@ -85,10 +86,6 @@ export default class DigiBook extends H5P.EventDispatcher {
      */
     this.on('toggleMenu', () => {
       this.sideBar.div.classList.toggle('h5p-digibook-hide');
-      //The transition time is set in CSS at 0.5 seconds
-      setTimeout(() => {
-        this.trigger('resize');
-      }, 500);
     });
 
     this.on('scrollToTop', () => {
@@ -343,8 +340,15 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.cover = new Cover(config.bookCover, contentData.metadata.title, config.read, contentId, this);
     }
 
-    this.pageContent = new PageContent(config, contentId, contentData, this);
+    this.pageContent = new PageContent(config, contentId, contentData, this, {
+      l10n: {
+        markAsFinished: config.markAsFinished
+      },
+      behaviour: this.behaviour
+    });
+
     this.sideBar = new SideBar(config, contentId, contentData.metadata.title, this);
+
     this.statusBar = new StatusBar(contentId, config.chapters.length, this, {
       l10n: {
         nextPage: config.nextPage,

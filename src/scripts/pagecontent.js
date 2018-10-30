@@ -6,10 +6,12 @@ class PageContent extends H5P.EventDispatcher {
    * @param {string} contentId
    * @param {object} contentData
    */
-  constructor(config, contentId, contentData, parent) {
+  constructor(config, contentId, contentData, parent, params) {
     super();
     this.parent = parent;
     this.behaviour = config.behaviour;
+
+    this.params = params;
 
     // H5P-instances (columns)
     this.instances = [];
@@ -38,6 +40,29 @@ class PageContent extends H5P.EventDispatcher {
     return content;
   }
 
+  createPageReadMark() {
+    const div = document.createElement('div');
+    const checkText = document.createElement('p');
+    checkText.innerHTML = this.params.l10n.markAsFinished;
+
+    const markRead = document.createElement('input');
+    markRead.setAttribute('type', 'checkbox');
+    div.classList.add('h5p-digibook-status-progress-marker');
+    markRead.onclick = () => {
+      this.parent.setCurrentChapterRead();
+      markRead.disabled = true;
+    };
+
+    div.appendChild(markRead);
+    div.appendChild(checkText);
+
+    return {
+      div,
+      markRead,
+      checkText
+    };
+  }
+
   createColumns(config, contentId, contentData) {
     const redirObject = this.parent.retrieveHashFromUrl();
 
@@ -49,6 +74,11 @@ class PageContent extends H5P.EventDispatcher {
       newColumn.classList.add('h5p-digibook-chapter');
       newInstance.title = config.chapters[i].metadata.title;
       newInstance.completed = false;
+      
+      if (this.behaviour.progressIndicators && !this.behaviour.progressAuto) {
+        const checkPage = this.createPageReadMark();
+        newColumn.appendChild(checkPage.div);
+      }
       
 
       //Find sections with tasks and tracks them
@@ -70,10 +100,11 @@ class PageContent extends H5P.EventDispatcher {
     }
     
     //First chapter should be visible, except if the url says otherwise.
-    let chosenChapter = (redirObject.chapter-1) || 0;
+    let chosenChapter = 0;
 
-    if (redirObject.chapter) {
+    if (redirObject.chapter && redirObject.h5pbookid === this.parent.contentId) {
       this.parent.setActiveChapter(redirObject.chapter-1);
+      chosenChapter = redirObject.chapter-1;
     }
 
     this.columnElements.filter(x => this.columnElements.indexOf(x) !== chosenChapter)
@@ -160,27 +191,26 @@ class PageContent extends H5P.EventDispatcher {
     }
   }
   addcontentListener() {
-    const self = this;
-    this.content.addEventListener('transitionend', function _animationCallBack(event) {
-      const activeChapter = self.parent.getActiveChapter();
-      if (event.propertyName === 'transform' && event.target === self.columnElements[activeChapter]) {
+    this.content.addEventListener('transitionend', (event) => {
+      const activeChapter = this.parent.getActiveChapter();
+      if (event.propertyName === 'transform' && event.target === this.columnElements[activeChapter]) {
         // Remove all animation-related classes
-        const inactiveElems = self.columnElements.filter(x => x !== self.columnElements[activeChapter]);
+        const inactiveElems = this.columnElements.filter(x => x !== this.columnElements[activeChapter]);
         inactiveElems.map(x => x.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left'));
         inactiveElems.map(x => x.classList.add('h5p-content-hidden'));
 
-        const activeElem = self.columnElements[activeChapter];
+        const activeElem = this.columnElements[activeChapter];
 
         activeElem.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
         
         
-        let footerStatus = self.parent.shouldFooterBeVisible(activeElem.clientHeight);
-        self.parent.statusBar.editFooterVisibillity(footerStatus);
+        let footerStatus = this.parent.shouldFooterBeVisible(activeElem.clientHeight);
+        this.parent.statusBar.editFooterVisibillity(footerStatus);
         
         //Focus on section only after the page scrolling is finished
-        self.parent.animationInProgress = false;
-        self.redirectSection(activeElem);
-        self.parent.resizeChildInstances();  
+        this.parent.animationInProgress = false;
+        this.redirectSection(activeElem);
+        this.parent.resizeChildInstances();  
       }
     });
   }

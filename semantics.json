@@ -5,7 +5,7 @@
     "label": "Enable book cover",
     "description": "A cover that shows info regarding the book before access",
     "importance": "low",
-    "default": true
+    "default": false
   },
   {
     "name": "bookCover",
@@ -84,6 +84,7 @@
   {
     "name": "behaviour",
     "type": "group",
+    "importance": "low",
     "label": "Behavioural settings",
     "fields": [
       {

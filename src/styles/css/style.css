@@ -9,9 +9,8 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'h5p-book' !important;
+#h5p-digibook [class^="icon-"], #h5p-digibook [class*=" icon-"] {
+  font-family: 'h5p-book';
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -49,4 +48,7 @@
 }
 .icon-up:before {
   content: "\e909";
+}
+.icon-question-answered:before {
+  content: "\e90a";
 }
