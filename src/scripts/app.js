@@ -86,10 +86,6 @@ export default class DigiBook extends H5P.EventDispatcher {
      */
     this.on('toggleMenu', () => {
       this.sideBar.div.classList.toggle('h5p-digibook-hide');
-      //The transition time is set in CSS at 0.5 seconds
-      setTimeout(() => {
-        this.trigger('resize');
-      }, 500);
     });
 
     this.on('scrollToTop', () => {
