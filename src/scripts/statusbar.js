@@ -54,8 +54,9 @@ class StatusBar extends H5P.EventDispatcher {
      * Bottom row initializer
      */
     this.footer = document.createElement('div');
+    this.footer.classList.add('h5p-digibook-status-footer');
     this.footerInfo = document.createElement('div');
-    this.footerInfo.classList.add('h5p-digibook-status', 'h5p-digibook-status-footer');
+    this.footerInfo.classList.add('h5p-digibook-status');
     
     this.footerProgressBar = this.addProgressBar();    
 
@@ -108,6 +109,8 @@ class StatusBar extends H5P.EventDispatcher {
     let barWidth = ((chapter / this.totalChapters)*100)+"%";
 
     this.headerProgressBar.progress.style.width = barWidth;
+    this.footerProgressBar.progress.style.width = barWidth;
+
   }
 
 
