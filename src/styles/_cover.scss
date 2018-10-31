@@ -1,4 +1,4 @@
-.h5p-digibook-cover{
+.h5p-digibook-cover {
     align-items: center;
     background: white;
     display: flex;
@@ -8,77 +8,79 @@
     left: 0px;
     position: absolute;
     top: 0px;
-    width:100%;
+    width: 100%;
     z-index: 3;
-
     &.h5p-cover-nographics {
         padding-top: 120px;
     }
+}
 
-    &-graphics{
-        align-items: center;
-        display:flex;
-        height:15em;
-        margin: 4.375em 0;
-        position:relative;
-        width:100%;
-    }
-    
-    &-bar{
-        background-color: #f9f8fa;
+.h5p-digibook-cover-graphics {
+    align-items: center;
+    display: flex;
+    height: 15em;
+    margin: 4.375em 0;
+    position: relative;
+    width: 100%;
+}
+
+.h5p-digibook-cover-bar {
+    background-color: #f9f8fa;
+    background-size: cover;
+    height: 70%;
+    width: inherit;
+}
+
+.h5p-digibook-cover-image {
+    height: 100%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+}
+
+.h5p-digibook-cover-title {
+    color: #363636;
+    font-size: 2.188em;
+    font-weight: 700;
+    height: 40px;
+    margin: 0.625em;
+    text-decoration: none solid rgb(54, 54, 54);
+    text-align: center
+}
+
+.h5p-digibook-cover-description {
+    color: #363636;
+    font-size: 1.250em;
+    font-weight: 400;
+    margin-bottom: 0.5em;
+    text-decoration: none solid rgb(54, 54, 54);
+    text-align: center;
+}
+
+.h5p-digibook-cover-readbutton {
+    margin-top: 0.5em;
+    button {
+        background-color: $base-color;
         background-size: cover;
-        height: 70%;
-        width:inherit;
-    }
-    &-image{
-        height:100%;
-        left: 50%;
-        position: absolute;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 3;
-    }
-    &-title{
-        color: #363636;
-        font-size: 2.188em;
-        font-weight: 700;
-        height: 40px;
-        margin: 0.625em;
-        text-decoration: none solid rgb(54, 54, 54);
-        text-align: center
-    }
-    &-description{
-        color: #363636;
-        font-size: 1.250em;
+        border: none;
+        cursor: pointer;
+        color: $background-color;
+        font-family: Arial;
+        font-size: 20px;
         font-weight: 400;
-        margin-bottom: 0.5em;
-        text-decoration: none solid rgb(54, 54, 54);
+        padding: 10px 40px;
+        text-decoration: none solid rgb(255, 255, 255);
         text-align: center;
-    }
-
-    &-readbutton {
-        margin-top: 0.5em;
-        button {
-            background-color: $base-color;
+        &:hover {
+            cursor: pointer;
+            background-color: rgba($base-color, 0.9);
             background-size: cover;
-            border:none;
-            cursor:pointer;
-            color: $background-color;
-            font-family: Arial;
-            font-size: 20px;
-            font-weight: 400;
-            padding: 10px 40px;
-            text-decoration: none solid rgb(255, 255, 255);
-            text-align: center;
-            &:hover {
-                cursor: pointer;
-                background-color: rgba($base-color, 0.9);
-                background-size: cover;
-            }
-            &:active {
-                background-color: rgba($base-color, 0.95);
-                background-size: cover;
-            }
         }
-    } 
+        &:active {
+            background-color: rgba($base-color, 0.95);
+            background-size: cover;
+        }
+    }
 }
