@@ -1,19 +1,15 @@
 {
-  "name": "h5p-boilerplate",
+  "name": "h5p-digibook",
   "version": "1.0.0",
-  "description": "Example H5P Content Type for getting started",
+  "description": "A digital book which displays content in chapters and sections",
   "private": true,
   "scripts": {
-    "webpack:b": "cross-env NODE_ENV='production' webpack -p",
-    "webpack:w": "webpack --watch",
-    "scss:w": "node-sass --watch src/styles/scss -o src/styles/css",
-    "scss:b": "node-sass src/styles/scss -o src/styles/css",
-    "build": "npm run scss:b && npm run webpack:b",
-    "dev-win": "start npm run webpack:w && start npm run scss:w"
+    "build": "cross-env NODE_ENV='production' webpack -p",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/h5p/h5p-boilerplate.git"
+    "url": "git+https://github.com/OlavStornes/h5p-digibook"
   },
   "keywords": [
     "h5p",
@@ -31,11 +27,12 @@
     "cross-env": "^4.0.0",
     "css-loader": "^0.26.2",
     "file-loader": "^2.0.0",
+    "node-sass": "^4.9.4",
+    "sass-loader": "^7.1.0",
     "style-loader": "^0.13.2",
     "webpack": "^2.7.0"
   },
   "dependencies": {
-    "node-sass": "^4.9.3",
     "url-loader": "^1.1.2"
   }
 }
