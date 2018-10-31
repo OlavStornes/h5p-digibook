@@ -13,9 +13,3 @@ Build project:
 ```bash
 npm run build
 ```
-
-Run tests:
-
-```bash
-npm test
-```
