@@ -23,6 +23,14 @@ export default class DigiBook extends H5P.EventDispatcher {
     // H5P-instances (columns)
     this.instances = [];
 
+    this.doesCoverExist = () => {
+      if (this.cover && this.cover.div) {
+        return true;
+      } 
+      return false;
+    };
+
+
     this.getActiveChapter = () => {
       return this.activeChapter;
     };
@@ -285,6 +293,27 @@ export default class DigiBook extends H5P.EventDispatcher {
       $wrapper.get(0).appendChild(this.statusBar.footer);
     };
 
+    this.hideAllElements = function (hideElements) {
+
+      const targetElements = [
+        this.statusBar.header,
+        this.statusBar.footer,
+        this.pageContent.div
+      ];
+
+      if (hideElements) {
+        targetElements.forEach(x => {
+          x.classList.add('h5p-content-hidden', 'digibook-cover-present');
+        });
+      }
+
+      else {
+        targetElements.forEach(x => {
+          x.classList.remove('h5p-content-hidden', 'digibook-cover-present');
+        });
+      }
+    };
+
     //Initialize the support components
     if (config.showCoverPage) {
       this.cover = new Cover(config.bookCover, contentData.metadata.title, config.read, contentId, this);
@@ -307,6 +336,17 @@ export default class DigiBook extends H5P.EventDispatcher {
       },
       behaviour: this.behaviour
     });
+
+    if (this.doesCoverExist()) {
+
+      this.hideAllElements(true);
+      
+      this.on('coverRemoved', () => {
+        this.hideAllElements(false);
+
+        this.resizeChildInstances();
+      });
+    }
 
     //Kickstart the statusbar
     this.statusBar.updateStatusBar();
