@@ -180,10 +180,7 @@ export default class DigiBook extends H5P.EventDispatcher {
       this.instances[this.activeChapter].childInstances.map(x => {
         x.trigger('resize');
       });
-
-      setTimeout(() => {
-        this.trigger('resize');
-      }, 1000);
+      this.trigger('resize');
     };
 
     /**

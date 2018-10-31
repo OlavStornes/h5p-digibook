@@ -227,9 +227,9 @@ class PageContent extends H5P.EventDispatcher {
         inactiveElems.map(x => x.classList.add('h5p-content-hidden'));
 
         const activeElem = this.columnElements[activeChapter];
+        this.parent.resizeChildInstances();  
 
         activeElem.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
-        
         
         let footerStatus = this.parent.shouldFooterBeVisible(activeElem.clientHeight);
         this.parent.statusBar.editFooterVisibillity(footerStatus);
@@ -237,7 +237,6 @@ class PageContent extends H5P.EventDispatcher {
         //Focus on section only after the page scrolling is finished
         this.parent.animationInProgress = false;
         this.redirectSection(this.targetPage.section);
-        this.parent.resizeChildInstances();  
       }
     });
   }
