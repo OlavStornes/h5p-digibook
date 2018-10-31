@@ -198,8 +198,8 @@ export default class DigiBook extends H5P.EventDispatcher {
      * Triggers whenever the hash changes, indicating that a chapter redirect is happening
      */
     H5P.on(this, 'respondChangeHash', function (event) {
-      if (event.data.newURL.indexOf('h5pbookid' !== -1)) {
-        const payload = self.retrieveHashFromUrl(new URL(event.data.newURL).hash);
+      const payload = self.retrieveHashFromUrl(new URL(event.data.newURL).hash);
+      if (payload.h5pbookid) {
         this.redirectChapter(payload);
       }
     });
