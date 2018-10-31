@@ -17,6 +17,10 @@ $background-color: #ffffff;
   background-color: rgb(255, 255, 255);
 }
 
+.h5p-content-hidden.digibook-cover-present {
+  display: none;
+}
+
 @import 'pagecontent';
 @import 'statusbar';
 @import 'navigationbar';
