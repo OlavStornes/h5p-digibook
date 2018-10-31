@@ -127,7 +127,7 @@ class PageContent extends H5P.EventDispatcher {
     }
 
     this.columnElements.filter(x => x.id !== chosenChapter)
-      .map(x => x.classList.add('h5p-content-hidden'));
+      .forEach(x => x.classList.add('h5p-content-hidden'));
   }
 
   isH5PTask(H5PObject) {
@@ -223,8 +223,10 @@ class PageContent extends H5P.EventDispatcher {
       if (event.propertyName === 'transform' && event.target === this.columnElements[activeChapter]) {
         // Remove all animation-related classes
         const inactiveElems = this.columnElements.filter(x => x !== this.columnElements[activeChapter]);
-        inactiveElems.map(x => x.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left'));
-        inactiveElems.map(x => x.classList.add('h5p-content-hidden'));
+        inactiveElems.forEach(x => {
+          x.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left');
+          x.classList.add('h5p-content-hidden');
+        });
 
         const activeElem = this.columnElements[activeChapter];
         this.parent.resizeChildInstances();  

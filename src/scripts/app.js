@@ -177,7 +177,7 @@ export default class DigiBook extends H5P.EventDispatcher {
      * Resize all child instances. 
      */
     this.resizeChildInstances = function () {
-      this.instances[this.activeChapter].childInstances.map(x => {
+      this.instances[this.activeChapter].childInstances.forEach(x => {
         x.trigger('resize');
       });
       this.trigger('resize');
