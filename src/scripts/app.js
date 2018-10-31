@@ -168,9 +168,7 @@ export default class DigiBook extends H5P.EventDispatcher {
      * @param {div} chapterHeight 
      */
     this.shouldFooterBeVisible = (chapterHeight) => {
-      if (this.behaviour.progressAuto) {
-        return chapterHeight <= window.outerHeight;
-      }
+      return chapterHeight <= window.outerHeight;
     };
 
     /**
