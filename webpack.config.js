@@ -4,7 +4,7 @@ var isDev = (nodeEnv !== 'production');
 
 var config = {
   entry: {
-    dist: './src/entries/dist.js'
+    dist: './src/entries/digibook.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -18,9 +18,9 @@ var config = {
         loader: 'babel-loader'
       },
       {
-        test: /\.css$/,
-        include: path.resolve(__dirname, 'src'),
-        use: ['style-loader', 'css-loader']
+        test:/\.scss$/,
+        include: path.resolve(__dirname, 'src/styles'),
+        use:['style-loader','css-loader', 'sass-loader']
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
