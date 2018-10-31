@@ -12,6 +12,8 @@ class PageContent extends H5P.EventDispatcher {
     this.behaviour = config.behaviour;
 
     this.params = params;
+    this.targetPage = {};
+    this.targetPage.redirectFromComponent = false;
 
     // H5P-instances (columns)
     this.instances = [];
@@ -80,6 +82,7 @@ class PageContent extends H5P.EventDispatcher {
       const newInstance = H5P.newRunnable(config.chapters[i], contentId, H5P.jQuery(newColumn), contentData);
       newInstance.childInstances = newInstance.getInstances();
       newColumn.classList.add('h5p-digibook-chapter');
+      newColumn.id = newInstance.subContentId;
       newInstance.title = config.chapters[i].metadata.title;
       newInstance.completed = false;
       
@@ -110,14 +113,20 @@ class PageContent extends H5P.EventDispatcher {
     }
     
     //First chapter should be visible, except if the url says otherwise.
-    let chosenChapter = 0;
+    let chosenChapter = this.columnElements[0].id;
+    if (redirObject.chapter && redirObject.h5pbookid == this.parent.contentId) {
+      const chapterIndex = this.findChapterIndex(redirObject.chapter);
+      this.parent.setActiveChapter(chapterIndex);
+      chosenChapter = redirObject.chapter;
 
-    if (redirObject.chapter && redirObject.h5pbookid === this.parent.contentId) {
-      this.parent.setActiveChapter(redirObject.chapter-1);
-      chosenChapter = redirObject.chapter-1;
+      if (redirObject.section) {
+        setTimeout(() => {
+          this.redirectSection(redirObject.section);
+        }, 1000);
+      }
     }
 
-    this.columnElements.filter(x => this.columnElements.indexOf(x) !== chosenChapter)
+    this.columnElements.filter(x => x.id !== chosenChapter)
       .map(x => x.classList.add('h5p-content-hidden'));
   }
 
@@ -129,17 +138,21 @@ class PageContent extends H5P.EventDispatcher {
   }
 
 
-  redirectSection() {
-    if (this.targetPage.section === 'top') {
+  redirectSection(sectionId) {
+    if (sectionId === 'top') {
       this.parent.trigger('scrollToTop');
     }
     else {
-      const section = document.getElementById(this.targetPage.section);
+      const section = document.getElementById(sectionId);
       if (section) {
         section.scrollIntoView(true);
         this.targetPage.redirectFromComponent = false;
       }
     }
+  }
+
+  findChapterIndex(id) {
+    return this.columnElements.findIndex(x => x.id === id);
   }
 
   /**
@@ -151,15 +164,14 @@ class PageContent extends H5P.EventDispatcher {
     if (this.parent.animationInProgress) {
       return;
     }
-
+    
     this.targetPage = newHandler;
     const oldChapterNum = this.parent.getActiveChapter();
-    const newChapterNum = parseInt(this.targetPage.chapter);
+    const newChapterNum = this.findChapterIndex(this.targetPage.chapter);
 
-
-    if (this.targetPage.chapter < this.columnElements.length) {
+    if (newChapterNum < this.columnElements.length) {
       const oldChapter = this.columnElements[oldChapterNum];
-      const targetChapter = this.columnElements[this.targetPage.chapter];
+      const targetChapter = this.columnElements[newChapterNum];
       
       if (oldChapterNum !== newChapterNum && !redirectOnLoad) {
         this.parent.animationInProgress = true;
@@ -169,7 +181,7 @@ class PageContent extends H5P.EventDispatcher {
         var newPageProgress = '';
         var oldPageProgrss = '';
         // The pages will progress from right to left
-        if (oldChapterNum < this.targetPage.chapter) {
+        if (oldChapterNum < newChapterNum) {
           newPageProgress = 'right';
           oldPageProgrss = 'left';
         }
@@ -191,15 +203,15 @@ class PageContent extends H5P.EventDispatcher {
       else {
         if (this.parent.cover && !this.parent.cover.div.hidden) {
           this.parent.on('coverRemoved', () => {
-            this.redirectSection();
+            this.redirectSection(this.targetPage.section);
           });
         }
         else {
-          this.redirectSection();
+          this.redirectSection(this.targetPage.section);
         }
       }
 
-      this.parent.sideBar.redirectHandler(this.targetPage.chapter);
+      this.parent.sideBar.redirectHandler(newChapterNum);
       if (!redirectOnLoad) {
         this.parent.updateChapterProgress(oldChapterNum);
       }
@@ -215,17 +227,16 @@ class PageContent extends H5P.EventDispatcher {
         inactiveElems.map(x => x.classList.add('h5p-content-hidden'));
 
         const activeElem = this.columnElements[activeChapter];
+        this.parent.resizeChildInstances();  
 
         activeElem.classList.remove('h5p-digibook-offset-right', 'h5p-digibook-offset-left', 'h5p-digibook-animate-new');
-        
         
         let footerStatus = this.parent.shouldFooterBeVisible(activeElem.clientHeight);
         this.parent.statusBar.editFooterVisibillity(footerStatus);
         
         //Focus on section only after the page scrolling is finished
         this.parent.animationInProgress = false;
-        this.redirectSection();
-        this.parent.resizeChildInstances();  
+        this.redirectSection(this.targetPage.section);
       }
     });
   }
