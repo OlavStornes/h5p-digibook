@@ -141,4 +141,8 @@
 
 .h5p-digibook-status-footer {
   bottom: 0;
+  &.footer-hidden {
+    display:none;
+  }
 }
+

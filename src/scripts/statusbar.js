@@ -296,7 +296,12 @@ class StatusBar extends H5P.EventDispatcher {
    * @param {Boolean} input 
    */
   editFooterVisibillity(input) {
-    this.footer.hidden = input;
+    if (input) {
+      this.footer.classList.add('footer-hidden');
+    }
+    else {
+      this.footer.classList.remove('footer-hidden');
+    }
   }
 
   /**
