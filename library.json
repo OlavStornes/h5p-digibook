@@ -1,6 +1,6 @@
 {
   "title": "Digital book",
-  "description": "A regular ordinary special book",
+  "description": "A digital book which displays content in chapters and sections",
   "majorVersion": 1,
   "minorVersion": 0,
   "patchVersion": 1,
